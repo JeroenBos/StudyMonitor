@@ -11,9 +11,9 @@ namespace DummyClient
 	{
 		static void Main(string[] args)
 		{
-			var c = new StudyTasks();
-
-			c.SaveChanges();
+			var database = new StudyTasks();
+			database.Tasks.Add(new StudyTask { Id = 1, Name = "Hallo" });
+			database.SaveChanges();
 		}
 	}
 }
