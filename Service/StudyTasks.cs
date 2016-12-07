@@ -8,7 +8,6 @@ using System.Text;
 
 namespace StudyMonitor.Service
 {
-	// NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
 	public class StudyTasks : IStudyTasks
 	{
 		private readonly List<StudyTask> tasks = new List<StudyTask>();
