@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
-namespace Service
+namespace StudyMonitor.Service
 {
 	[ServiceContract]
 	public interface IStudyTasks
