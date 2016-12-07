@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.25914.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMonitorDatabase", "StudyMonitor\StudyMonitorDatabase.csproj", "{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyClient", "DummyClient\DummyClient.csproj", "{4F5B5E72-7582-4813-91C8-55371A13DB5C}"
 EndProject

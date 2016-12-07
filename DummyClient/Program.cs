@@ -1,5 +1,4 @@
-﻿using StudyMonitor;
-using StudyMonitorDatabase;
+﻿using StudyMonitor.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;

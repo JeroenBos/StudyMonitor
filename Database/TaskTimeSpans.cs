@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudyMonitor
+namespace StudyMonitor.Database
 {
-	public partial class StudyTasks : DbContext
+	public partial class TaskTimeSpans : DbContext
 	{
-		public StudyTasks()
+		public TaskTimeSpans()
 			: base("name=Tasks")
 		{
-				
+
 		}
 
-		public virtual DbSet<StudyTask> Tasks { get; set; }
+		public virtual DbSet<TaskTimeSpan> TimeSpans { get; set; }
 	}
 }

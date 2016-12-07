@@ -7,8 +7,8 @@
     <ProjectGuid>{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StudyMonitorDatabase</RootNamespace>
-    <AssemblyName>StudyMonitorDatabase</AssemblyName>
+    <RootNamespace>StudyMonitor.Database</RootNamespace>
+    <AssemblyName>StudyMonitor.Database</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>

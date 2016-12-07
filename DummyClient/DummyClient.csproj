@@ -59,9 +59,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StudyMonitor\StudyMonitorDatabase.csproj">
+    <ProjectReference Include="..\Database\Database.csproj">
       <Project>{04a0151a-9875-4277-96b7-ccbd7c4a2f8a}</Project>
-      <Name>StudyMonitorDatabase</Name>
+      <Name>Database</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
