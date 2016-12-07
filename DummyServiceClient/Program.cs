@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudyMonitor.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,9 @@ namespace StudyMonitor.DummyServiceClient
 	{
 		static void Main(string[] args)
 		{
+			StudyTasksService tasks = new StudyTasksService();
+			var id = tasks.Add(new StudyTaskService() { Id = 3, Name = "first" });
+			Console.ReadLine();
 		}
 	}
 }
