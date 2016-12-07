@@ -15,6 +15,6 @@ namespace StudyMonitor.Database
 				
 		}
 
-		public virtual DbSet<StudyTaskDB> Tasks { get; set; }
+		public virtual DbSet<StudyTask> Tasks { get; set; }
 	}
 }

@@ -8,17 +8,17 @@ using System.Text;
 namespace StudyMonitor.Service
 {
 	[ServiceContract]
-	public interface IStudyTasks
+	public interface IStudyTasksService
 	{
 		[OperationContract]
-		int Add(StudyTask task);
+		int Add(StudyTaskService task);
 
 		[OperationContract]
-		StudyTask GetTask(int id);
+		StudyTaskService GetTask(int id);
 	}
 
 	[DataContract]
-	public class StudyTask
+	public class StudyTaskService
 	{
 		[DataMember]
 		public int Id { get; set; }

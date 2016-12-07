@@ -8,9 +8,9 @@ using System.Text;
 
 namespace StudyMonitor.Service
 {
-	public class StudyTasks : IStudyTasks
+	public class StudyTasksService : IStudyTasksService
 	{
-		public int Add(StudyTask task)
+		public int Add(StudyTaskService task)
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));
 
@@ -22,14 +22,14 @@ namespace StudyMonitor.Service
 			return result.Id;
 		}
 
-		public StudyTask GetTask(int id)
+		public StudyTaskService GetTask(int id)
 		{
 			var context = new StudyTasksContext();
 			var result = context.Tasks.FirstOrDefault(task => task.Id == id);
 			if (result == null)
 				throw new NotImplementedException();
 
-			return result.ToEntity();
+			return result.ToService();
 		}
 	}
 }

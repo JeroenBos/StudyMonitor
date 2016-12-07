@@ -9,16 +9,16 @@ namespace StudyMonitor.Service
 {
 	static class DatabaseExtensions
 	{
-		public static StudyTask ToEntity(this StudyTaskDB task)
+		public static StudyTaskService ToService(this StudyTask task)
 		{
-			return new StudyTask()
+			return new StudyTaskService()
 			{
 				Name = task.Name
 			};
 		}
-		public static StudyTaskDB ToDBObject(this StudyTask task)
+		public static StudyTask ToDBObject(this StudyTaskService task)
 		{
-			return new StudyTaskDB()
+			return new StudyTask()
 			{
 				Name = task.Name
 			};
