@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.Database
 {
-	public class TaskTimeSpan
+	public class TaskTimeSpanDB
 	{
 		public int Id { get; set; }
 
