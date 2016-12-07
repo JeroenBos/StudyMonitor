@@ -19,6 +19,7 @@ namespace StudyMonitor.Service
 			if (result == null)
 				throw new NotImplementedException();
 
+			var saveChangeResult = context.SaveChanges();
 			return result.Id;
 		}
 
