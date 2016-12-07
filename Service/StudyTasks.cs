@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudyMonitor.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -19,7 +20,7 @@ namespace StudyMonitor.Service
 
 		public StudyTask GetTask(int id)
 		{
-			var context = new Database.StudyTasks();
+			var context = new StudyTasksContext();
 			var result = context.Tasks.FirstOrDefault(task => task.Id == id);
 			if (result == null)
 				throw new InvalidOperationException();

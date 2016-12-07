@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.Database
 {
-	public partial class StudyTasks : DbContext
+	public partial class StudyTasksContext : DbContext
 	{
-		public StudyTasks()
+		public StudyTasksContext()
 			: base("name=Tasks")
 		{
 				
