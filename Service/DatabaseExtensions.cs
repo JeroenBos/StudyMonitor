@@ -16,5 +16,12 @@ namespace StudyMonitor.Service
 				Name = task.Name
 			};
 		}
+		public static StudyTaskDB ToDBObject(this StudyTask task)
+		{
+			return new StudyTaskDB()
+			{
+				Name = task.Name
+			};
+		}
 	}
 }
