@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.Database
 {
-	public class StudyTask
+	public class StudyTaskDB
 	{
 		public int Id { get; set; }
 

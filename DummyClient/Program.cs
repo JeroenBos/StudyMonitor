@@ -12,7 +12,7 @@ namespace DummyClient
 		static void Main(string[] args)
 		{
 			var database = new StudyTasks();
-			database.Tasks.Add(new StudyTask { Id = 1, Name = "Hallo" });
+			database.Tasks.Add(new StudyTaskDB { Id = 1, Name = "Hallo" });
 			database.SaveChanges();
 
 			var taskSpansDB = new TaskTimeSpans();

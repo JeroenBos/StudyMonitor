@@ -1,4 +1,5 @@
 ﻿using Service;
+using StudyMonitor.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace StudyMonitor.Service
 {
 	static class DatabaseExtensions
 	{
-		public static StudyTask ToEntity(this Database.StudyTask task)
+		public static StudyTask ToEntity(this StudyTaskDB task)
 		{
 			return new StudyTask()
 			{
