@@ -11,7 +11,7 @@ namespace StudyMonitor.Service
 	public interface IStudyTasks
 	{
 		[OperationContract]
-		void Add(StudyTask task);
+		int Add(StudyTask task);
 
 		[OperationContract]
 		StudyTask GetTask(int id);

@@ -10,11 +10,16 @@ namespace StudyMonitor.Service
 {
 	public class StudyTasks : IStudyTasks
 	{
-		private readonly List<StudyTask> tasks = new List<StudyTask>();
-
-		public void Add(StudyTask task)
+		public int Add(StudyTask task)
 		{
-			tasks.Add(task);
+			if (task == null) throw new ArgumentNullException(nameof(task));
+
+			var context = new StudyTasksContext();
+			var result = context.Tasks.Add(task.ToDBObject());
+			if (result == null)
+				throw new NotImplementedException();
+
+			return result.Id;
 		}
 
 		public StudyTask GetTask(int id)
@@ -22,7 +27,8 @@ namespace StudyMonitor.Service
 			var context = new StudyTasksContext();
 			var result = context.Tasks.FirstOrDefault(task => task.Id == id);
 			if (result == null)
-				throw new InvalidOperationException();
+				throw new NotImplementedException();
+
 			return result.ToEntity();
 		}
 	}
