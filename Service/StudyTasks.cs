@@ -16,5 +16,14 @@ namespace StudyMonitor.Service
 		{
 			tasks.Add(task);
 		}
+
+		public StudyTask GetTask(int id)
+		{
+			var context = new Database.StudyTasks();
+			var result = context.Tasks.FirstOrDefault(task => task.Id == id);
+			if (result == null)
+				throw new InvalidOperationException();
+			return result.ToEntity();
+		}
 	}
 }

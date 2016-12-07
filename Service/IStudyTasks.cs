@@ -12,11 +12,17 @@ namespace StudyMonitor.Service
 	{
 		[OperationContract]
 		void Add(StudyTask task);
+
+		[OperationContract]
+		StudyTask GetTask(int id);
 	}
 
 	[DataContract]
 	public class StudyTask
 	{
+		[DataMember]
+		public int Id { get; set; }
+
 		[DataMember]
 		public string Name { get; set; }
 	}
