@@ -68,6 +68,7 @@
     <Compile Include="StudyTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskTimeSpan.cs" />
+    <Compile Include="TaskTimeSpans.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Database.mdf">
