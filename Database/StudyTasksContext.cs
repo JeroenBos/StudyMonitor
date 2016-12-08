@@ -16,5 +16,6 @@ namespace StudyMonitor.Database
 		}
 
 		public virtual DbSet<StudyTask> Tasks { get; set; }
+		public virtual DbSet<TaskTimeSpan> TimeSpans { get; set; }
 	}
 }
