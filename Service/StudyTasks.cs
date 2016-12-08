@@ -32,5 +32,22 @@ namespace StudyMonitor.Service
 
 			return result.ToService();
 		}
+
+		public void AddTimeSpanTo(StudyTaskService task, TaskTimeSpanService timeSpan)
+		{
+			var context = new StudyTasksContext();
+			var timeSpanDB = context.TimeSpans.FirstOrDefault(_ => _.Id == timeSpan.Id);
+			if (timeSpanDB != null)
+			{
+				context.TimeSpans.Remove(timeSpanDB);
+			}
+			else
+			{
+				timeSpanDB = timeSpan.ToDBObject();
+			}
+
+			context.TimeSpans.Add(timeSpanDB);
+			context.SaveChanges();
+		}
 	}
 }
