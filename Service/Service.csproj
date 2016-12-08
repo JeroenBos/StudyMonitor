@@ -57,6 +57,7 @@
     <Compile Include="IStudyTasks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StudyTasks.cs" />
+    <Compile Include="TaskTimeSpanService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
