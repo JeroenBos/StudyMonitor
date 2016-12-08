@@ -49,5 +49,14 @@ namespace StudyMonitor.Service
 			context.TimeSpans.Add(timeSpanDB);
 			context.SaveChanges();
 		}
+
+		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task)
+		{
+			var context = new StudyTasksContext();
+			var result = context.TimeSpans
+								.Where(timeSpanDB => timeSpanDB.TaskId == task.Id)
+								.Select(timeSpanDB => timeSpanDB.ToService(this));
+			return result;
+		}
 	}
 }
