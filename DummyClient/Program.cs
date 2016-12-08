@@ -15,9 +15,9 @@ namespace DummyClient
 			database.Tasks.Add(new StudyTask { Id = 1, Name = "Hallo" });
 			database.SaveChanges();
 
-			var taskSpansDB = new TaskTimeSpans();
-			taskSpansDB.TimeSpans.Add(new TaskTimeSpan { End = DateTime.Now, Start = DateTime.Now, Id = 1, TaskId = 1 });
-			taskSpansDB.SaveChanges();
+			var taskSpans = new TaskTimeSpans();
+			taskSpans.TimeSpans.Add(new TaskTimeSpan { End = DateTime.Now, Start = DateTime.Now, Id = 1, TaskId = 1 });
+			taskSpans.SaveChanges();
 		}
 	}
 }
