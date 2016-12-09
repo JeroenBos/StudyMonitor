@@ -16,6 +16,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyServiceClient", "Dummy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAccess", "ServiceAccess\ServiceAccess.csproj", "{DBB98465-B31C-41A5-A671-D2E022C67291}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F2A1D682-F23A-4DBA-B614-E105F714683B} = {F2A1D682-F23A-4DBA-B614-E105F714683B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +47,10 @@ Global
 		{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB98465-B31C-41A5-A671-D2E022C67291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB98465-B31C-41A5-A671-D2E022C67291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB98465-B31C-41A5-A671-D2E022C67291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB98465-B31C-41A5-A671-D2E022C67291}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
