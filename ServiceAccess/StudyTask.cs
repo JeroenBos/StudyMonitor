@@ -11,7 +11,7 @@ namespace StudyMonitor.ServiceAccess
 	class StudyTask
 	{
 		private readonly IStudyTasksService tasks;
-		private readonly StudyTaskService service;
+		internal readonly StudyTaskService service;
 		public string Name { get; }
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
@@ -25,7 +25,7 @@ namespace StudyMonitor.ServiceAccess
 	}
 	class TaskTimeSpan
 	{
-		private readonly TaskTimeSpanService service;
+		internal readonly TaskTimeSpanService service;
 		public TaskTimeSpan(TaskTimeSpanService service)
 		{
 			this.service = service ?? throw new ArgumentNullException(nameof(service));
