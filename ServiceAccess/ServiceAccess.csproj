@@ -48,6 +48,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="StudyTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service Capabilities\" />
