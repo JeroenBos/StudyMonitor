@@ -10,6 +10,10 @@ namespace StudyMonitor.Service
 {
 	public class StudyTasksService : IStudyTasksService
 	{
+		public StudyTasksService()
+		{
+			
+		}
 		public int Add(StudyTaskService task)
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));

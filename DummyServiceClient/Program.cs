@@ -1,4 +1,4 @@
-﻿using StudyMonitor.Service;
+﻿using StudyMonitor.DummyServiceClient.ServiceReference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,8 @@ namespace StudyMonitor.DummyServiceClient
 	{
 		static void Main(string[] args)
 		{
-			StudyTasksService tasks = new StudyTasksService();
+			
+			StudyTasksServiceClient tasks = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService1");
 			var task = new StudyTaskService() { Id = 3, Name = "first" };
 			var timespan = new TaskTimeSpanService() { Id = 1, End = DateTime.Now, Start = DateTime.Now, Task = task };
 			var id = tasks.Add(task);

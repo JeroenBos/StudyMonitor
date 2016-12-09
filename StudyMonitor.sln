@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{F2A1D682-F23A-4DBA-B614-E105F714683B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyServiceClient", "DummyServiceClient\DummyServiceClient.csproj", "{E5AB89AF-5D8D-4FEC-AC9F-78BE490A8A26}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F2A1D682-F23A-4DBA-B614-E105F714683B} = {F2A1D682-F23A-4DBA-B614-E105F714683B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}"
 EndProject
