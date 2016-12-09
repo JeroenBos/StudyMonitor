@@ -12,7 +12,6 @@ namespace StudyMonitor.Service
 	{
 		public StudyTasksService()
 		{
-			
 		}
 		public int Add(StudyTaskService task)
 		{
@@ -37,7 +36,7 @@ namespace StudyMonitor.Service
 			return result.ToService();
 		}
 
-		public void AddTimeSpanTo(StudyTaskService task, TaskTimeSpanService timeSpan)
+		public void AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
 		{
 			var context = new StudyTasksContext();
 			var timeSpanDB = context.TimeSpans.FirstOrDefault(_ => _.Id == timeSpan.Id);

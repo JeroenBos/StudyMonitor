@@ -36,7 +36,7 @@ namespace StudyMonitor.Service
 				Id = timeSpan.Id,
 				Start = timeSpan.Start,
 				End = timeSpan.End,
-				Task = task
+				TaskId = timeSpan.TaskId
 			};
 		}
 		public static TaskTimeSpan ToDBObject(this TaskTimeSpanService timeSpan)
@@ -46,7 +46,7 @@ namespace StudyMonitor.Service
 				Id = timeSpan.Id,
 				Start = timeSpan.Start,
 				End = timeSpan.End,
-				TaskId = timeSpan.Task.Id
+				TaskId = timeSpan.TaskId
 			};
 		}
 	}
