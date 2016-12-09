@@ -10,13 +10,15 @@ namespace StudyMonitor.ServiceAccess
 {
 	class StudyTask
 	{
+		private readonly IStudyTasksService tasks;
 		private readonly StudyTaskService service;
 		public string Name { get; }
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
-		public StudyTask(StudyTaskService service)
+		public StudyTask(StudyTaskService service, IStudyTasksService tasks)
 		{
 			this.service = service ?? throw new ArgumentNullException(nameof(service));
+			this.tasks = tasks ?? throw new ArgumentNullException(nameof(tasks));
 			Name = service.Name;
 			TimeSpans = new ObservableCollection<TaskTimeSpan>();
 		}
