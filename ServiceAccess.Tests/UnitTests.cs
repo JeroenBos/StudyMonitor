@@ -12,9 +12,8 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			var testObject = new UnitTests();
 			testObject.CalledEverytimeAfterATest();
+
 			testObject.TaskIdAssignmentTest();
-			Console.WriteLine("Ran test");
-			Console.ReadLine();
 		}
 
 		private readonly StudyTaskService service = new StudyTaskService();
