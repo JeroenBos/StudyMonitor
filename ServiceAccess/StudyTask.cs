@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.ServiceAccess
 {
-	class StudyTask
+	public class StudyTask
 	{
 		private readonly IStudyTasksService tasks;
 		internal readonly StudyTaskService service;
@@ -23,7 +23,7 @@ namespace StudyMonitor.ServiceAccess
 			TimeSpans = new ObservableCollection<TaskTimeSpan>();
 		}
 	}
-	class TaskTimeSpan
+	public class TaskTimeSpan
 	{
 		internal readonly TaskTimeSpanService service;
 		public TaskTimeSpan(TaskTimeSpanService service)
