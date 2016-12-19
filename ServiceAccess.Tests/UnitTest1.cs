@@ -20,7 +20,13 @@ namespace ServiceAccesTests
         private readonly StudyTaskService service = new StudyTaskService();
         private readonly StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
 
-        [TestCleanup]
+		[TestInitialize]
+		public void InitializeTest()
+		{
+			client.ClearAll();
+		}
+
+		[TestCleanup]
         public void CalledEverytimeAfterATest()
         {
             client.ClearAll();
