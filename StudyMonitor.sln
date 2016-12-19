@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}"
 EndProject
@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAccess", "ServiceAcc
 		{F2A1D682-F23A-4DBA-B614-E105F714683B} = {F2A1D682-F23A-4DBA-B614-E105F714683B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAccesTests", "ServiceAccesTests\ServiceAccesTests.csproj", "{3D8F615B-84F6-4DD7-A5D0-7A17E99F00FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAccess.Tests", "ServiceAccesTests\ServiceAccess.Tests.csproj", "{3D8F615B-84F6-4DD7-A5D0-7A17E99F00FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
