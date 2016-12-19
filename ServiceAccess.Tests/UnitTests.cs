@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StudyMonitor.ServiceAccess.ServiceReference;
 
 
-namespace ServiceAccesTests
+namespace StudyMonitor.ServiceAccess.Tests
 {
 	[TestClass]
 	public class UnitTests
