@@ -13,53 +13,63 @@ namespace StudyMonitor.Service
 		public StudyTasksService()
 		{
 		}
-		public int Add(StudyTaskService task)
-		{
-			if (task == null) throw new ArgumentNullException(nameof(task));
 
-			var context = new StudyTasksContext();
-			var result = context.Tasks.Add(task.ToDBObject());
-			if (result == null)
-				throw new NotImplementedException();
+	    public int Add(StudyTaskService task)
+	    {
+	        if (task == null) throw new ArgumentNullException(nameof(task));
 
-			var saveChangeResult = context.SaveChanges();
-			return result.Id;
-		}
+	        using (var context = new StudyTasksContext())
+	        {
+	            var result = context.Tasks.Add(task.ToDBObject());
+	            if (result == null)
+	                throw new NotImplementedException();
+
+	            var saveChangeResult = context.SaveChanges();
+
+	            return result.Id;
+	        }
+	    }
 
 		public StudyTaskService GetTask(int id)
 		{
-			var context = new StudyTasksContext();
-			var result = context.Tasks.FirstOrDefault(task => task.Id == id);
-			if (result == null)
-				throw new NotImplementedException();
+		    using (var context = new StudyTasksContext())
+		    {
+		        var result = context.Tasks.FirstOrDefault(task => task.Id == id);
+		        if (result == null)
+		            throw new NotImplementedException();
 
-			return result.ToService();
+		        return result.ToService();
+		    }
 		}
 
 		public void AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
 		{
-			var context = new StudyTasksContext();
-			var timeSpanDB = context.TimeSpans.FirstOrDefault(_ => _.Id == timeSpan.Id);
-			if (timeSpanDB != null)
-			{
-				context.TimeSpans.Remove(timeSpanDB);
-			}
-			else
-			{
-				timeSpanDB = timeSpan.ToDBObject();
-			}
+		    using (var context = new StudyTasksContext())
+		    {
+		        var timeSpanDB = context.TimeSpans.FirstOrDefault(_ => _.Id == timeSpan.Id);
+		        if (timeSpanDB != null)
+		        {
+		            context.TimeSpans.Remove(timeSpanDB);
+		        }
+		        else
+		        {
+		            timeSpanDB = timeSpan.ToDBObject();
+		        }
 
-			context.TimeSpans.Add(timeSpanDB);
-			context.SaveChanges();
+		        context.TimeSpans.Add(timeSpanDB);
+		        context.SaveChanges();
+		    }
 		}
 
 		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task)
 		{
-			var context = new StudyTasksContext();
-			var result = context.TimeSpans
-								.Where(timeSpanDB => timeSpanDB.TaskId == task.Id)
-								.Select(timeSpanDB => timeSpanDB.ToService(this));
-			return result;
+		    using (var context = new StudyTasksContext())
+		    {
+		        var result = context.TimeSpans
+		            .Where(timeSpanDB => timeSpanDB.TaskId == task.Id)
+		            .Select(timeSpanDB => timeSpanDB.ToService(this));
+		        return result;
+		    }
 		}
 	}
 }
