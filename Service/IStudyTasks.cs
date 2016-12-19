@@ -21,6 +21,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task);
+
+		[OperationContract]
+		void ClearAll();
 	}
 
 	[DataContract]

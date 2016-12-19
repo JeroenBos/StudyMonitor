@@ -71,5 +71,14 @@ namespace StudyMonitor.Service
 		        return result;
 		    }
 		}
+
+		public void ClearAll()
+		{
+			using (var context = new StudyTasksContext())
+			{
+				context.Tasks.RemoveRange(context.Tasks);
+				context.TimeSpans.RemoveRange(context.TimeSpans);
+			}
+		}
 	}
 }

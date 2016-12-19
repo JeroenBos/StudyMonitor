@@ -12,7 +12,7 @@
       <xs:element minOccurs="0" name="End" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Start" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Task" nillable="true" type="tns:StudyTaskService" />
+      <xs:element minOccurs="0" name="TaskId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TaskTimeSpanService" nillable="true" type="tns:TaskTimeSpanService" />
