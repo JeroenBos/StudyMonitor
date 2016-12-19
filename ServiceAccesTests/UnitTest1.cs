@@ -10,7 +10,7 @@ namespace ServiceAccesTests
     {
         public static void Main(string[] args)
         {
-            new UnitTests().test();
+			new UnitTests().test();
             Console.ReadLine();
         }
         private readonly StudyTaskService service = new StudyTaskService();
