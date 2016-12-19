@@ -35,7 +35,11 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void test()
 		{
-			client.Add(new StudyTaskService() { Name = "Erik" });
+			var taskId = client.Add(new StudyTaskService() { Name = "Erik" });
+
+		    var retrievedTask = client.GetTask(taskId);
+
+            Assert.AreEqual(taskId, retrievedTask.Id);
 		}
 	}
 

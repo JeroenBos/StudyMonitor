@@ -13,7 +13,8 @@ namespace StudyMonitor.Service
 		{
 			return new StudyTaskService()
 			{
-				Name = task.Name
+				Name = task.Name,
+                Id = task.Id
 			};
 		}
 		public static StudyTask ToDBObject(this StudyTaskService task)
