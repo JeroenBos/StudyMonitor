@@ -12,7 +12,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			var testObject = new UnitTests();
 			testObject.CalledEverytimeAfterATest();
-			testObject.test();
+			testObject.TaskIdAssignmentTest();
 			Console.WriteLine("Ran test");
 			Console.ReadLine();
 		}
@@ -32,8 +32,19 @@ namespace StudyMonitor.ServiceAccess.Tests
 			client.ClearAll();
 		}
 
+
 		[TestMethod]
-		public void test()
+		public void TaskIdAssignmentTest()
+		{
+			var taskId = client.Add(new StudyTaskService() { Name = "Erik" });
+
+			var retrievedTask = client.GetTask(taskId);
+
+			Assert.AreNotEqual(retrievedTask.Id, 0);
+		}
+
+		[TestMethod]
+		public void TaskCreationAndRetrievalTest()
 		{
 			var taskId = client.Add(new StudyTaskService() { Name = "Erik" });
 
