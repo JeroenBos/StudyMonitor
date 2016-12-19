@@ -5,16 +5,7 @@ VisualStudioVersion = 15.0.25914.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyClient", "DummyClient\DummyClient.csproj", "{4F5B5E72-7582-4813-91C8-55371A13DB5C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{F2A1D682-F23A-4DBA-B614-E105F714683B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyServiceClient", "DummyServiceClient\DummyServiceClient.csproj", "{E5AB89AF-5D8D-4FEC-AC9F-78BE490A8A26}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F2A1D682-F23A-4DBA-B614-E105F714683B} = {F2A1D682-F23A-4DBA-B614-E105F714683B}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAccess", "ServiceAccess\ServiceAccess.csproj", "{DBB98465-B31C-41A5-A671-D2E022C67291}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -31,22 +22,10 @@ Global
 		{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04A0151A-9875-4277-96B7-CCBD7C4A2F8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F5B5E72-7582-4813-91C8-55371A13DB5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F5B5E72-7582-4813-91C8-55371A13DB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F5B5E72-7582-4813-91C8-55371A13DB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F5B5E72-7582-4813-91C8-55371A13DB5C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2A1D682-F23A-4DBA-B614-E105F714683B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2A1D682-F23A-4DBA-B614-E105F714683B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2A1D682-F23A-4DBA-B614-E105F714683B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2A1D682-F23A-4DBA-B614-E105F714683B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5AB89AF-5D8D-4FEC-AC9F-78BE490A8A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5AB89AF-5D8D-4FEC-AC9F-78BE490A8A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5AB89AF-5D8D-4FEC-AC9F-78BE490A8A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5AB89AF-5D8D-4FEC-AC9F-78BE490A8A26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCD1A0B3-3B57-4720-865B-CCD2E2F8C10B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBB98465-B31C-41A5-A671-D2E022C67291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBB98465-B31C-41A5-A671-D2E022C67291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBB98465-B31C-41A5-A671-D2E022C67291}.Release|Any CPU.ActiveCfg = Release|Any CPU
