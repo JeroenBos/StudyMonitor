@@ -10,16 +10,20 @@ namespace ServiceAccesTests
     {
         public static void Main(string[] args)
         {
-			new UnitTests().test();
+			var testObject = new UnitTests();
+			testObject.CalledEverytimeAfterATest();
+			testObject.test();
+			Console.WriteLine("Ran test");
             Console.ReadLine();
         }
+
         private readonly StudyTaskService service = new StudyTaskService();
         private readonly StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
 
         [TestCleanup]
-        public void calledEverytimeAfterATest()
+        public void CalledEverytimeAfterATest()
         {
-            //client.ClearAll();
+            client.ClearAll();
         }
 
         [TestMethod]
