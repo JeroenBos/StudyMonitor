@@ -3,16 +3,46 @@
 }
 
 <div class="jumbotron">
-    <h1>Study Monitor</h1>
-    <p class="lead">@ViewBag.Id</p>
-    <p class="body-content">@ViewBag.Name</p>
+        <h1>Study Monitor</h1>
+        <p class="lead">@ViewBag.Id</p>
+        <p class="body-content">@ViewBag.Name</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Test</h2>
+            <p>
+                Not sure if we want to keep this data
+            </p>
+            <button type="button" id="buttonid" onclick="myFunction()">Click Me!</button>
+        </div>
+    </div>
+
+    <script>
+        function myFunction() {
+
+            document.getElementById("buttonid").style.color = "magenta"
+            $.get("Select", function () {
+                alert("success");
+            }).fail(function (xhr, status, error) {
+                alert(error)
+            });
+    }
+</script>
+
+
+@*<div>
+
+    Field1: <input type="text" value="Hello World!"><br>
+
+    <button id="field1" onclick="myFunction()">Make orange!</button>
+
+
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Test</h2>
-        <p>
-            Not sure if we want to keep this data
-        </p>
-    </div>
-</div>
+<script>
+function myFunction() {
+    document.getElementById("field1").style.color = "magenta"
+}
+</script>*@

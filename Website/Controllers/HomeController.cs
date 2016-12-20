@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web;
 using StudyMonitor.ServiceAccess.ServiceReference;
 
 namespace Website.Controllers
@@ -26,6 +27,11 @@ namespace Website.Controllers
 		{
 			ViewBag.Message = "Your contact page.";
 
+			return View();
+		}
+
+		public ActionResult Select()
+		{
 			return View();
 		}
 	}
