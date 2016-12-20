@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Web;
 using System.Security.Cryptography;
 using System.Web.Mvc;
 using StudyMonitor.ServiceAccess.ServiceReference;
@@ -31,5 +32,9 @@ namespace Website.Controllers
 
             return View();
         }
-    }
+		public ActionResult Select()
+		{
+			return View();
+		}
+	}
 }
