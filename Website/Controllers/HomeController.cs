@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 using System.Web.Mvc;
@@ -11,11 +12,13 @@ namespace Website.Controllers
     {
         public ActionResult Index()
         {
-            StudyTaskService service = new StudyTaskService();
-            StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
-            StudyTasksModel studyTasksModel = new StudyTasksModel();
-            studyTasksModel.StudyTaskModels = client.GetAllTasks().Select(
-                e => new StudyTaskModel() {Id = e.Id, Name = e.Name}).ToList();
+            var client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
+            client.Add(new StudyTaskService() { Name = "TestCase" });
+            var studyTasksModel = new StudyTasksModel
+            {
+                StudyTaskModels = client.GetAllTasks().Select(
+                    e => new StudyTaskModel() { Id = e.Id, Name = e.Name }).ToList()
+            };
             return View(studyTasksModel);
         }
 
@@ -32,9 +35,27 @@ namespace Website.Controllers
 
             return View();
         }
+
+        
 		public ActionResult Select(object data)
 		{
-			return View();
-		}
+            string[] taskId = (string[])data;
+            int id;
+            bool validData = int.TryParse(taskId[0], out id);
+            if (validData)
+            {
+                var startingTaskItemTimeSpan = new TaskTimeSpanService()
+                {
+                    End = null,
+                    TaskId = id,
+                    Start = DateTime.Now
+                };
+
+                StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
+                client.AddTimeSpanTo(id, startingTaskItemTimeSpan);
+            }
+
+            return View();
+        }
 	}
 }
