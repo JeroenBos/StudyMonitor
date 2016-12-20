@@ -1,4 +1,5 @@
-﻿using StudyMonitor.ServiceAccess.ServiceReference;
+﻿using JBSnorro;
+using StudyMonitor.ServiceAccess.ServiceReference;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.ServiceAccess
 {
-	public class StudyTask
+	public class StudyTask : DefaultINotifyPropertyChanged
 	{
 		private readonly IStudyTasksService client;
 		internal readonly StudyTaskService service;
@@ -47,7 +48,7 @@ namespace StudyMonitor.ServiceAccess
 			}
 		}
 	}
-	public class TaskTimeSpan
+	public class TaskTimeSpan : DefaultINotifyPropertyChanged
 	{
 		internal readonly TaskTimeSpanService service = new TaskTimeSpanService();
 
