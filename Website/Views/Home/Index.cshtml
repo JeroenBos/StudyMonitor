@@ -11,6 +11,7 @@
     {
         <p class="body-content">
             @task.Id.ToString(), @task.Name
+            <button type="button" id="button1" onclick="myFunction(@task.Id.ToString())">Click Me!</button>
         </p>
     }
 }
@@ -22,15 +23,15 @@
             <p>
                 Not sure if we want to keep this data
             </p>
-            <button type="button" id="buttonid" onclick="myFunction()">Click Me!</button>
+            
         </div>
     </div>
 
     <script>
-        function myFunction() {
+        function myFunction(taskId) {
 
-            document.getElementById("buttonid").style.color = "magenta"
-            $.post("Select", function () {
+            document.getElementById("button1").style.color = "magenta"
+            $.get("Select", {taskId: taskId}, function () {
                 alert("success");
             }).fail(function (xhr, status, error) {
                 alert(error)

@@ -32,7 +32,7 @@ namespace Website.Controllers
 
             return View();
         }
-		public ActionResult Select()
+		public ActionResult Select(object data)
 		{
 			return View();
 		}
