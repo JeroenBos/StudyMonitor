@@ -39,20 +39,22 @@
   </xs:element>
   <xs:element name="AddTimeSpanToResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddTimeSpanToResult" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTimeSpansFor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="task" nillable="true" type="q4:StudyTaskService" />
+        <xs:element minOccurs="0" name="taskId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTimeSpansForResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetTimeSpansForResult" nillable="true" type="q5:ArrayOfTaskTimeSpanService" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetTimeSpansForResult" nillable="true" type="q4:ArrayOfTaskTimeSpanService" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
