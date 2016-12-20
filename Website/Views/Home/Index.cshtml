@@ -17,37 +17,10 @@
 }
 </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Test</h2>
-            <p>
-                Not sure if we want to keep this data
-            </p>
-            
-        </div>
-    </div>
-
-    <script>
-        function myFunction(taskId) {
-
-            document.getElementById("button1").style.color = "magenta"
-            $.post("Select", { data: taskId });
+<script>
+    function myFunction(taskId) 
+    {
+        document.getElementById("button1").style.color = "magenta"
+        $.post("Select", { data: taskId });
     }
 </script>
-
-
-@*<div>
-
-    Field1: <input type="text" value="Hello World!"><br>
-
-    <button id="field1" onclick="myFunction()">Make orange!</button>
-
-
-
-</div>
-
-<script>
-function myFunction() {
-    document.getElementById("field1").style.color = "magenta"
-}
-</script>*@
