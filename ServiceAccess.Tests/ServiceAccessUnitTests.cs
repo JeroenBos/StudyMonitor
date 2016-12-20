@@ -29,5 +29,16 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var result = client.GetTask(task.service.Id).Name;
 			Assert.AreEqual(expected, result);
 		}
+		[TestMethod]
+		public void RemoveTaskTest()
+		{
+			object expected = null;
+			var task = new StudyTask(base.client, "name");
+
+			task.RemoveFromDatabase();
+			
+			var result = client.GetTask(task.service.Id);
+			Assert.AreEqual(expected, result);
+		}
 	}
 }
