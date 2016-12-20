@@ -40,7 +40,7 @@ namespace StudyMonitor.ServiceAccess
 			// add to database
 			this.service.Id = this.client.Add(this.service);
 
-			this.TimeSpans.CollectionChanged += TimeSpansChanged;
+			this.TimeSpans.CollectionChanged += timeSpansChanged;
 			this.PropertyChanged += propertyChanged;
 		}
 
@@ -54,7 +54,7 @@ namespace StudyMonitor.ServiceAccess
 			}
 		}
 
-		private void TimeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
+		private void timeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			switch (e.Action)
 			{
