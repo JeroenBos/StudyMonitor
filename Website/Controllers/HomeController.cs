@@ -7,31 +7,34 @@ using Website.Models;
 
 namespace Website.Controllers
 {
-    public class HomeController : Controller
-    {
-        public ActionResult Index()
-        {
-            StudyTaskService service = new StudyTaskService();
-            StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
-            StudyTasksModel studyTasksModel = new StudyTasksModel();
-            studyTasksModel.StudyTaskModels = client.GetAllTasks().Select(
-                e => new StudyTaskModel() {Id = e.Id, Name = e.Name}).ToList();
-            return View(studyTasksModel);
-        }
+	public class HomeController : Controller
+	{
+		public ActionResult Index()
+		{
+			StudyTaskService service = new StudyTaskService();
+			StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
+			StudyTasksModel studyTasksModel = new StudyTasksModel();
+			client.Add(new StudyTaskService() { Name = "hoi" });
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+			studyTasksModel.StudyTaskModels = client.GetAllTasks().Select(
+				e => new StudyTaskModel() { Id = e.Id, Name = e.Name }).ToList();
+			return View(studyTasksModel);
+		}
 
-            return View();
-        }
+		public ActionResult About()
+		{
+			ViewBag.Message = "Your application description page.";
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+			return View();
+		}
 
-            return View();
-        }
+		public ActionResult Contact()
+		{
+			ViewBag.Message = "Your contact page.";
+
+			return View();
+		}
+		[HttpPost]
 		public ActionResult Select(object data)
 		{
 			return View();
