@@ -4,7 +4,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
+<div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
 @{
     foreach (var task in Model.StudyTaskModels)
@@ -14,13 +14,47 @@
             <button type="button" id="button1" onclick="myFunction(@task.Id)">Click Me!</button>
         </p>
     }
+
+    <p class="body-content">
+        <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
+    </p>
 }
 </div>
 
 <script>
-    function myFunction(taskId) 
-    {
+    function myFunction(taskId) {
         document.getElementById("button1").style.color = "magenta"
         $.get("Select", { data: taskId });
+    }
+
+    function addTask() {
+        $form = $('<form id="createForm"></form>');
+        $form.append(
+            $("<input>",
+                {
+                    type: 'text',
+                    name: 'Task Name',
+                    id: 'createTaskName'
+                }
+            )
+        );
+        $form.append(
+            $("<input>",
+                {
+                    type:'button',
+                    value:'Create Task',
+                    onclick: 'createTask()'
+                }
+            )
+        );
+        $('#taskList').append($form);
+        $('#requestAddTask').remove();
+    }
+
+    function createTask()
+    {
+        $.get("Add", { data: $('#createForm').find('input[name="Task Name"]').val() });
+        $('#createForm').remove();
+        $('#taskList').append($('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>'));
     }
 </script>
