@@ -52,8 +52,24 @@ namespace StudyMonitor.ServiceAccess
 	{
 		internal readonly TaskTimeSpanService service = new TaskTimeSpanService();
 
-		public DateTime Start { get; set; }
-		public DateTime? End { get; set; }
-		public StudyTask Task { get; set; }
+		public DateTime Start
+		{
+			get { return start; }
+			set { base.Set(ref start, value); }
+		}
+		public DateTime? End
+		{
+			get { return end; }
+			set { base.Set(ref end, value); }
+		}
+		public StudyTask Task
+		{
+			get { return task; }
+			set { base.Set(ref task, value); }
+		}
+
+		private DateTime start;
+		private DateTime? end;
+		private StudyTask task;
 	}
 }
