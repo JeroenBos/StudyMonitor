@@ -140,5 +140,16 @@ namespace StudyMonitor.Service
 				context.SaveChanges();
 			}
 		}
+
+		public void RemoveTimeSpan(int timeSpanId)
+		{
+			if (timeSpanId == 0) throw new ArgumentOutOfRangeException(nameof(timeSpanId));
+
+			using (var context = new StudyTasksContext())
+			{
+				context.TimeSpans.RemoveRange(context.TimeSpans.Where(timeSpan => timeSpan.Id == timeSpanId));
+				context.SaveChanges();
+			}
+		}
 	}
 }

@@ -33,6 +33,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		void RemoveTask(int taskId);
+
+		[OperationContract]
+		void RemoveTimeSpan(int timeSpanId);
 	}
 
 	[DataContract]
