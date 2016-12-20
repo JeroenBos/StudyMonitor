@@ -76,6 +76,11 @@ namespace StudyMonitor.ServiceAccess
 					}
 					break;
 				case NotifyCollectionChangedAction.Remove:
+					foreach (var newTimeSpan in e.OldItems.Cast<TaskTimeSpan>())
+					{
+						this.client.RemoveTimeSpan(newTimeSpan.service.Id);
+					}
+					break;
 				case NotifyCollectionChangedAction.Replace:
 				case NotifyCollectionChangedAction.Move:
 				case NotifyCollectionChangedAction.Reset:
