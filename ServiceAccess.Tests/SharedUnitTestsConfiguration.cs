@@ -9,7 +9,6 @@ namespace StudyMonitor.ServiceAccess.Tests
 {
 	public class SharedUnitTestsConfiguration
 	{
-		protected readonly StudyTaskService service = new StudyTaskService();
 		protected readonly StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
 	}
 }

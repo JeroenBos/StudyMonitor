@@ -13,12 +13,12 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void CreateServiceAccessTest()
 		{
-			var task = new StudyTask(base.service, base.client);
+			var task = new StudyTask(base.client);
 		}
 		[TestMethod]
 		public void AddTaskTest()
 		{
-			var task = new StudyTask(base.service, base.client);
+			var task = new StudyTask(base.client);
 			task.TimeSpans.Add(new TaskTimeSpan(new ServiceReference.TaskTimeSpanService()));
 		}
 	}

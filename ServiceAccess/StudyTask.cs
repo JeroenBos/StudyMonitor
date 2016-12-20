@@ -10,24 +10,17 @@ namespace StudyMonitor.ServiceAccess
 {
 	public class StudyTask
 	{
-		private readonly IStudyTasksService tasks;
+		private readonly IStudyTasksService client;
 		internal readonly StudyTaskService service;
 		public string Name { get; }
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
-		public StudyTask(StudyTaskService service, IStudyTasksService tasks)
+		public StudyTask(IStudyTasksService client)
 		{
-			if (service == null)
-			{
-				throw new ArgumentNullException(nameof(service));
-			}
-			if (tasks == null)
-			{
-				throw new ArgumentNullException(nameof(tasks));
-			}
+			if (client == null) throw new ArgumentNullException(nameof(client));
 
-			this.service = service;
-			this.tasks = tasks;
+			this.service = new StudyTaskService();
+			this.client = client;
 			Name = service.Name;
 			TimeSpans = new ObservableCollection<TaskTimeSpan>();
 		}
@@ -37,7 +30,7 @@ namespace StudyMonitor.ServiceAccess
 		internal readonly TaskTimeSpanService service;
 		public TaskTimeSpan(TaskTimeSpanService service)
 		{
-			if(service == null)
+			if (service == null)
 			{
 				throw new ArgumentNullException(nameof(service));
 			}
