@@ -36,6 +36,17 @@ namespace StudyMonitor.ServiceAccess
 			this.Name = name;
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();
 			this.TimeSpans.CollectionChanged += TimeSpansChanged;
+			this.PropertyChanged += propertyChanged;
+		}
+
+		private void propertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			switch (e.PropertyName)
+			{
+				case nameof(Name):
+					service.Name = this.Name;
+					break;
+			}
 		}
 
 		private void TimeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
