@@ -116,7 +116,7 @@ namespace StudyMonitor.Service
 
 				Contract.Assert(openTimeSpansDB.Count <= 1, "There should at most one open timespan per task");
 
-				if(openTimeSpansDB.Count == 1)
+				if (openTimeSpansDB.Count == 1)
 				{
 					return openTimeSpansDB[0].Id;
 				}
@@ -124,6 +124,19 @@ namespace StudyMonitor.Service
 				{
 					return 0;
 				}
+			}
+		}
+
+		/// <summary> Removes the task with specified Id from the database, and all associated time spans. </summary>
+		public void RemoveTask(int taskId)
+		{
+			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
+
+			using (var context = new StudyTasksContext())
+			{
+				context.Tasks.RemoveRange(context.Tasks.Where(task => task.Id == taskId));
+				context.TimeSpans.RemoveRange(context.TimeSpans.Where(timeSpan => timeSpan.TaskId == taskId));
+				context.SaveChanges();
 			}
 		}
 	}

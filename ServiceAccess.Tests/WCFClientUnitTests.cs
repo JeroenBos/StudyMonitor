@@ -105,5 +105,16 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var obtainedOpenTimeSpanId = client.GetOpenTimeSpanIdFor(taskId);
 			Assert.AreEqual(expectedOpenTimeSpanId, obtainedOpenTimeSpanId);
 		}
+		[TestMethod]
+		public void RemoveTaskTest()
+		{
+			var taskId = client.Add(new StudyTaskService() { Name = "Erik" });
+			client.RemoveTask(taskId);
+
+			var result = client.GetAllTasks().Length;
+			var expected = 0;
+			Assert.AreEqual(expected, result);
+		}
+
 	}
 }
