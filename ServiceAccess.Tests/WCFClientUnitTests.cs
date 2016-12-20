@@ -123,6 +123,14 @@ namespace StudyMonitor.ServiceAccess.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+		[TestMethod]
+		public void GetNonExistentTimeSpanTest()
+		{
+			object expected = null;
+			var result = client.GetTimeSpan(int.MaxValue / 3);
+
+			Assert.AreEqual(expected, result);
+		}
 
 	}
 }
