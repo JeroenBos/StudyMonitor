@@ -43,6 +43,11 @@ namespace StudyMonitor.Service
 
 		public int AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
 		{
+			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
+			if (timeSpan == null) throw new ArgumentNullException(nameof(timeSpan));
+			if (timeSpan.Id == 0) throw new ArgumentException();
+			if (timeSpan.TaskId == 0) throw new ArgumentException();
+
 			int timeSpanId = timeSpan.Id;
 			using (var context = new StudyTasksContext())
 			{
