@@ -47,11 +47,20 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			var taskId = client.Add(new StudyTaskService() { Name = "Erik" });
 
-		    var retrievedTask = client.GetTask(taskId);
+			var retrievedTask = client.GetTask(taskId);
 
-            Assert.AreEqual(taskId, retrievedTask.Id);
+			Assert.AreEqual(taskId, retrievedTask.Id);
+		}
+
+		[TestMethod]
+		public void TaskWithNameCreationTest()
+		{
+			const string name = "myname";
+			var taskId = client.Add(new StudyTaskService() { Name = name });
+
+			var retrievedTask = client.GetTask(taskId);
+
+			Assert.AreEqual(retrievedTask.Name, name);
 		}
 	}
-
-
 }
