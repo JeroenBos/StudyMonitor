@@ -14,62 +14,71 @@ namespace StudyMonitor.Service
 		{
 		}
 
-	    public int Add(StudyTaskService task)
-	    {
-	        if (task == null) throw new ArgumentNullException(nameof(task));
+		public int Add(StudyTaskService task)
+		{
+			if (task == null) throw new ArgumentNullException(nameof(task));
 
-	        using (var context = new StudyTasksContext())
-	        {
-	            var result = context.Tasks.Add(task.ToDBObject());
-	            if (result == null)
-	                throw new NotImplementedException();
+			using (var context = new StudyTasksContext())
+			{
+				var result = context.Tasks.Add(task.ToDBObject());
+				if (result == null)
+					throw new NotImplementedException();
 
-	            var saveChangeResult = context.SaveChanges();
+				var saveChangeResult = context.SaveChanges();
 
-	            return result.Id;
-	        }
-	    }
+				return result.Id;
+			}
+		}
 
 		public StudyTaskService GetTask(int id)
 		{
-		    using (var context = new StudyTasksContext())
-		    {
-		        var result = context.Tasks.FirstOrDefault(task => task.Id == id);
-		        if (result == null)
-		            throw new NotImplementedException();
+			using (var context = new StudyTasksContext())
+			{
+				var result = context.Tasks.FirstOrDefault(task => task.Id == id);
+				if (result == null)
+					throw new NotImplementedException();
 
-		        return result.ToService();
-		    }
+				return result.ToService();
+			}
 		}
 
-		public void AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
+		public int AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
 		{
-		    using (var context = new StudyTasksContext())
-		    {
-		        var timeSpanDB = context.TimeSpans.FirstOrDefault(_ => _.Id == timeSpan.Id);
-		        if (timeSpanDB != null)
-		        {
-		            context.TimeSpans.Remove(timeSpanDB);
-		        }
-		        else
-		        {
-		            timeSpanDB = timeSpan.ToDBObject();
-		        }
+			int timeSpanId = timeSpan.Id;
+			using (var context = new StudyTasksContext())
+			{
+				var timeSpanDB = context.TimeSpans.FirstOrDefault(_ => _.Id == timeSpan.Id);
+				if (timeSpanDB != null)
+				{
+					context.TimeSpans.Remove(timeSpanDB);
+				}
+				else
+				{
+					timeSpanDB = timeSpan.ToDBObject();
+				}
 
-		        context.TimeSpans.Add(timeSpanDB);
-		        context.SaveChanges();
-		    }
+				var createdTimeSpan = context.TimeSpans.Add(timeSpanDB);
+				context.SaveChanges();
+				timeSpanId = createdTimeSpan.Id;
+			}
+			return timeSpanId;
 		}
 
-		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task)
+		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(int taskId)
 		{
-		    using (var context = new StudyTasksContext())
-		    {
-		        var result = context.TimeSpans
-		            .Where(timeSpanDB => timeSpanDB.TaskId == task.Id)
-		            .Select(timeSpanDB => timeSpanDB.ToService(this));
-		        return result;
-		    }
+			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
+
+			using (var context = new StudyTasksContext())
+			{
+				var dbResult = context.TimeSpans
+									.Where(timeSpanDB => timeSpanDB.TaskId == taskId)
+									.ToList();
+
+				var result = dbResult.Select(x => x.ToService(this))
+									 .ToList();
+
+				return result;
+			}
 		}
 
 		public void ClearAll()
@@ -78,6 +87,15 @@ namespace StudyMonitor.Service
 			{
 				context.Tasks.RemoveRange(context.Tasks);
 				context.TimeSpans.RemoveRange(context.TimeSpans);
+				context.SaveChanges();
+			}
+		}
+
+		public IEnumerable<StudyTaskService> GetAllTasks()
+		{
+			using (var context = new StudyTasksContext())
+			{
+				return context.Tasks.ToList().Select(x => x.ToService());
 			}
 		}
 	}
