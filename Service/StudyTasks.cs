@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -108,7 +109,7 @@ namespace StudyMonitor.Service
 											 .Where(timeSpanDB => timeSpanDB.End == null)
 											 .ToList();
 
-				Debug.Assert(openTimeSpansDB.Count <= 1, "There should at most one open timespan per task");
+				Contract.Assert(openTimeSpansDB.Count <= 1, "There should at most one open timespan per task");
 
 				if(openTimeSpansDB.Count == 1)
 				{
