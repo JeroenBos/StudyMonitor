@@ -18,19 +18,24 @@ namespace StudyMonitor.ServiceAccess
 		public string Name
 		{
 			get { return name; }
-			set { base.Set(ref name, value); }
+			set
+			{
+				if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException(nameof(value));
+				base.Set(ref name, value);
+			}
 		}
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
-		public StudyTask(IStudyTasksService client)
+		public StudyTask(IStudyTasksService client, string name)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
+			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
 
 			this.service = new StudyTaskService();
 			this.client = client;
-			Name = service.Name;
-			TimeSpans = new ObservableCollection<TaskTimeSpan>();
-			TimeSpans.CollectionChanged += TimeSpansChanged;
+			this.Name = name;
+			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();
+			this.TimeSpans.CollectionChanged += TimeSpansChanged;
 		}
 
 		private void TimeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
