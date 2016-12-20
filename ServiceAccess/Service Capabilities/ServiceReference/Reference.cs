@@ -184,10 +184,10 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService> GetTaskAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/AddTimeSpanTo", ReplyAction="http://tempuri.org/IStudyTasksService/AddTimeSpanToResponse")]
-        void AddTimeSpanTo(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan);
+        int AddTimeSpanTo(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/AddTimeSpanTo", ReplyAction="http://tempuri.org/IStudyTasksService/AddTimeSpanToResponse")]
-        System.Threading.Tasks.Task AddTimeSpanToAsync(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan);
+        System.Threading.Tasks.Task<int> AddTimeSpanToAsync(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetTimeSpansFor", ReplyAction="http://tempuri.org/IStudyTasksService/GetTimeSpansForResponse")]
         StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService[] GetTimeSpansFor(StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService task);
@@ -245,11 +245,11 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
             return base.Channel.GetTaskAsync(id);
         }
         
-        public void AddTimeSpanTo(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan) {
-            base.Channel.AddTimeSpanTo(taskId, timeSpan);
+        public int AddTimeSpanTo(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan) {
+            return base.Channel.AddTimeSpanTo(taskId, timeSpan);
         }
         
-        public System.Threading.Tasks.Task AddTimeSpanToAsync(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan) {
+        public System.Threading.Tasks.Task<int> AddTimeSpanToAsync(int taskId, StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService timeSpan) {
             return base.Channel.AddTimeSpanToAsync(taskId, timeSpan);
         }
         

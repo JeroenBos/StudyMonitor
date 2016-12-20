@@ -17,7 +17,7 @@ namespace StudyMonitor.Service
 		StudyTaskService GetTask(int id);
 
 		[OperationContract]
-		void AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan);
+		int AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan);
 
 		[OperationContract]
 		IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task);

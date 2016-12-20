@@ -42,8 +42,9 @@ namespace StudyMonitor.Service
 		    }
 		}
 
-		public void AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
+		public int AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
 		{
+			int timeSpanId = timeSpan.Id;
 		    using (var context = new StudyTasksContext())
 		    {
 		        var timeSpanDB = context.TimeSpans.FirstOrDefault(_ => _.Id == timeSpan.Id);
@@ -56,9 +57,11 @@ namespace StudyMonitor.Service
 		            timeSpanDB = timeSpan.ToDBObject();
 		        }
 
-		        context.TimeSpans.Add(timeSpanDB);
+		        var createdTimeSpan = context.TimeSpans.Add(timeSpanDB);
+				timeSpanId = createdTimeSpan.Id;
 		        context.SaveChanges();
 		    }
+			return timeSpanId;
 		}
 
 		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task)
