@@ -39,9 +39,9 @@ namespace Website.Controllers
         
 		public ActionResult Select(object data)
 		{
-            string[] taskId = (string[])data;
+            string taskId = ((string[])data)[0];
             int id;
-            bool validData = int.TryParse(taskId[0], out id);
+            bool validData = int.TryParse(taskId, out id);
             if (validData)
             {
                 var startingTaskItemTimeSpan = new TaskTimeSpanService()
@@ -55,7 +55,20 @@ namespace Website.Controllers
                 client.AddTimeSpanTo(id, startingTaskItemTimeSpan);
             }
 
-            return View();
+            return View("Index");
+        }
+
+        public ActionResult Add(object data)
+        {
+            string taskName = ((string[]) data)[0];
+            // Check the string for a valid task name
+            if (true)
+            {
+                StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
+                client.Add(new StudyTaskService() {Name= taskName});
+            }
+
+            return View("Index");
         }
 	}
 }
