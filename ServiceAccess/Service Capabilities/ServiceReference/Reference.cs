@@ -200,6 +200,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/ClearAll", ReplyAction="http://tempuri.org/IStudyTasksService/ClearAllResponse")]
         System.Threading.Tasks.Task ClearAllAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
+        StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
+        System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -267,6 +273,14 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         public System.Threading.Tasks.Task ClearAllAsync() {
             return base.Channel.ClearAllAsync();
+        }
+        
+        public StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks() {
+            return base.Channel.GetAllTasks();
+        }
+        
+        public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync() {
+            return base.Channel.GetAllTasksAsync();
         }
     }
 }
