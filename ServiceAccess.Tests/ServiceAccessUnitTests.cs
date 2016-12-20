@@ -36,9 +36,19 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var task = new StudyTask(base.client, "name");
 
 			task.RemoveFromDatabase();
-			
+
 			var result = client.GetTask(task.service.Id);
 			Assert.AreEqual(expected, result);
+		}
+		[TestMethod]
+		public void RemoveTimeSpanTest()
+		{
+			var task = new StudyTask(base.client, "taskName");
+			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			task.TimeSpans.RemoveAt(0);
+
+			var result = client.GetTimeSpansFor(task.service.Id);
+			Assert.AreEqual(0, result.Length);
 		}
 	}
 }

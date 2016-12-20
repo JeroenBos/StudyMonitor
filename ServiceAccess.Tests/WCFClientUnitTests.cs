@@ -13,7 +13,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			new WCFClientUnitTests().InitializeTest();
 
 			//new WCFClientUnitTests().OpenTimeSpanAdditionToTaskTest();
-			new ServiceAccessUnitTests().AddTaskTest();
+			new ServiceAccessUnitTests().RemoveTimeSpanTest();
 		}
 
 		[TestInitialize]
