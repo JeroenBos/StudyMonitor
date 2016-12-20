@@ -14,7 +14,11 @@ namespace StudyMonitor.ServiceAccess
 	{
 		private readonly IStudyTasksService client;
 		internal readonly StudyTaskService service;
-		public string Name { get; }
+		public string Name
+		{
+			get { return name; }
+			set { base.Set(ref name, value); }
+		}
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
 		public StudyTask(IStudyTasksService client)
@@ -47,6 +51,8 @@ namespace StudyMonitor.ServiceAccess
 					throw new Exception();
 			}
 		}
+
+		private string name;
 	}
 	public class TaskTimeSpan : DefaultINotifyPropertyChanged
 	{
