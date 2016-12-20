@@ -104,6 +104,7 @@ namespace StudyMonitor.ServiceAccess
 		private DateTime? end;
 		private StudyTask task;
 
+		/// <remarks> This ctor should not add this instance to the database because the <see cref="StudyTask.TimeSpans.CollectionChanged"/> is responsible for that. </remarks>
 		public TaskTimeSpan(StudyTask task, DateTime start)
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));
