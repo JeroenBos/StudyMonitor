@@ -115,6 +115,14 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var expected = 0;
 			Assert.AreEqual(expected, result);
 		}
+		[TestMethod]
+		public void GetNonExistentTaskTest()
+		{
+			object expected = null;
+			var result = client.GetTask(int.MaxValue / 3);
+
+			Assert.AreEqual(expected, result);
+		}
 
 	}
 }
