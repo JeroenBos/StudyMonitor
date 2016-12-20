@@ -43,11 +43,17 @@ namespace StudyMonitor.ServiceAccess
 			this.TimeSpans.CollectionChanged += timeSpansChanged;
 			this.PropertyChanged += propertyChanged;
 		}
-		
+
 		/// <summary> Removes the task represented by this instance from the database. </summary>
 		public void RemoveFromDatabase()
 		{
+			const string removedErrorMessage = "The current instance has been removed from the database";
+
 			client.RemoveTask(this.service.Id);
+			this.TimeSpans.CollectionChanged -= timeSpansChanged;
+			this.TimeSpans.CollectionChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
+			this.PropertyChanged -= propertyChanged;
+			this.PropertyChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
 		}
 
 		private void propertyChanged(object sender, PropertyChangedEventArgs e)
