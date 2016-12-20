@@ -27,6 +27,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		IEnumerable<StudyTaskService> GetAllTasks();
+
+		[OperationContract]
+		int GetOpenTimeSpanIdFor(int taskId);
 	}
 
 	[DataContract]

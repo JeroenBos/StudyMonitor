@@ -84,7 +84,7 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime EndField;
+        private System.Nullable<System.DateTime> EndField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
@@ -106,7 +106,7 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime End {
+        public System.Nullable<System.DateTime> End {
             get {
                 return this.EndField;
             }
@@ -206,6 +206,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
         System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor", ReplyAction="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdForResponse")]
+        int GetOpenTimeSpanIdFor(int taskId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor", ReplyAction="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdForResponse")]
+        System.Threading.Tasks.Task<int> GetOpenTimeSpanIdForAsync(int taskId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -281,6 +287,14 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync() {
             return base.Channel.GetAllTasksAsync();
+        }
+        
+        public int GetOpenTimeSpanIdFor(int taskId) {
+            return base.Channel.GetOpenTimeSpanIdFor(taskId);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetOpenTimeSpanIdForAsync(int taskId) {
+            return base.Channel.GetOpenTimeSpanIdForAsync(taskId);
         }
     }
 }

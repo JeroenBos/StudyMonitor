@@ -6,13 +6,13 @@ using StudyMonitor.ServiceAccess.ServiceReference;
 namespace StudyMonitor.ServiceAccess.Tests
 {
 	[TestClass]
-	public class UnitTests
+	public class WCFClientUnitTests
 	{
 		public static void Main(string[] args)
 		{
-			var testObject = new UnitTests();
+			var testObject = new WCFClientUnitTests();
 			testObject.InitializeTest();
-			testObject.RetrieveAllTasksTest();
+			testObject.OpenTimeSpanAdditionToTaskTest();
 
 			testObject.TaskIdAssignmentTest();
 		}
@@ -31,7 +31,6 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			client.ClearAll();
 		}
-
 
 		[TestMethod]
 		public void TaskIdAssignmentTest()
@@ -96,6 +95,19 @@ namespace StudyMonitor.ServiceAccess.Tests
 
 			var taskTimeSpans = client.GetTimeSpansFor(taskId);
 			Assert.AreEqual(taskTimeSpans.Length, 1);
+		}
+
+		[TestMethod]
+		public void OpenTimeSpanAdditionToTaskTest()
+		{
+			const string name = "myname";
+			var task = new StudyTaskService() { Name = name };
+			var taskId = client.Add(task);
+			var closedTimeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var expectedOpenTimeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = null, TaskId = taskId });
+
+			var obtainedOpenTimeSpanId = client.GetOpenTimeSpanIdFor(taskId);
+			Assert.AreEqual(expectedOpenTimeSpanId, obtainedOpenTimeSpanId);
 		}
 	}
 }
