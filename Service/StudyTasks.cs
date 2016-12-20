@@ -68,9 +68,13 @@ namespace StudyMonitor.Service
 		{
 			using (var context = new StudyTasksContext())
 			{
-				var result = context.TimeSpans
-					.Where(timeSpanDB => timeSpanDB.TaskId == task.Id)
-					.Select(timeSpanDB => timeSpanDB.ToService(this));
+				var dbResult = context.TimeSpans
+									.Where(timeSpanDB => timeSpanDB.TaskId == task.Id)
+									.ToList();
+
+				var result = dbResult.Select(x => x.ToService(this))
+									 .ToList();
+
 				return result;
 			}
 		}
