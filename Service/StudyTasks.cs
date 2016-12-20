@@ -1,6 +1,7 @@
 ﻿using StudyMonitor.Database;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -93,6 +94,30 @@ namespace StudyMonitor.Service
 			using (var context = new StudyTasksContext())
 			{
 				return context.Tasks.ToList().Select(x => x.ToService());
+			}
+		}
+
+		/// <summary> Gets the ID of the open time span (i.e. with <see cref="TaskTimeSpan.End"/> == null) pertaining to the specified task id; 
+		/// or 0 in case there is no such open time span. </summary>
+		public int GetOpenTimeSpanIdFor(int taskId)
+		{
+			using (var context = new StudyTasksContext())
+			{
+				var openTimeSpansDB = context.TimeSpans
+											 .Where(timeSpanDB => timeSpanDB.TaskId == taskId)
+											 .Where(timeSpanDB => timeSpanDB.End == null)
+											 .ToList();
+
+				Debug.Assert(openTimeSpansDB.Count <= 1, "There should at most one open timespan per task");
+
+				if(openTimeSpansDB.Count == 1)
+				{
+					return openTimeSpansDB[0].Id;
+				}
+				else
+				{
+					return 0;
+				}
 			}
 		}
 	}

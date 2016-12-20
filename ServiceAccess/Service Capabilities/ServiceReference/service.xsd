@@ -80,4 +80,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetOpenTimeSpanIdFor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="taskId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOpenTimeSpanIdForResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOpenTimeSpanIdForResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
