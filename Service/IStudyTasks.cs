@@ -24,6 +24,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		void ClearAll();
+
+		[OperationContract]
+		IEnumerable<StudyTaskService> GetAllTasks();
 	}
 
 	[DataContract]

@@ -80,5 +80,13 @@ namespace StudyMonitor.Service
 				context.TimeSpans.RemoveRange(context.TimeSpans);
 			}
 		}
+
+		public IEnumerable<StudyTaskService> GetAllTasks()
+		{
+			using (var context = new StudyTasksContext())
+			{
+				return context.Tasks.ToList().Select(x => x.ToService());
+			}
+		}
 	}
 }

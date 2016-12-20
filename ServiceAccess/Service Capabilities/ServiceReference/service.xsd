@@ -66,4 +66,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetAllTasks">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetAllTasksResult" nillable="true" type="q5:ArrayOfStudyTaskService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -22,4 +22,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfTaskTimeSpanService" nillable="true" type="tns:ArrayOfTaskTimeSpanService" />
+  <xs:complexType name="ArrayOfStudyTaskService">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StudyTaskService" nillable="true" type="tns:StudyTaskService" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStudyTaskService" nillable="true" type="tns:ArrayOfStudyTaskService" />
 </xs:schema>
