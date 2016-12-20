@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,5 +78,26 @@ namespace StudyMonitor.ServiceAccess
 		private DateTime start;
 		private DateTime? end;
 		private StudyTask task;
+
+		public TaskTimeSpan()
+		{
+			this.PropertyChanged += propertyChanged;
+		}
+
+		private void propertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			switch (e.PropertyName)
+			{
+				case nameof(Start):
+					service.Start = this.Start;
+					break;
+				case nameof(End):
+					service.End = this.End;
+					break;
+				case nameof(Task):
+					service.TaskId = this.Task.service.Id;
+					break;
+			}
+		}
 	}
 }
