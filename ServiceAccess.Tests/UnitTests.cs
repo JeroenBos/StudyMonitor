@@ -11,7 +11,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public static void Main(string[] args)
 		{
 			var testObject = new UnitTests();
-			testObject.TimeSpanIdAssignmentTest();
+			testObject.TimeSpanAdditionToTaskTest();
 
 			testObject.TaskIdAssignmentTest();
 		}
@@ -73,6 +73,16 @@ namespace StudyMonitor.ServiceAccess.Tests
 			Assert.AreNotEqual(timeSpanId, 0);
 		}
 
+		[TestMethod]
+		public void TimeSpanAdditionToTaskTest()
+		{
+			const string name = "myname";
+			var task = new StudyTaskService() { Name = name };
+			var taskId = client.Add(task);
+			var timeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
+			var taskTimeSpans = client.GetTimeSpansFor(taskId);
+			Assert.AreEqual(taskTimeSpans.Length, 1);
+		}
 	}
 }
