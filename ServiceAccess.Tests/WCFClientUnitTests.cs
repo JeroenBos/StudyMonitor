@@ -94,6 +94,21 @@ namespace StudyMonitor.ServiceAccess.Tests
 		}
 
 		[TestMethod]
+		public void TimeSpanRemovalTest()
+		{
+			const string name = "myname";
+			var task = new StudyTaskService() { Name = name };
+			var taskId = client.Add(task);
+			var timeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+
+			client.RemoveTimeSpan(timeSpanId);
+
+			object expected = null;
+			var result = client.GetTimeSpan(timeSpanId);
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
 		public void OpenTimeSpanAdditionToTaskTest()
 		{
 			const string name = "myname";
