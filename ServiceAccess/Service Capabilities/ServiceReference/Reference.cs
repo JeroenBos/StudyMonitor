@@ -84,7 +84,7 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime EndField;
+        private System.Nullable<System.DateTime> EndField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
@@ -106,7 +106,7 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime End {
+        public System.Nullable<System.DateTime> End {
             get {
                 return this.EndField;
             }

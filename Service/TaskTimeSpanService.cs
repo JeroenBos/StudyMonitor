@@ -15,7 +15,7 @@ namespace StudyMonitor.Service
 		[DataMember]
 		public DateTime Start { get; set; }
 		[DataMember]
-		public DateTime End { get; set; }
+		public DateTime? End { get; set; }
 		[DataMember]
 		public int TaskId { get; set; }
 	}
