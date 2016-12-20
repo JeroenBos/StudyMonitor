@@ -78,6 +78,7 @@ namespace StudyMonitor.Service
 			{
 				context.Tasks.RemoveRange(context.Tasks);
 				context.TimeSpans.RemoveRange(context.TimeSpans);
+				context.SaveChanges();
 			}
 		}
 
