@@ -83,8 +83,13 @@ namespace StudyMonitor.ServiceAccess
 		private DateTime? end;
 		private StudyTask task;
 
-		public TaskTimeSpan()
+		public TaskTimeSpan(StudyTask task, DateTime start)
 		{
+			if (task == null) throw new ArgumentNullException(nameof(task));
+
+			this.Task = task;
+			this.Start = start;
+
 			this.PropertyChanged += propertyChanged;
 		}
 
