@@ -72,7 +72,11 @@ namespace StudyMonitor.ServiceAccess
 		public StudyTask Task
 		{
 			get { return task; }
-			set { base.Set(ref task, value); }
+			set
+			{
+				if (value == null) throw new ArgumentNullException();
+				base.Set(ref task, value);
+			}
 		}
 
 		private DateTime start;
