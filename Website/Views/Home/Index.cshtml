@@ -31,11 +31,7 @@
         function myFunction(taskId) {
 
             document.getElementById("button1").style.color = "magenta"
-            $.get("Select", {taskId: taskId}, function () {
-                alert("success");
-            }).fail(function (xhr, status, error) {
-                alert(error)
-            });
+            $.post("Select", { data: taskId });
     }
 </script>
 
