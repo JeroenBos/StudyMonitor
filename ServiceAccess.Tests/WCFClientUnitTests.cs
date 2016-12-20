@@ -6,7 +6,7 @@ using StudyMonitor.ServiceAccess.ServiceReference;
 namespace StudyMonitor.ServiceAccess.Tests
 {
 	[TestClass]
-	public class WCFClientUnitTests
+	public class WCFClientUnitTests : SharedUnitTestsConfiguration
 	{
 		public static void Main(string[] args)
 		{
@@ -16,9 +16,6 @@ namespace StudyMonitor.ServiceAccess.Tests
 
 			testObject.TaskIdAssignmentTest();
 		}
-
-		private readonly StudyTaskService service = new StudyTaskService();
-		private readonly StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
 
 		[TestInitialize]
 		public void InitializeTest()

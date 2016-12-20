@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace StudyMonitor.ServiceAccess.Tests
 {
 	[TestClass]
-	public class ServiceAccessUnitTests
+	public class ServiceAccessUnitTests : SharedUnitTestsConfiguration
 	{
 		[TestMethod]
 		public void TestMethod()
