@@ -22,7 +22,7 @@
         function myFunction() {
 
             document.getElementById("buttonid").style.color = "magenta"
-            $.get("Select", function () {
+            $.post("Select", function () {
                 alert("success");
             }).fail(function (xhr, status, error) {
                 alert(error)
