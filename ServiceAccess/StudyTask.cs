@@ -56,6 +56,12 @@ namespace StudyMonitor.ServiceAccess
 			this.PropertyChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
 		}
 
+		/// <summary> Gets the open time span associated to this task, if any; null otherwise. </summary>
+		public TaskTimeSpan OpenTimeSpan
+		{
+			get { return TimeSpans.FirstOrDefault(timeSpan => timeSpan.End == null); }
+		}
+
 		private void propertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			switch (e.PropertyName)
