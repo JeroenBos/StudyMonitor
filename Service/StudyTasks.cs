@@ -127,7 +127,8 @@ namespace StudyMonitor.Service
 			}
 		}
 
-		/// <summary> Removes the task with specified Id from the database, and all associated time spans. </summary>
+		/// <summary> Removes the task with specified <paramref name="taskId"/> from the database, and all associated time spans. 
+		/// Does nothing if no task has that ID. </summary>
 		public void RemoveTask(int taskId)
 		{
 			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
