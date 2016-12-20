@@ -64,15 +64,14 @@ namespace StudyMonitor.Service
 			return timeSpanId;
 		}
 
-		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task)
+		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(int taskId)
 		{
-			if (task == null) throw new ArgumentNullException(nameof(task));
-			if (task.Id == 0) throw new ArgumentException("task has id 0", nameof(task));
+			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
 
 			using (var context = new StudyTasksContext())
 			{
 				var dbResult = context.TimeSpans
-									.Where(timeSpanDB => timeSpanDB.TaskId == task.Id)
+									.Where(timeSpanDB => timeSpanDB.TaskId == taskId)
 									.ToList();
 
 				var result = dbResult.Select(x => x.ToService(this))
