@@ -66,6 +66,9 @@ namespace StudyMonitor.Service
 
 		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task)
 		{
+			if (task == null) throw new ArgumentNullException(nameof(task));
+			if (task.Id == 0) throw new ArgumentException("task has id 0", nameof(task));
+
 			using (var context = new StudyTasksContext())
 			{
 				var dbResult = context.TimeSpans
