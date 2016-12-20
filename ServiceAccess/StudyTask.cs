@@ -43,6 +43,12 @@ namespace StudyMonitor.ServiceAccess
 			this.TimeSpans.CollectionChanged += timeSpansChanged;
 			this.PropertyChanged += propertyChanged;
 		}
+		
+		/// <summary> Removes the task represented by this instance from the database. </summary>
+		public void RemoveFromDatabase()
+		{
+			client.RemoveTask(this.service.Id);
+		}
 
 		private void propertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -53,7 +59,6 @@ namespace StudyMonitor.ServiceAccess
 					break;
 			}
 		}
-
 		private void timeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			switch (e.Action)
