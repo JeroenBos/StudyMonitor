@@ -10,11 +10,10 @@ namespace StudyMonitor.ServiceAccess.Tests
 	{
 		public static void Main(string[] args)
 		{
-			var testObject = new WCFClientUnitTests();
-			testObject.InitializeTest();
-			testObject.OpenTimeSpanAdditionToTaskTest();
+			new WCFClientUnitTests().InitializeTest();
 
-			testObject.TaskIdAssignmentTest();
+			//new WCFClientUnitTests().OpenTimeSpanAdditionToTaskTest();
+			new ServiceAccessUnitTests().AddTaskTest();
 		}
 
 		[TestInitialize]
