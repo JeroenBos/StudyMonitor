@@ -11,9 +11,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 	public class ServiceAccessUnitTests : SharedUnitTestsConfiguration
 	{
 		[TestMethod]
-		public void TestMethod()
+		public void CreateServiceAccessTest()
 		{
-
+			var task = new StudyTask(base.service, base.client);
 		}
 	}
 }
