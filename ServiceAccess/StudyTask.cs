@@ -26,15 +26,20 @@ namespace StudyMonitor.ServiceAccess
 		}
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
+		/// <summary> Creates a new task and adds it to the database. </summary>
 		public StudyTask(IStudyTasksService client, string name)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
 
-			this.service = new StudyTaskService();
+			this.service = new StudyTaskService() { Name = name };
 			this.client = client;
 			this.Name = name;
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();
+
+			// add to database
+			this.service.Id = this.client.Add(this.service);
+
 			this.TimeSpans.CollectionChanged += TimeSpansChanged;
 			this.PropertyChanged += propertyChanged;
 		}
