@@ -35,10 +35,7 @@ namespace StudyMonitor.Service
 			using (var context = new StudyTasksContext())
 			{
 				var result = context.Tasks.FirstOrDefault(task => task.Id == id);
-				if (result == null)
-					throw new NotImplementedException();
-
-				return result.ToService();
+				return result?.ToService();
 			}
 		}
 
