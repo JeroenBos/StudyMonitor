@@ -45,7 +45,7 @@ namespace StudyMonitor.Service
 		{
 			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
 			if (timeSpan == null) throw new ArgumentNullException(nameof(timeSpan));
-			if (timeSpan.Id == 0) throw new ArgumentException();
+			if (timeSpan.Id != 0) throw new ArgumentException("timespan has an ID assigned but is ignored");
 			if (timeSpan.TaskId == 0) throw new ArgumentException();
 
 			int timeSpanId = timeSpan.Id;

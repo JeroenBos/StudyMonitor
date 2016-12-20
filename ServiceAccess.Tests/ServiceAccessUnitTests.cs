@@ -11,16 +11,23 @@ namespace StudyMonitor.ServiceAccess.Tests
 	public class ServiceAccessUnitTests : SharedUnitTestsConfiguration
 	{
 		[TestMethod]
-		public void CreateServiceAccessTest()
-		{
-			var task = new StudyTask(base.client, "taskName");
-		}
-		[TestMethod]
 		public void AddTaskTest()
 		{
-			var task = new StudyTask(base.client, "taskName");
+			const string expected = "taskName";
+			var task = new StudyTask(base.client, expected);
+
+			var result = client.GetTask(task.service.Id).Name;
+			Assert.AreEqual(expected, result);
+		}
+		[TestMethod]
+		public void AddTimeSpanTest()
+		{
+			const string expected = "taskName";
+			var task = new StudyTask(base.client, name: expected);
 			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
 
+			var result = client.GetTask(task.service.Id).Name;
+			Assert.AreEqual(expected, result);
 		}
 	}
 }
