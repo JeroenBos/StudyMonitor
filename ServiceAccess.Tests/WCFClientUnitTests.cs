@@ -131,6 +131,17 @@ namespace StudyMonitor.ServiceAccess.Tests
 
 			Assert.AreEqual(expected, result);
 		}
+		[TestMethod]
+		public void GetTimeSpanTest()
+		{
+			const string name = "myname";
+			var task = new StudyTaskService() { Name = name };
+			var taskId = client.Add(task);
+			int expectedTimeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+
+			var resultTimeSpan = client.GetTimeSpan(expectedTimeSpanId);
+			Assert.AreEqual(expectedTimeSpanId, resultTimeSpan.Id);
+		}
 
 	}
 }
