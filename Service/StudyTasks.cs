@@ -151,5 +151,26 @@ namespace StudyMonitor.Service
 				context.SaveChanges();
 			}
 		}
+
+		public TaskTimeSpanService GetTimeSpan(int timeSpanId)
+		{
+			if (timeSpanId == 0) throw new ArgumentOutOfRangeException(nameof(timeSpanId));
+
+			using (var context = new StudyTasksContext())
+			{
+				var dbResult = context.TimeSpans
+									  .Where(timeSpanDB => timeSpanDB.Id == timeSpanId)
+									  .ToList();
+
+				if (dbResult.Count == 0)
+				{
+					return null;
+				}
+				else
+				{
+					return dbResult[0].ToService(this);
+				}
+			}
+		}
 	}
 }

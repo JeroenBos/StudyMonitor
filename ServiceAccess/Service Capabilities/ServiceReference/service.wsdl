@@ -61,6 +61,12 @@
   <wsdl:message name="IStudyTasksService_RemoveTimeSpan_OutputMessage">
     <wsdl:part name="parameters" element="tns:RemoveTimeSpanResponse" />
   </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetTimeSpan_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeSpan" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetTimeSpan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeSpanResponse" />
+  </wsdl:message>
   <wsdl:portType name="IStudyTasksService">
     <wsdl:operation name="Add">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/Add" message="tns:IStudyTasksService_Add_InputMessage" />
@@ -97,6 +103,10 @@
     <wsdl:operation name="RemoveTimeSpan">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/RemoveTimeSpan" message="tns:IStudyTasksService_RemoveTimeSpan_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/RemoveTimeSpanResponse" message="tns:IStudyTasksService_RemoveTimeSpan_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeSpan">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetTimeSpan" message="tns:IStudyTasksService_GetTimeSpan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetTimeSpanResponse" message="tns:IStudyTasksService_GetTimeSpan_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IStudyTasksService" type="tns:IStudyTasksService">
@@ -175,6 +185,15 @@
     </wsdl:operation>
     <wsdl:operation name="RemoveTimeSpan">
       <soap:operation soapAction="http://tempuri.org/IStudyTasksService/RemoveTimeSpan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeSpan">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetTimeSpan" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
