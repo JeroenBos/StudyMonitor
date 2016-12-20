@@ -109,10 +109,10 @@ namespace StudyMonitor.ServiceAccess
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));
 
+			this.PropertyChanged += propertyChanged;
+
 			this.Task = task;
 			this.Start = start;
-
-			this.PropertyChanged += propertyChanged;
 		}
 
 		private void propertyChanged(object sender, PropertyChangedEventArgs e)
