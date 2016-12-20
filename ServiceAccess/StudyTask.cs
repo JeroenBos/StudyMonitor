@@ -72,7 +72,9 @@ namespace StudyMonitor.ServiceAccess
 				case NotifyCollectionChangedAction.Add:
 					foreach (var newTimeSpan in e.NewItems.Cast<TaskTimeSpan>())
 					{
-						this.client.AddTimeSpanTo(service.Id, newTimeSpan.service);
+						Contract.Assert(newTimeSpan.service.Id == 0, "The added time span is already added to another task");
+						var assignedTimeSpanId = this.client.AddTimeSpanTo(service.Id, newTimeSpan.service);
+						newTimeSpan.service.Id = assignedTimeSpanId;
 					}
 					break;
 				case NotifyCollectionChangedAction.Remove:
