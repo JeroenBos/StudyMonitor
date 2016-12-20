@@ -49,14 +49,6 @@ namespace StudyMonitor.ServiceAccess
 	}
 	public class TaskTimeSpan
 	{
-		internal readonly TaskTimeSpanService service;
-		public TaskTimeSpan(TaskTimeSpanService service)
-		{
-			if (service == null)
-			{
-				throw new ArgumentNullException(nameof(service));
-			}
-			this.service = service;
-		}
+		internal readonly TaskTimeSpanService service = new TaskTimeSpanService();
 	}
 }
