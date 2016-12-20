@@ -11,7 +11,8 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public static void Main(string[] args)
 		{
 			var testObject = new UnitTests();
-			testObject.CalledEverytimeAfterATest();
+			testObject.InitializeTest();
+			testObject.RetrieveAllTasksTest();
 
 			testObject.TaskIdAssignmentTest();
 		}
@@ -40,6 +41,18 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var retrievedTask = client.GetTask(taskId);
 
 			Assert.AreNotEqual(retrievedTask.Id, 0);
+		}
+
+		[TestMethod]
+		public void RetrieveAllTasksTest()
+		{
+			var taskId1 = client.Add(new StudyTaskService() { Name = "Erik" });
+			var taskId2 = client.Add(new StudyTaskService() { Name = "Jeroen" });
+			var taskId3 = client.Add(new StudyTaskService() { Name = "Nobody" });
+
+			var allTasks = client.GetAllTasks();
+
+			Assert.AreEqual(allTasks.Length, 3);
 		}
 
 		[TestMethod]
