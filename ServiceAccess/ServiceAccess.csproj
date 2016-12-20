@@ -44,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DefaultINotifyPropertyChanged.cs" />
+    <Compile Include="Core\DefaultINotifyPropertyChangedPostponementObject.cs" />
+    <Compile Include="Core\Hack.cs" />
+    <Compile Include="Core\PropertyMutatedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service Capabilities\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -89,5 +93,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
