@@ -6,11 +6,11 @@ using StudyMonitor.ServiceAccess.ServiceReference;
 namespace StudyMonitor.ServiceAccess.Tests
 {
 	[TestClass]
-	public class UnitTests
+	public class WCFClientUnitTests
 	{
 		public static void Main(string[] args)
 		{
-			var testObject = new UnitTests();
+			var testObject = new WCFClientUnitTests();
 			testObject.InitializeTest();
 			testObject.OpenTimeSpanAdditionToTaskTest();
 
@@ -31,7 +31,6 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			client.ClearAll();
 		}
-
 
 		[TestMethod]
 		public void TaskIdAssignmentTest()
