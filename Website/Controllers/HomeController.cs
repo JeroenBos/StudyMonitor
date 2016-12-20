@@ -1,5 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Security.Cryptography;
+using System.Web.Mvc;
 using StudyMonitor.ServiceAccess.ServiceReference;
+using Website.Models;
 
 namespace Website.Controllers
 {
@@ -9,10 +12,10 @@ namespace Website.Controllers
         {
             StudyTaskService service = new StudyTaskService();
             StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
-            var task = client.GetTask(1);
-            ViewBag.Id = task.Id;
-            ViewBag.Name = task.Name;
-            return View();
+            StudyTasksModel studyTasksModel = new StudyTasksModel();
+            studyTasksModel.StudyTaskModels = client.GetAllTasks().Select(
+                e => new StudyTaskModel() {Id = e.Id, Name = e.Name}).ToList();
+            return View(studyTasksModel);
         }
 
         public ActionResult About()
