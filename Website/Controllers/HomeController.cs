@@ -58,8 +58,8 @@ namespace Website.Controllers
 			// Check the string for a valid task name
 			if (true)
 			{
-				StudyTasksServiceClient client = CreateTasksClient();
-				client.Add(new StudyTaskService() { Name = taskName });
+				// adds itself to database
+				new StudyTask(CreateTasksClient(), taskName);
 			}
 
 			return View("Index");
