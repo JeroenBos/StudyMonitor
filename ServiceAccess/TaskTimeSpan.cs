@@ -38,13 +38,13 @@ namespace StudyMonitor.ServiceAccess
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));
 
-			this.PropertyChanged += propertyChanged;
+			this.PropertyChanged += OnPropertyChanged;
 
 			this.Task = task;
 			this.Start = start;
 		}
 
-		private void propertyChanged(object sender, PropertyChangedEventArgs e)
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			switch (e.PropertyName)
 			{
@@ -52,7 +52,7 @@ namespace StudyMonitor.ServiceAccess
 					service.Start = this.Start;
 					break;
 				case nameof(End):
-					Contract.Assert(this.End != null || this.Task.hasAtMostOneOpenTimeSpan());
+					Contract.Assert(this.End != null || this.Task.HasAtMostOneOpenTimeSpan());
 					service.End = this.End;
 					break;
 				case nameof(Task):
