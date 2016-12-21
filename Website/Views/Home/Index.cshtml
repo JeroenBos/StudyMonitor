@@ -35,15 +35,15 @@
                 {
                     type: 'text',
                     name: 'Task Name',
-                    id: 'createTaskName'+tasksNumber
+                    id: 'createTaskName' + tasksNumber
                 }
             )
         );
         $form.append(
             $("<input>",
                 {
-                    type:'button',
-                    value:'Create Task',
+                    type: 'button',
+                    value: 'Create Task',
                     onclick: 'createTask()'
                 }
             )
@@ -52,9 +52,9 @@
         $('#requestAddTask').remove();
     }
 
-    function createTask()
-    {
-        $.post("@Url.Action("Add", "Home")", { data: $('#createForm').find('input[name="Task Name"]').val() });
+    function createTask() {
+        $.post("@Url.Action("Add", "Home")",
+            { data: $('#createForm').find('input[name="Task Name"]').val() });
         $('#createForm').remove();
         $('#taskList').append($('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>'));
     }
