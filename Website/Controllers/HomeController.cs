@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Web.Mvc;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using Website.Models;
+using StudyMonitor.ServiceAccess;
 
 namespace Website.Controllers
 {
@@ -44,15 +45,8 @@ namespace Website.Controllers
 			bool validData = int.TryParse(taskId, out id);
 			if (validData)
 			{
-				var startingTaskItemTimeSpan = new TaskTimeSpanService()
-				{
-					End = null,
-					TaskId = id,
-					Start = DateTime.Now
-				};
-
-				StudyTasksServiceClient client = CreateTasksClient();
-				client.AddTimeSpanTo(id, startingTaskItemTimeSpan);
+				var task = new StudyTask(CreateTasksClient(), id);
+				task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
 			}
 
 			return View("Index");
