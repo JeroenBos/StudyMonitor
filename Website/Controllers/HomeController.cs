@@ -5,22 +5,25 @@ using System.Security.Cryptography;
 using System.Web.Mvc;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using Website.Models;
+using StudyMonitor.ServiceAccess;
 
 namespace Website.Controllers
 {
-    public class HomeController : Controller
-    {
-        public ActionResult Index()
-        {
-            var client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
-            client.Add(new StudyTaskService() { Name = "TestCase" });
-            var studyTasksModel = new StudyTasksModel
-            {
-                StudyTaskModels = client.GetAllTasks().Select(
-                    e => new StudyTaskModel() { Id = e.Id, Name = e.Name }).ToList()
-            };
-            return View(studyTasksModel);
-        }
+	public class HomeController : Controller
+	{
+		public ActionResult Index()
+		{
+			var client = CreateTasksClient();
+			new StudyTask(client, "TestCase");// is added to database
+
+			var allTasks = new StudyTasksModel
+			{
+				StudyTaskModels = StudyTask.GetAllTasksFromDatabase(client)
+										   .Select(task => new StudyTaskModel() { Name = task.Name, Id = task.Id })
+										   .ToList()
+			};
+			return View(allTasks);
+		}
 
 		public ActionResult About()
 		{
@@ -33,42 +36,41 @@ namespace Website.Controllers
 		{
 			ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
+			return View();
+		}
 
         [HttpPost]
 		public ActionResult Select(object data)
 		{
-            string taskId = ((string[])data)[0];
-            int id;
-            bool validData = int.TryParse(taskId, out id);
-            if (validData)
-            {
-                var startingTaskItemTimeSpan = new TaskTimeSpanService()
-                {
-                    End = null,
-                    TaskId = id,
-                    Start = DateTime.Now
-                };
+			string taskId = ((string[])data)[0];
+			int id;
+			bool validData = int.TryParse(taskId, out id);
+			if (validData)
+			{
+				var task = new StudyTask(CreateTasksClient(), id);
+				task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			}
 
-                StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
-                client.AddTimeSpanTo(id, startingTaskItemTimeSpan);
-            }
+			return View();
+		}
 
-            return View();
-        }
+		public ActionResult Add(object data)
+		{
+			string taskName = ((string[])data)[0];
+			// Check the string for a valid task name
+			if (true)
+			{
+				// adds itself to database
+				new StudyTask(CreateTasksClient(), taskName);
+			}
 
-        public ActionResult Add(object data)
-        {
-            string taskName = ((string[]) data)[0];
-            // Check the string for a valid task name
-            if (true)
-            {
-                StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
-                client.Add(new StudyTaskService() {Name= taskName});
-            }
+			return View();
+		}
 
-            return View();
-        }
+		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
+		private StudyTasksServiceClient CreateTasksClient()
+		{
+			return new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
+		}
 	}
 }

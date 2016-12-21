@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace JBSnorro
 	}
 	class Contract
 	{
+		[DebuggerHidden]
 		public static void Requires(bool requirement, string message = "Requirement not met")
 		{
 			if (!requirement)
@@ -28,6 +30,7 @@ namespace JBSnorro
 				throw new Exception(message);
 			}
 		}
+		[DebuggerHidden]
 		public static void Assert(bool requirement, string message = "Requirement not met")
 		{
 			if (!requirement)
