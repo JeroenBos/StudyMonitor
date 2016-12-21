@@ -51,7 +51,7 @@ namespace Website.Controllers
 				task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
 			}
 
-			return View("Index");
+			return View();
 		}
 
 		public ActionResult Add(object data)
@@ -64,7 +64,7 @@ namespace Website.Controllers
 				new StudyTask(CreateTasksClient(), taskName);
 			}
 
-			return View("Index");
+			return View();
 		}
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
