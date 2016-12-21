@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.ServiceAccess
 {
-	public class StudyTasks : ObservableCollection<StudyTask>
+	public class StudyTaskCollection : ObservableCollection<StudyTask>
 	{
 		private readonly IStudyTasksService client;
 
-		private StudyTasks(IStudyTasksService client, IEnumerable<StudyTask> initialTasks) : base(initialTasks)
+		private StudyTaskCollection(IStudyTasksService client, IEnumerable<StudyTask> initialTasks) : base(initialTasks)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 
@@ -49,20 +49,20 @@ namespace StudyMonitor.ServiceAccess
 		}
 
 		/// <summary> Creates an empty study tasks collection that is linked to the database. </summary>
-		public static StudyTasks Create(IStudyTasksService client)
+		public static StudyTaskCollection Create(IStudyTasksService client)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 
-			return new StudyTasks(client, Enumerable.Empty<StudyTask>());
+			return new StudyTaskCollection(client, Enumerable.Empty<StudyTask>());
 		}
 		/// <summary> Gets a study tasks collection from all tasks in the database. </summary>
-		public static StudyTasks FromDatabase(IStudyTasksService client)
+		public static StudyTaskCollection FromDatabase(IStudyTasksService client)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 
 			var tasksFromDatabase = client.GetAllTasks()
 										  .Select(taskService => new StudyTask(client, taskService));
-			return new StudyTasks(client, tasksFromDatabase);
+			return new StudyTaskCollection(client, tasksFromDatabase);
 		}
 	}
 }

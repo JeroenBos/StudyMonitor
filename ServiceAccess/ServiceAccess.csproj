@@ -55,7 +55,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="StudyTask.cs" />
-    <Compile Include="StudyTasks.cs" />
+    <Compile Include="StudyTaskCollection.cs" />
     <Compile Include="TaskTimeSpan.cs" />
   </ItemGroup>
   <ItemGroup>
