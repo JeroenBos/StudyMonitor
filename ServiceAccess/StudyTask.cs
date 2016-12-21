@@ -12,15 +12,6 @@ namespace StudyMonitor.ServiceAccess
 	/// <summary> Represents a study task and handles updating the database. </summary>
 	public class StudyTask : DefaultINotifyPropertyChanged
 	{
-		/// <summary> Gets a list of all tasks in the database. </summary>
-		public static IEnumerable<StudyTask> GetAllTasksFromDatabase(IStudyTasksService client)
-		{
-			if (client == null) throw new ArgumentNullException(nameof(client));
-
-			return client.GetAllTasks()
-						 .Select(taskService => new StudyTask(client, taskService));
-		}
-
 		private readonly IStudyTasksService client;
 		internal readonly StudyTaskService Service;
 		/// <summary> Gets or sets the name of this task. Setting will update the database. </summary>
@@ -66,7 +57,7 @@ namespace StudyMonitor.ServiceAccess
 			this.TimeSpans.CollectionChanged += OnTimeSpansChanged;
 			this.PropertyChanged += OnPropertyChanged;
 		}
-		/// <summary> Creates a new task and adds it to the database. </summary>
+		/// <summary> Creates a new task. </summary>
 		public StudyTask(IStudyTasksService client, string name)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
@@ -77,19 +68,15 @@ namespace StudyMonitor.ServiceAccess
 			this.Name = name;
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();
 
-			// add to database
-			this.Service.Id = this.client.Add(this.Service);
-
 			this.TimeSpans.CollectionChanged += OnTimeSpansChanged;
 			this.PropertyChanged += OnPropertyChanged;
 		}
 
 		/// <summary> Removes the task represented by this instance from the database. </summary>
-		public void RemoveFromDatabase()
+		internal void OnRemoveFromDatabase()
 		{
 			const string removedErrorMessage = "The current instance has been removed from the database";
 
-			client.RemoveTask(this.Service.Id);
 			this.TimeSpans.CollectionChanged -= OnTimeSpansChanged;
 			this.TimeSpans.CollectionChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
 			this.PropertyChanged -= OnPropertyChanged;
