@@ -50,5 +50,14 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var result = client.GetTimeSpansFor(task.service.Id);
 			Assert.AreEqual(0, result.Length);
 		}
+		[TestMethod]
+		public void TaskRetrievalTest()
+		{
+			const string expected = "taskName";
+			var task = new StudyTask(base.client, expected);
+
+			task = new StudyTask(base.client, task.service.Id);
+			Assert.AreEqual(expected, task.Name);
+		}
 	}
 }
