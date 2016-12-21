@@ -28,14 +28,12 @@
     }
 
     function addTask() {
-        var tasksNumber = $('input[name="Task Name"]').length;
         $form = $('<form id="createForm"></form>');
         $form.append(
             $("<input>",
                 {
                     type: 'text',
-                    name: 'Task Name',
-                    id: 'createTaskName' + tasksNumber
+                    name: 'Task Name'
                 }
             )
         );
