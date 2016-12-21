@@ -14,10 +14,7 @@
         {
             <p class="body-content">
                 @task.Id.ToString(), @task.Name
-                @if (openTask == null || openTask == task)
-                {
-                    <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)">@buttonCaption</button>
-}
+                <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(openTask == null || openTask == task)">@buttonCaption</button>
             </p>
         }
 
@@ -31,17 +28,17 @@
     function myFunction(taskId) {
         var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
         $.find('button[id$="-button"]').forEach(function (button) { button.hidden = taskWasOpen });
-    
+
         if (taskWasOpen) {
             //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
 
-            
 
-    
-            
+
+
+
         }
         else {
-           // $.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: false });
+            // $.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: false });
             $('#' + taskId + '-button').text("Stop")
         }
     }
