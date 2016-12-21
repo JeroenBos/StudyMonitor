@@ -26,6 +26,28 @@ namespace StudyMonitor.ServiceAccess
 		}
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
+		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
+		/// <param name="taskId"> The id of the task in the database to fetch. </param>
+		public StudyTask(IStudyTasksService client, int taskId)
+		{
+			if (client == null) throw new ArgumentNullException(nameof(client));
+
+			this.service = client.GetTask(taskId);
+
+			if (this.service == null) throw new ArgumentException("No task with the specified ID exists", nameof(taskId));
+			Contract.Assert(this.service.Id == taskId);
+
+			this.client = client;
+			this.Name = this.service.Name;
+
+			//retrieve time spans from database:
+			var timeSpans = client.GetTimeSpansFor(taskId).Select(timeSpanDB => new TaskTimeSpan(timeSpanDB, this));
+			this.TimeSpans = new ObservableCollection<TaskTimeSpan>(timeSpans);
+
+			this.TimeSpans.CollectionChanged += timeSpansChanged;
+			this.PropertyChanged += propertyChanged;
+		}
+
 		/// <summary> Creates a new task and adds it to the database. </summary>
 		public StudyTask(IStudyTasksService client, string name)
 		{
