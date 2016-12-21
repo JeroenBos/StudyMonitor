@@ -36,7 +36,7 @@ namespace Website.Controllers
             return View();
         }
 
-        
+        [HttpPost]
 		public ActionResult Select(object data)
 		{
             string taskId = ((string[])data)[0];
@@ -55,7 +55,7 @@ namespace Website.Controllers
                 client.AddTimeSpanTo(id, startingTaskItemTimeSpan);
             }
 
-            return View("Index");
+            return View();
         }
 
         public ActionResult Add(object data)
@@ -68,7 +68,7 @@ namespace Website.Controllers
                 client.Add(new StudyTaskService() {Name= taskName});
             }
 
-            return View("Index");
+            return View();
         }
 	}
 }
