@@ -54,7 +54,7 @@
 
     function createTask()
     {
-        $.get("Add", { data: $('#createForm').find('input[name="Task Name"]').val() });
+        $.post("@Url.Action("Add", "Home")", { data: $('#createForm').find('input[name="Task Name"]').val() });
         $('#createForm').remove();
         $('#taskList').append($('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>'));
     }
