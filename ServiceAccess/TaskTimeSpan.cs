@@ -59,6 +59,7 @@ namespace StudyMonitor.ServiceAccess
 					service.Start = this.Start;
 					break;
 				case nameof(End):
+					Contract.Assert(this.End != null || this.Task.hasAtMostOneOpenTimeSpan());
 					service.End = this.End;
 					break;
 				case nameof(Task):

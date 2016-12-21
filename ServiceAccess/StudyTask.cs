@@ -82,6 +82,7 @@ namespace StudyMonitor.ServiceAccess
 						var assignedTimeSpanId = this.client.AddTimeSpanTo(service.Id, newTimeSpan.service);
 						newTimeSpan.service.Id = assignedTimeSpanId;
 					}
+					Contract.Assert(hasAtMostOneOpenTimeSpan(), "A task may not have multiple open time spans associated to it");
 					break;
 				case NotifyCollectionChangedAction.Remove:
 					foreach (var newTimeSpan in e.OldItems.Cast<TaskTimeSpan>())
@@ -98,6 +99,10 @@ namespace StudyMonitor.ServiceAccess
 			}
 		}
 
+		internal bool hasAtMostOneOpenTimeSpan()
+		{
+			return TimeSpans.Count(timeSpan => timeSpan.End == null) <= 1;
+		}
 		private string name;
 	}
 }
