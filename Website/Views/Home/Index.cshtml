@@ -30,7 +30,7 @@
 <script>
     function myFunction(taskId) {
         var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
-        $.find('button[id$="-button"]').forEach(function (f) { f.hidden = taskWasOpen });
+        $.find('button[id$="-button"]').forEach(function (button) { button.hidden = taskWasOpen });
     
         if (taskWasOpen) {
             //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
