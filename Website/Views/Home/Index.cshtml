@@ -24,7 +24,7 @@
 <script>
     function myFunction(taskId) {
         document.getElementById("button1").style.color = "magenta"
-        $.get("Select", { data: taskId });
+        $.get("@Url.Action("Select", "Home")", { data: taskId });
     }
 
     function addTask() {
