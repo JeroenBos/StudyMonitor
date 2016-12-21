@@ -24,6 +24,28 @@ namespace StudyMonitor.ServiceAccess
 
 		private void OnTasksChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
+			switch (e.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					foreach (var newTask in e.NewItems.Cast<StudyTask>())
+					{
+						newTask.Service.Id = this.client.Add(newTask.Service);
+					}
+					break;
+				case NotifyCollectionChangedAction.Remove:
+					foreach (var removedTask in e.OldItems.Cast<StudyTask>())
+					{
+						this.client.RemoveTask(removedTask.Service.Id);
+						removedTask.OnRemoveFromDatabase();
+					}
+					break;
+				case NotifyCollectionChangedAction.Replace:
+				case NotifyCollectionChangedAction.Move:
+				case NotifyCollectionChangedAction.Reset:
+					throw new NotImplementedException();
+				default:
+					throw new Exception();
+			}
 		}
 
 		/// <summary> Creates an empty study tasks collection that is linked to the database. </summary>

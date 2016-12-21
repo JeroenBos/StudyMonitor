@@ -15,6 +15,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			const string expected = "taskName";
 			var task = new StudyTask(base.client, expected);
+			StudyTasks.Create(base.client).Add(task);
 
 			var result = client.GetTask(task.Service.Id).Name;
 			Assert.AreEqual(expected, result);
@@ -24,6 +25,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			const string expected = "taskName";
 			var task = new StudyTask(base.client, name: expected);
+			StudyTasks.Create(base.client).Add(task);
 			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
 
 			var result = client.GetTask(task.Service.Id).Name;
@@ -33,9 +35,10 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void RemoveTaskTest()
 		{
 			object expected = null;
+			var tasks = StudyTasks.Create(base.client);
 			var task = new StudyTask(base.client, "name");
-
-			task.RemoveFromDatabase();
+			tasks.Add(task);
+			tasks.Remove(task);
 
 			var result = client.GetTask(task.Service.Id);
 			Assert.AreEqual(expected, result);
@@ -44,6 +47,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void RemoveTimeSpanTest()
 		{
 			var task = new StudyTask(base.client, "taskName");
+			StudyTasks.Create(base.client).Add(task);
 			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
 			task.TimeSpans.RemoveAt(0);
 
@@ -55,6 +59,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			const string expected = "taskName";
 			var task = new StudyTask(base.client, expected);
+			StudyTasks.Create(base.client).Add(task);
 
 			task = new StudyTask(base.client, task.Service.Id);
 			Assert.AreEqual(expected, task.Name);
@@ -63,6 +68,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TaskRetrievalWithTimeSpansTest()
 		{
 			var task = new StudyTask(base.client, "taskName");
+			StudyTasks.Create(base.client).Add(task);
 			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
 
 			int expectedTimeSpanCount = 1;
