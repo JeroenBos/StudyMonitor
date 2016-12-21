@@ -37,6 +37,11 @@ namespace StudyMonitor.ServiceAccess
 		}
 		/// <summary> Gets the collection of time spans associated with this task. Modifications will be propagated to the database. </summary>
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
+		/// <summary> Gets the ID this task has in the database. </summary>
+		public int Id
+		{
+			get { return this.service.Id; }
+		}
 
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
 		/// <param name="taskId"> The id of the task in the database to fetch. </param>
