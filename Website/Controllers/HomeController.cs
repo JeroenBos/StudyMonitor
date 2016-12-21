@@ -54,6 +54,7 @@ namespace Website.Controllers
 			return View();
 		}
 
+        [HttpPost]
 		public ActionResult Add(object data)
 		{
 			string taskName = ((string[])data)[0];
