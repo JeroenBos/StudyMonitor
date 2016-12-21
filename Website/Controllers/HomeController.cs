@@ -14,14 +14,10 @@ namespace Website.Controllers
 		public ActionResult Index()
 		{
 			var client = CreateTasksClient();
-			new StudyTask(client, "TestCase");// is added to database
+			var allTasks = StudyTaskCollection.FromDatabase(client);
 
-			var allTasks = new StudyTasksModel
-			{
-				StudyTaskModels = StudyTaskCollection.FromDatabase(client)
-										    .Select(task => new StudyTaskModel() { Name = task.Name, Id = task.Id })
-										    .ToList()
-			};
+			allTasks.Add(new StudyTask(client, "TestCase")); // is added to database as well
+
 			return View(allTasks);
 		}
 
@@ -60,8 +56,9 @@ namespace Website.Controllers
 			// Check the string for a valid task name
 			if (true)
 			{
-				// adds itself to database
-				new StudyTask(CreateTasksClient(), taskName);
+				var client = CreateTasksClient();
+				var databaseConnection = StudyTaskCollection.FromDatabase(client);
+				databaseConnection.Add(new StudyTask(client, taskName));
 			}
 
 			return View();
