@@ -73,7 +73,7 @@ namespace StudyMonitor.ServiceAccess
 					service.End = this.End;
 					break;
 				case nameof(Task):
-					service.TaskId = this.Task.service.Id;
+					service.TaskId = this.Task.Service.Id;
 					break;
 			}
 		}
