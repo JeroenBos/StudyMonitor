@@ -14,13 +14,15 @@ namespace Website.Controllers
 		public ActionResult Index()
 		{
 			var client = CreateTasksClient();
-			client.Add(new StudyTaskService() { Name = "TestCase" });
-			var studyTasksModel = new StudyTasksModel
+			new StudyTask(client, "TestCase");// is added to database
+
+			var allTasks = new StudyTasksModel
 			{
-				StudyTaskModels = client.GetAllTasks().Select(
-					e => new StudyTaskModel() { Id = e.Id, Name = e.Name }).ToList()
+				StudyTaskModels = StudyTask.GetAllTasksFromDatabase(client)
+										   .Select(task => new StudyTaskModel() { Name = task.Name, Id = task.Id })
+										   .ToList()
 			};
-			return View(studyTasksModel);
+			return View(allTasks);
 		}
 
 		public ActionResult About()
