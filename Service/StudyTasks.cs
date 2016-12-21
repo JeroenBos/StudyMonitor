@@ -1,12 +1,8 @@
 ﻿using StudyMonitor.Database;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 
 namespace StudyMonitor.Service
 {
@@ -16,6 +12,11 @@ namespace StudyMonitor.Service
 		{
 		}
 
+        /// <summary>
+        /// Add a task to the database
+        /// </summary>
+        /// <param name="task">The task to add</param>
+        /// <returns>The id of the task in the database</returns>
 		public int Add(StudyTaskService task)
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));
@@ -32,6 +33,11 @@ namespace StudyMonitor.Service
 			}
 		}
 
+        /// <summary>
+        /// Find a task with the given Id
+        /// </summary>
+        /// <param name="id">The id of the task</param>
+        /// <returns>A task</returns>
 		public StudyTaskService GetTask(int id)
 		{
 			using (var context = new StudyTasksContext())
@@ -41,6 +47,12 @@ namespace StudyMonitor.Service
 			}
 		}
 
+        /// <summary>
+        /// Add a timespan to the database
+        /// </summary>
+        /// <param name="taskId">The task id to which the timespan belongs</param>
+        /// <param name="timeSpan">The timespan</param>
+        /// <returns>The id of the timespan in the database</returns>
 		public int AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
 		{
 			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
@@ -68,6 +80,11 @@ namespace StudyMonitor.Service
 			return timeSpanId;
 		}
 
+        /// <summary>
+        /// Get the timespans for a given taskId
+        /// </summary>
+        /// <param name="taskId">The task id of the timespans</param>
+        /// <returns>The timespans</returns>
 		public IEnumerable<TaskTimeSpanService> GetTimeSpansFor(int taskId)
 		{
 			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
@@ -85,6 +102,9 @@ namespace StudyMonitor.Service
 			}
 		}
 
+        /// <summary>
+        /// Removes all the entires in the Tasks and Timespans database
+        /// </summary>
 		public void ClearAll()
 		{
 			using (var context = new StudyTasksContext())
@@ -95,6 +115,10 @@ namespace StudyMonitor.Service
 			}
 		}
 
+        /// <summary>
+        /// Gets all the tasks from the database
+        /// </summary>
+        /// <returns>All tasks</returns>
 		public IEnumerable<StudyTaskService> GetAllTasks()
 		{
 			using (var context = new StudyTasksContext())
@@ -141,6 +165,10 @@ namespace StudyMonitor.Service
 			}
 		}
 
+        /// <summary>
+        /// Removes a timespan by its Id
+        /// </summary>
+        /// <param name="timeSpanId">The timespan id</param>
 		public void RemoveTimeSpan(int timeSpanId)
 		{
 			if (timeSpanId == 0) throw new ArgumentOutOfRangeException(nameof(timeSpanId));
@@ -152,6 +180,11 @@ namespace StudyMonitor.Service
 			}
 		}
 
+        /// <summary>
+        /// Find a timespan by the given id
+        /// </summary>
+        /// <param name="timeSpanId">The id of the timespan</param>
+        /// <returns>A timespan or null</returns>
 		public TaskTimeSpanService GetTimeSpan(int timeSpanId)
 		{
 			if (timeSpanId == 0) throw new ArgumentOutOfRangeException(nameof(timeSpanId));

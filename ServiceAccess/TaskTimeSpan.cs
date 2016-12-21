@@ -1,18 +1,11 @@
 ﻿using JBSnorro;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-[assembly: InternalsVisibleTo("StudyMonitor.ServiceAccess.Tests")]
 
 namespace StudyMonitor.ServiceAccess
 {
-	public class TaskTimeSpan : DefaultINotifyPropertyChanged
+    public class TaskTimeSpan : DefaultINotifyPropertyChanged
 	{
 		internal readonly TaskTimeSpanService service = new TaskTimeSpanService();
 
@@ -45,13 +38,13 @@ namespace StudyMonitor.ServiceAccess
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));
 
-			this.PropertyChanged += propertyChanged;
+			this.PropertyChanged += OnPropertyChanged;
 
 			this.Task = task;
 			this.Start = start;
 		}
 
-		private void propertyChanged(object sender, PropertyChangedEventArgs e)
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			switch (e.PropertyName)
 			{
@@ -59,7 +52,7 @@ namespace StudyMonitor.ServiceAccess
 					service.Start = this.Start;
 					break;
 				case nameof(End):
-					Contract.Assert(this.End != null || this.Task.hasAtMostOneOpenTimeSpan());
+					Contract.Assert(this.End != null || this.Task.HasAtMostOneOpenTimeSpan());
 					service.End = this.End;
 					break;
 				case nameof(Task):
