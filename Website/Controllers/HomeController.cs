@@ -19,7 +19,6 @@ namespace Website.Controllers
 			var allTasks = new StudyTasksModel
 			{
 				StudyTaskModels = StudyTasks.FromDatabase(client)
-											.Tasks
 										    .Select(task => new StudyTaskModel() { Name = task.Name, Id = task.Id })
 										    .ToList()
 			};

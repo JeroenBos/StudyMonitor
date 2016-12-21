@@ -9,20 +9,17 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.ServiceAccess
 {
-	public class StudyTasks
+	public class StudyTasks : ObservableCollection<StudyTask>
 	{
 		private readonly IStudyTasksService client;
-		public ObservableCollection<StudyTask> Tasks { get; }
 
-		private StudyTasks(IStudyTasksService client, IEnumerable<StudyTask> initialTasks)
+		private StudyTasks(IStudyTasksService client, IEnumerable<StudyTask> initialTasks) : base(initialTasks)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
-			if (initialTasks == null) throw new ArgumentNullException(nameof(initialTasks));
 
 			this.client = client;
-			this.Tasks = new ObservableCollection<StudyTask>(initialTasks);
 
-			this.Tasks.CollectionChanged += OnTasksChanged;
+			this.CollectionChanged += OnTasksChanged;
 		}
 
 		private void OnTasksChanged(object sender, NotifyCollectionChangedEventArgs e)
