@@ -12,15 +12,6 @@ namespace StudyMonitor.ServiceAccess
 	/// <summary> Represents a study task and handles updating the database. </summary>
 	public class StudyTask : DefaultINotifyPropertyChanged
 	{
-		/// <summary> Gets a list of all tasks in the database. </summary>
-		public static IEnumerable<StudyTask> GetAllTasksFromDatabase(IStudyTasksService client)
-		{
-			if (client == null) throw new ArgumentNullException(nameof(client));
-
-			return client.GetAllTasks()
-						 .Select(taskService => new StudyTask(client, taskService));
-		}
-
 		private readonly IStudyTasksService client;
 		internal readonly StudyTaskService Service;
 		/// <summary> Gets or sets the name of this task. Setting will update the database. </summary>
