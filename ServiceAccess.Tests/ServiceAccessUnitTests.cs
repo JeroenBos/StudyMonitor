@@ -34,14 +34,13 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void RemoveTaskTest()
 		{
-			object expected = null;
 			var tasks = StudyTaskCollection.Create(base.client);
 			var task = new StudyTask(base.client, "name");
 			tasks.Add(task);
 			tasks.Remove(task);
 
 			var result = client.GetTask(task.Service.Id);
-			Assert.AreEqual(expected, result);
+			Assert.IsNull(result);
 		}
 		[TestMethod]
 		public void RemoveTimeSpanTest()
