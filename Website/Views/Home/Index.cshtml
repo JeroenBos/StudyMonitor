@@ -14,7 +14,7 @@
         {
             <p class="body-content">
                 @task.Id.ToString(), @task.Name
-                <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(openTask == null || openTask == task)">@buttonCaption</button>
+                <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(openTask != null && openTask != task)">@buttonCaption</button>
             </p>
         }
 
