@@ -30,6 +30,15 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		int GetOpenTimeSpanIdFor(int taskId);
+
+		[OperationContract]
+		void RemoveTask(int taskId);
+
+		[OperationContract]
+		void RemoveTimeSpan(int timeSpanId);
+
+		[OperationContract]
+		TaskTimeSpanService GetTimeSpan(int timeSpanId);
 	}
 
 	[DataContract]

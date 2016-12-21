@@ -43,6 +43,11 @@ namespace StudyMonitor.Service
 
 		public int AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
 		{
+			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
+			if (timeSpan == null) throw new ArgumentNullException(nameof(timeSpan));
+			if (timeSpan.Id != 0) throw new ArgumentException("timespan has an ID assigned but is ignored");
+			if (timeSpan.TaskId == 0) throw new ArgumentException();
+
 			int timeSpanId = timeSpan.Id;
 			using (var context = new StudyTasksContext())
 			{
@@ -111,13 +116,59 @@ namespace StudyMonitor.Service
 
 				Contract.Assert(openTimeSpansDB.Count <= 1, "There should at most one open timespan per task");
 
-				if(openTimeSpansDB.Count == 1)
+				if (openTimeSpansDB.Count == 1)
 				{
 					return openTimeSpansDB[0].Id;
 				}
 				else
 				{
 					return 0;
+				}
+			}
+		}
+
+		/// <summary> Removes the task with specified <paramref name="taskId"/> from the database, and all associated time spans. 
+		/// Does nothing if no task has that ID. </summary>
+		public void RemoveTask(int taskId)
+		{
+			if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
+
+			using (var context = new StudyTasksContext())
+			{
+				context.Tasks.RemoveRange(context.Tasks.Where(task => task.Id == taskId));
+				context.TimeSpans.RemoveRange(context.TimeSpans.Where(timeSpan => timeSpan.TaskId == taskId));
+				context.SaveChanges();
+			}
+		}
+
+		public void RemoveTimeSpan(int timeSpanId)
+		{
+			if (timeSpanId == 0) throw new ArgumentOutOfRangeException(nameof(timeSpanId));
+
+			using (var context = new StudyTasksContext())
+			{
+				context.TimeSpans.RemoveRange(context.TimeSpans.Where(timeSpan => timeSpan.Id == timeSpanId));
+				context.SaveChanges();
+			}
+		}
+
+		public TaskTimeSpanService GetTimeSpan(int timeSpanId)
+		{
+			if (timeSpanId == 0) throw new ArgumentOutOfRangeException(nameof(timeSpanId));
+
+			using (var context = new StudyTasksContext())
+			{
+				var dbResult = context.TimeSpans
+									  .Where(timeSpanDB => timeSpanDB.Id == timeSpanId)
+									  .ToList();
+
+				if (dbResult.Count == 0)
+				{
+					return null;
+				}
+				else
+				{
+					return dbResult[0].ToService(this);
 				}
 			}
 		}

@@ -6,19 +6,15 @@ using StudyMonitor.ServiceAccess.ServiceReference;
 namespace StudyMonitor.ServiceAccess.Tests
 {
 	[TestClass]
-	public class WCFClientUnitTests
+	public class WCFClientUnitTests : SharedUnitTestsConfiguration
 	{
 		public static void Main(string[] args)
 		{
-			var testObject = new WCFClientUnitTests();
-			testObject.InitializeTest();
-			testObject.OpenTimeSpanAdditionToTaskTest();
+			new WCFClientUnitTests().InitializeTest();
 
-			testObject.TaskIdAssignmentTest();
+			//new WCFClientUnitTests().OpenTimeSpanAdditionToTaskTest();
+			new ServiceAccessUnitTests().RemoveTimeSpanTest();
 		}
-
-		private readonly StudyTaskService service = new StudyTaskService();
-		private readonly StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
 
 		[TestInitialize]
 		public void InitializeTest()
@@ -98,6 +94,21 @@ namespace StudyMonitor.ServiceAccess.Tests
 		}
 
 		[TestMethod]
+		public void TimeSpanRemovalTest()
+		{
+			const string name = "myname";
+			var task = new StudyTaskService() { Name = name };
+			var taskId = client.Add(task);
+			var timeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+
+			client.RemoveTimeSpan(timeSpanId);
+
+			object expected = null;
+			var result = client.GetTimeSpan(timeSpanId);
+			Assert.AreEqual(expected, result);
+		}
+
+		[TestMethod]
 		public void OpenTimeSpanAdditionToTaskTest()
 		{
 			const string name = "myname";
@@ -109,5 +120,43 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var obtainedOpenTimeSpanId = client.GetOpenTimeSpanIdFor(taskId);
 			Assert.AreEqual(expectedOpenTimeSpanId, obtainedOpenTimeSpanId);
 		}
+		[TestMethod]
+		public void RemoveTaskTest()
+		{
+			var taskId = client.Add(new StudyTaskService() { Name = "Erik" });
+			client.RemoveTask(taskId);
+
+			var result = client.GetAllTasks().Length;
+			var expected = 0;
+			Assert.AreEqual(expected, result);
+		}
+		[TestMethod]
+		public void GetNonExistentTaskTest()
+		{
+			object expected = null;
+			var result = client.GetTask(int.MaxValue / 3);
+
+			Assert.AreEqual(expected, result);
+		}
+		[TestMethod]
+		public void GetNonExistentTimeSpanTest()
+		{
+			object expected = null;
+			var result = client.GetTimeSpan(int.MaxValue / 3);
+
+			Assert.AreEqual(expected, result);
+		}
+		[TestMethod]
+		public void GetTimeSpanTest()
+		{
+			const string name = "myname";
+			var task = new StudyTaskService() { Name = name };
+			var taskId = client.Add(task);
+			int expectedTimeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+
+			var resultTimeSpan = client.GetTimeSpan(expectedTimeSpanId);
+			Assert.AreEqual(expectedTimeSpanId, resultTimeSpan.Id);
+		}
+
 	}
 }

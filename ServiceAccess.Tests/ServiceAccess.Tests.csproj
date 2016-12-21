@@ -55,6 +55,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ServiceAccessUnitTests.cs" />
+    <Compile Include="SharedUnitTestsConfiguration.cs" />
     <Compile Include="WCFClientUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
