@@ -133,10 +133,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void GetNonExistentTaskTest()
 		{
-			object expected = null;
 			var result = client.GetTask(int.MaxValue / 3);
 
-			Assert.AreEqual(expected, result);
+			Assert.IsNull(result);
 		}
 		[TestMethod]
 		public void GetNonExistentTimeSpanTest()

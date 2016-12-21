@@ -1,4 +1,4 @@
-﻿@model Website.Models.StudyTasksModel
+﻿@model StudyMonitor.ServiceAccess.StudyTaskCollection
 
 @{
     ViewBag.Title = "Home Page";
@@ -7,7 +7,7 @@
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
 @{
-    foreach (var task in Model.StudyTaskModels)
+    foreach (var task in Model)
     {
         <p class="body-content">
             @task.Id.ToString(), @task.Name
