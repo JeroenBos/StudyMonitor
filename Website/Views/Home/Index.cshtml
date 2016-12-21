@@ -28,23 +28,20 @@
     }
 
     function addTask() {
-        var tasksNumber = $('input[name="Task Name"]').length;
-        $form = $('<form id="createForm"></form>');
+        $form = $('<form id="createForm" action ="@Url.Action("Add", "Home")" method="post"></form>');
         $form.append(
             $("<input>",
                 {
                     type: 'text',
-                    name: 'Task Name',
-                    id: 'createTaskName'+tasksNumber
+                    name: 'taskName'
                 }
             )
         );
         $form.append(
             $("<input>",
                 {
-                    type:'button',
-                    value:'Create Task',
-                    onclick: 'createTask()'
+                    type: 'submit',
+                    value: 'Create Task'
                 }
             )
         );
@@ -52,9 +49,9 @@
         $('#requestAddTask').remove();
     }
 
-    function createTask()
-    {
-        $.post("@Url.Action("Add", "Home")", { data: $('#createForm').find('input[name="Task Name"]').val() });
+    function createTask() {
+        $.post("@Url.Action("Add", "Home")",
+            { data: $('#createForm').find('input[name="taskName"]').val() });
         $('#createForm').remove();
         $('#taskList').append($('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>'));
     }
