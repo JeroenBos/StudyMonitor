@@ -18,7 +18,7 @@ namespace Website.Controllers
 		public ActionResult Index()
 		{
 			var client = CreateTasksClient();
-			new StudyTask(client, "TestCase");// is added to database
+			// new StudyTask(client, "TestCase");// is added to database
 
 			var allTasks = new StudyTasksModel
 			{
@@ -63,15 +63,14 @@ namespace Website.Controllers
 			return View();
 		}
 
-        /// <summary>
-        /// This method is invoked when the client adds a task
-        /// </summary>
-        /// <param name="data">A string array with the taskname at index 0</param>
-        /// <returns>Nothing</returns>
-        [HttpPost]
-		public ActionResult Add(object data)
+	    /// <summary>
+	    /// This method is invoked when the client adds a task
+	    /// </summary>
+	    /// <param name="taskName">The name of the task</param>
+	    /// <returns>Redirects the action to Index</returns>
+	    [HttpPost]
+		public ActionResult Add(string taskName)
 		{
-			string taskName = ((string[])data)[0];
 			// Check the string for a valid task name
 			if (true)
 			{
@@ -79,7 +78,7 @@ namespace Website.Controllers
 				new StudyTask(CreateTasksClient(), taskName);
 			}
 
-			return View();
+			return RedirectToAction("Index", "Home");
 		}
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
