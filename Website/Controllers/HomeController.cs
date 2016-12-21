@@ -18,7 +18,6 @@ namespace Website.Controllers
 		public ActionResult Index()
 		{
 			var client = CreateTasksClient();
-			// new StudyTask(client, "TestCase");// is added to database
 
 			var allTasks = new StudyTasksModel
 			{
