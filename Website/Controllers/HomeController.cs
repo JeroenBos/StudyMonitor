@@ -11,6 +11,10 @@ namespace Website.Controllers
 {
 	public class HomeController : Controller
 	{
+        /// <summary>
+        /// Creates a Study Tasks and loads all study tasks to be shown
+        /// </summary>
+        /// <returns>A view which shows all tasks</returns>
 		public ActionResult Index()
 		{
 			var client = CreateTasksClient();
@@ -39,6 +43,11 @@ namespace Website.Controllers
 			return View();
 		}
 
+        /// <summary>
+        /// This method is invoked when the client selects a task
+        /// </summary>
+        /// <param name="data">A string array with the taskId at index 0</param>
+        /// <returns>Nothing</returns>
         [HttpPost]
 		public ActionResult Select(object data)
 		{
@@ -54,6 +63,11 @@ namespace Website.Controllers
 			return View();
 		}
 
+        /// <summary>
+        /// This method is invoked when the client adds a task
+        /// </summary>
+        /// <param name="data">A string array with the taskname at index 0</param>
+        /// <returns>Nothing</returns>
         [HttpPost]
 		public ActionResult Add(object data)
 		{
