@@ -29,11 +29,10 @@
 
 <script>
     function myFunction(taskId) {
-        
-        //alert($('[name$="-button"]').length)
-        $.find('button[id$="-button"]').forEach(function (f) { f.hidden = true });
+        var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
+        $.find('button[id$="-button"]').forEach(function (f) { f.hidden = taskWasOpen });
     
-        if ($('#' + taskId + '-button').text() == "Stop") {
+        if (taskWasOpen) {
             //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
 
             
