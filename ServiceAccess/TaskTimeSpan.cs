@@ -12,20 +12,24 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.ServiceAccess
 {
+	/// <summary> Represents a time span associated to a task and handles updating the database. </summary>
 	public class TaskTimeSpan : DefaultINotifyPropertyChanged
 	{
 		internal readonly TaskTimeSpanService service = new TaskTimeSpanService();
 
+		/// <summary> Gets or sets the start of this time span. Setting will update the database. </summary>
 		public DateTime Start
 		{
 			get { return start; }
 			set { base.Set(ref start, value); }
 		}
+		/// <summary> Gets or sets the end of this time span. Null indicates the time span contains the current moment. Setting will update the database. </summary>
 		public DateTime? End
 		{
 			get { return end; }
 			set { base.Set(ref end, value); }
 		}
+		/// <summary> Gets or sets the task this time span is associated to. Setting will update the database. </summary>
 		public StudyTask Task
 		{
 			get { return task; }

@@ -11,10 +11,12 @@ using System.Threading.Tasks;
 
 namespace StudyMonitor.ServiceAccess
 {
+	/// <summary> Represents a study task and handles updating the database. </summary>
 	public class StudyTask : DefaultINotifyPropertyChanged
 	{
 		private readonly IStudyTasksService client;
 		internal readonly StudyTaskService service;
+		/// <summary> Gets or sets the name of this task. Setting will update the database. </summary>
 		public string Name
 		{
 			get { return name; }
@@ -24,6 +26,7 @@ namespace StudyMonitor.ServiceAccess
 				base.Set(ref name, value);
 			}
 		}
+		/// <summary> Gets the collection of time spans associated with this task. Modifications will be propagated to the database. </summary>
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
