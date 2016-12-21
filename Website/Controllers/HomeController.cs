@@ -20,8 +20,6 @@ namespace Website.Controllers
 			var client = CreateTasksClient();
 			var allTasks = StudyTaskCollection.FromDatabase(client);
 
-			allTasks.Add(new StudyTask(client, "TestCase")); // is added to database as well
-
 			return View(allTasks);
 		}
 
