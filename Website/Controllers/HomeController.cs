@@ -47,15 +47,21 @@ namespace Website.Controllers
 		{
 			int id;
             bool taskOpen;
-			bool validData = int.TryParse(taskId, out id);
-            if (validData)
-            {
-                validData = bool.TryParse(taskWasOpen, out taskOpen);
-            }
-			if (validData)
+			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
-				var task = new StudyTask(CreateTasksClient(), id);
-				task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			    if (!taskOpen)
+			    {
+			        var task = new StudyTask(CreateTasksClient(), id);
+			        task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			    }
+			    else
+			    {
+			        var openTimeSpan = new StudyTask(CreateTasksClient(), id).OpenTimeSpan;
+			        if (openTimeSpan != null)
+			        {
+			            openTimeSpan.End = DateTime.Now;
+			        }
+			    }
 			}
 
 			return View();

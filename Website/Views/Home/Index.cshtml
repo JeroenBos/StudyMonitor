@@ -24,7 +24,7 @@
 <script>
     function myFunction(taskId) {
         document.getElementById(taskId+",button").style.color = "magenta";
-        $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: false});
+        $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: true});
     }
 
     function addTask() {
