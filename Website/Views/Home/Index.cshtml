@@ -6,25 +6,45 @@
 
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
-@{
-    foreach (var task in Model)
-    {
+    @{
+        var openTask = Model.FirstOrDefault(task => task.OpenTimeSpan != null);
+        var buttonCaption = openTask == null ? "Start" : "Stop";
+        var test = Model.GroupBy(task => task.Id).Where(group => group.Count() != 1).ToList();
+        foreach (var task in Model)
+        {
+            <p class="body-content">
+                @task.Id.ToString(), @task.Name
+                @if (openTask == null || openTask == task)
+                {
+                    <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)">@buttonCaption</button>
+}
+            </p>
+        }
+
         <p class="body-content">
-            @task.Id.ToString(), @task.Name
-            <button type="button" id="@task.Id,button" onclick="myFunction(@task.Id)">Start</button>
+            <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
         </p>
     }
-
-    <p class="body-content">
-        <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
-    </p>
-}
 </div>
 
 <script>
     function myFunction(taskId) {
-        document.getElementById(taskId+",button").style.color = "magenta";
-        $.post("@Url.Action("Select", "Home")", { data: taskId });
+        
+        //alert($('[name$="-button"]').length)
+        $.find('button[id$="-button"]').forEach(function (f) { f.hidden = true });
+    
+        if ($('#' + taskId + '-button').text() == "Stop") {
+            //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
+
+            
+
+    
+            
+        }
+        else {
+           // $.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: false });
+            $('#' + taskId + '-button').text("Stop")
+        }
     }
 
     function addTask() {
