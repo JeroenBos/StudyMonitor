@@ -39,7 +39,7 @@ namespace Website.Controllers
 			return View();
 		}
 
-
+        [HttpPost]
 		public ActionResult Select(object data)
 		{
 			string taskId = ((string[])data)[0];

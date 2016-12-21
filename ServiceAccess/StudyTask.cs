@@ -1,13 +1,11 @@
 ﻿using JBSnorro;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace StudyMonitor.ServiceAccess
 {
@@ -65,8 +63,8 @@ namespace StudyMonitor.ServiceAccess
 			var timeSpans = client.GetTimeSpansFor(task.Id).Select(timeSpanDB => new TaskTimeSpan(timeSpanDB, this));
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>(timeSpans);
 
-			this.TimeSpans.CollectionChanged += timeSpansChanged;
-			this.PropertyChanged += propertyChanged;
+			this.TimeSpans.CollectionChanged += OnTimeSpansChanged;
+			this.PropertyChanged += OnPropertyChanged;
 		}
 		/// <summary> Creates a new task and adds it to the database. </summary>
 		public StudyTask(IStudyTasksService client, string name)
@@ -82,8 +80,8 @@ namespace StudyMonitor.ServiceAccess
 			// add to database
 			this.service.Id = this.client.Add(this.service);
 
-			this.TimeSpans.CollectionChanged += timeSpansChanged;
-			this.PropertyChanged += propertyChanged;
+			this.TimeSpans.CollectionChanged += OnTimeSpansChanged;
+			this.PropertyChanged += OnPropertyChanged;
 		}
 
 		/// <summary> Removes the task represented by this instance from the database. </summary>
@@ -92,9 +90,9 @@ namespace StudyMonitor.ServiceAccess
 			const string removedErrorMessage = "The current instance has been removed from the database";
 
 			client.RemoveTask(this.service.Id);
-			this.TimeSpans.CollectionChanged -= timeSpansChanged;
+			this.TimeSpans.CollectionChanged -= OnTimeSpansChanged;
 			this.TimeSpans.CollectionChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
-			this.PropertyChanged -= propertyChanged;
+			this.PropertyChanged -= OnPropertyChanged;
 			this.PropertyChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
 		}
 
@@ -104,7 +102,7 @@ namespace StudyMonitor.ServiceAccess
 			get { return TimeSpans.FirstOrDefault(timeSpan => timeSpan.End == null); }
 		}
 
-		private void propertyChanged(object sender, PropertyChangedEventArgs e)
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			switch (e.PropertyName)
 			{
@@ -113,7 +111,7 @@ namespace StudyMonitor.ServiceAccess
 					break;
 			}
 		}
-		private void timeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
+		private void OnTimeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			switch (e.Action)
 			{
@@ -124,7 +122,7 @@ namespace StudyMonitor.ServiceAccess
 						var assignedTimeSpanId = this.client.AddTimeSpanTo(service.Id, newTimeSpan.service);
 						newTimeSpan.service.Id = assignedTimeSpanId;
 					}
-					Contract.Assert(hasAtMostOneOpenTimeSpan(), "A task may not have multiple open time spans associated to it");
+					Contract.Assert(HasAtMostOneOpenTimeSpan(), "A task may not have multiple open time spans associated to it");
 					break;
 				case NotifyCollectionChangedAction.Remove:
 					foreach (var newTimeSpan in e.OldItems.Cast<TaskTimeSpan>())
@@ -141,7 +139,7 @@ namespace StudyMonitor.ServiceAccess
 			}
 		}
 
-		internal bool hasAtMostOneOpenTimeSpan()
+		internal bool HasAtMostOneOpenTimeSpan()
 		{
 			return TimeSpans.Count(timeSpan => timeSpan.End == null) <= 1;
 		}

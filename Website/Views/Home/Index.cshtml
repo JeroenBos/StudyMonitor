@@ -11,7 +11,7 @@
     {
         <p class="body-content">
             @task.Id.ToString(), @task.Name
-            <button type="button" id="button1" onclick="myFunction(@task.Id)">Click Me!</button>
+            <button type="button" id="@task.Id,button" onclick="myFunction(@task.Id)">Click Me!</button>
         </p>
     }
 
@@ -23,8 +23,8 @@
 
 <script>
     function myFunction(taskId) {
-        document.getElementById("button1").style.color = "magenta"
-        $.get("@Url.Action("Select", "Home")", { data: taskId });
+        document.getElementById(taskId+",button").style.color = "magenta";
+        $.post("@Url.Action("Select", "Home")", { data: taskId });
     }
 
     function addTask() {
