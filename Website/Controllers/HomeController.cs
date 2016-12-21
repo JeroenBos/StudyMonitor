@@ -43,11 +43,15 @@ namespace Website.Controllers
         /// <param name="data">A string array with the taskId at index 0</param>
         /// <returns>Nothing</returns>
         [HttpPost]
-		public ActionResult Select(object data)
+		public ActionResult Select(string taskId, string taskWasOpen)
 		{
-			string taskId = ((string[])data)[0];
 			int id;
+            bool taskOpen;
 			bool validData = int.TryParse(taskId, out id);
+            if (validData)
+            {
+                validData = bool.TryParse(taskWasOpen, out taskOpen);
+            }
 			if (validData)
 			{
 				var task = new StudyTask(CreateTasksClient(), id);
