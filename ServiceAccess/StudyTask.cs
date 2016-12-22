@@ -32,6 +32,7 @@ namespace StudyMonitor.ServiceAccess
 			get { return this.Service.Id; }
 		}
 
+
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
 		/// <param name="taskId"> The id of the task in the database to fetch. </param>
 		public StudyTask(IStudyTasksService client, int taskId)
@@ -72,6 +73,12 @@ namespace StudyMonitor.ServiceAccess
 			this.PropertyChanged += OnPropertyChanged;
 		}
 
+		/// <summary> Gets the total length of all time spans in this task. </summary>
+		public TimeSpan GetLength()
+		{
+			return TimeSpans.Select(taskTimeSpan => taskTimeSpan.Length)
+							.Aggregate((a, b) => a + b);
+		}
 		/// <summary> Removes the task represented by this instance from the database. </summary>
 		internal void OnRemoveFromDatabase()
 		{
