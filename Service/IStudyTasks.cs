@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
@@ -36,6 +37,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		TaskTimeSpanService GetTimeSpan(int timeSpanId);
+
+		[OperationContract]
+		void Update(TaskTimeSpanService messageObject);
 	}
 
 	[DataContract]

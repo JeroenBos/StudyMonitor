@@ -6,25 +6,40 @@
 
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
-@{
-    foreach (var task in Model)
-    {
+    @{
+        bool hasOpenTask = Model.Any(task => task.IsOpen);
+        foreach (var task in Model)
+        {
+            var buttonCaption = task.IsOpen ? "Stop" : "Start";
+            <p class="body-content">
+                @task.Id.ToString(), @task.Name
+                <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(!task.IsOpen && hasOpenTask)">@buttonCaption</button>
+            </p>
+        }
+
         <p class="body-content">
-            @task.Id.ToString(), @task.Name
-            <button type="button" id="@task.Id,button" onclick="myFunction(@task.Id)">Click Me!</button>
+            <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
         </p>
     }
-
-    <p class="body-content">
-        <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
-    </p>
-}
 </div>
 
 <script>
     function myFunction(taskId) {
-        document.getElementById(taskId+",button").style.color = "magenta";
-        $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: true});
+        var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
+
+        // update database
+        $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen });
+
+        // update website client side
+        if (taskWasOpen) {
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
+            $('#' + taskId + '-button').text("Start");
+        }
+        else {
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
+            $('#' + taskId + '-button').text("Stop");
+            $('#' + taskId + '-button').show();
+        }
     }
 
     function addTask() {
