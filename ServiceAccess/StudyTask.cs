@@ -120,6 +120,7 @@ namespace StudyMonitor.ServiceAccess
 					MessageObject.Estimate = this.Estimate;
 					break;
 			}
+			this.service.UpdateTask(this.MessageObject);
 		}
 		private void OnTimeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{

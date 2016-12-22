@@ -198,7 +198,8 @@ namespace StudyMonitor.Service
             }
         }
 
-		public void Update(TaskTimeSpanService messageObject)
+		/// <summary> Updates the time span in the database with the specified properties. </summary>
+		public void UpdateTimeSpan(TaskTimeSpanService messageObject)
 		{
 			using (var context = new StudyTasksContext())
 			{
@@ -210,8 +211,21 @@ namespace StudyMonitor.Service
 				context.SaveChanges();
 			}
 		}
+		/// <summary> Updates the task in the database with the specified properties. </summary>
+		public void UpdateTask(StudyTaskService messageObject)
+		{
+			using (var context = new StudyTasksContext())
+			{
+				var dbElement = context.Tasks.FirstOrDefault(taskDB => taskDB.Id == messageObject.Id);
+				Contract.Assert(dbElement != null, "Cannot update an element that does not exist");
+				dbElement.Name = messageObject.Name;
+				dbElement.Estimate = messageObject.Estimate;
+				Contract.Assert(dbElement.UserId == messageObject.UserId);
+				context.SaveChanges();
+			}
+		}
 
-        public string GetUserIdForTests()
+		public string GetUserIdForTests()
         {
             using (var context = new StudyTasksContext())
             {

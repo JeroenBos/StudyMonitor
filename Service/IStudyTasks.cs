@@ -39,7 +39,10 @@ namespace StudyMonitor.Service
 		TaskTimeSpanService GetTimeSpan(int timeSpanId);
 
 		[OperationContract]
-		void Update(TaskTimeSpanService messageObject);
+		void UpdateTimeSpan(TaskTimeSpanService messageObject);
+
+		[OperationContract]
+		void UpdateTask(StudyTaskService messageObject);
 
 	    [OperationContract]
 	    string GetUserIdForTests();

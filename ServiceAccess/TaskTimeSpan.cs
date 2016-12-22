@@ -94,7 +94,7 @@ namespace StudyMonitor.ServiceAccess
 					timeSpanMessageObject.TaskId = this.Task.MessageObject.Id;
 					break;
 			}
-			service.Update(timeSpanMessageObject);
+			service.UpdateTimeSpan(timeSpanMessageObject);
 		}
 	}
 }

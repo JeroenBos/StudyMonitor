@@ -133,14 +133,26 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Update">
+  <xs:element name="UpdateTimeSpan">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="messageObject" nillable="true" type="q7:TaskTimeSpanService" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateResponse">
+  <xs:element name="UpdateTimeSpanResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="messageObject" nillable="true" type="q8:StudyTaskService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTaskResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
