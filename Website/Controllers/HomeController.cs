@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using Website.Models;
 using StudyMonitor.ServiceAccess;
@@ -18,9 +19,15 @@ namespace Website.Controllers
 		public ActionResult Index()
 		{
 			var client = CreateTasksClient();
-			var allTasks = StudyTaskCollection.FromDatabase(client);
+            var userId = User.Identity.GetUserId();
+            if (userId != null)
+            {
+                var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+                return View(userTasks);
+            }
 
-			return View(allTasks);
+
+            return View();
 		}
 
 		public ActionResult About()
@@ -79,8 +86,8 @@ namespace Website.Controllers
 			if (true)
 			{
 				var client = CreateTasksClient();
-				var databaseConnection = StudyTaskCollection.FromDatabase(client);
-				databaseConnection.Add(new StudyTask(client, taskName));
+				//var databaseConnection = StudyTaskCollection.FromDatabase(client);
+				//databaseConnection.Add(new StudyTask(client, taskName));
 			}
 
 			return RedirectToAction("Index", "Home");

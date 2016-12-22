@@ -6,19 +6,22 @@
 
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
-@{
-    foreach (var task in Model)
-    {
-        <p class="body-content">
-            @task.Id.ToString(), @task.Name
-            <button type="button" id="@task.Id,button" onclick="myFunction(@task.Id)">Click Me!</button>
-        </p>
-    }
+    @{
+        if (Model != null)
+        {
+            foreach (var task in Model)
+            {
+                <p class="body-content">
+                    @task.Id.ToString(), @task.Name
+                    <button type="button" id="@task.Id,button" onclick="myFunction(@task.Id)">Click Me!</button>
+                </p>
+            }
 
-    <p class="body-content">
-        <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
-    </p>
-}
+            <p class="body-content">
+                <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
+            </p>
+        }
+    }
 </div>
 
 <script>

@@ -118,11 +118,11 @@ namespace StudyMonitor.Service
         /// Gets all the tasks from the database
         /// </summary>
         /// <returns>All tasks</returns>
-        public IEnumerable<StudyTaskService> GetAllTasks()
+        public IEnumerable<StudyTaskService> GetAllTasks(string userId)
         {
             using (var context = new StudyTasksContext())
             {
-                return context.Tasks.ToList().Select(x => x.ToService());
+                return context.Tasks.ToList().Select(x => x.ToService()).Where(x => x.UserId == userId);
             }
         }
 

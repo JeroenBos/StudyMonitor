@@ -56,11 +56,11 @@ namespace StudyMonitor.ServiceAccess
 			return new StudyTaskCollection(client, Enumerable.Empty<StudyTask>());
 		}
 		/// <summary> Gets a study tasks collection from all tasks in the database. </summary>
-		public static StudyTaskCollection FromDatabase(IStudyTasksService client)
+		public static StudyTaskCollection FromDatabase(IStudyTasksService client, string userId)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 
-			var tasksFromDatabase = client.GetAllTasks()
+			var tasksFromDatabase = client.GetAllTasks(userId)
 										  .Select(taskService => new StudyTask(client, taskService));
 			return new StudyTaskCollection(client, tasksFromDatabase);
 		}

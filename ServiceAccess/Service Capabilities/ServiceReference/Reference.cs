@@ -28,6 +28,9 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserIdField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -60,6 +63,19 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserIdField, value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
                 }
             }
         }
@@ -202,10 +218,10 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         System.Threading.Tasks.Task ClearAllAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
-        StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks();
+        StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks(string UserId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
-        System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync();
+        System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync(string UserId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor", ReplyAction="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdForResponse")]
         int GetOpenTimeSpanIdFor(int taskId);
@@ -299,12 +315,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
             return base.Channel.ClearAllAsync();
         }
         
-        public StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks() {
-            return base.Channel.GetAllTasks();
+        public StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks(string UserId) {
+            return base.Channel.GetAllTasks(UserId);
         }
         
-        public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync() {
-            return base.Channel.GetAllTasksAsync();
+        public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync(string UserId) {
+            return base.Channel.GetAllTasksAsync(UserId);
         }
         
         public int GetOpenTimeSpanIdFor(int taskId) {
