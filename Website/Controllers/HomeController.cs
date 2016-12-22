@@ -87,7 +87,7 @@ namespace Website.Controllers
 	        DateTime estimate;
 	        string userId = User.Identity.GetUserId();
 			// Check the string for a valid task name
-			if (true && DateTime.TryParse(estimateString, out estimate))
+			if (DateTime.TryParse(estimateString, out estimate))
 			{
 				var client = CreateTasksClient();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);

@@ -11,7 +11,8 @@ namespace StudyMonitor.Service
 			{
 				Name = task.Name,
                 Id = task.Id,
-                UserId = task.UserId
+                UserId = task.UserId,
+                Estimate = task.Estimate
 			};
 		}
 		public static StudyTask ToDBObject(this StudyTaskService task)
@@ -20,6 +21,7 @@ namespace StudyMonitor.Service
 			{
 				Name = task.Name,
                 UserId = task.UserId,
+                Estimate = task.Estimate
 			};
 		}
 
