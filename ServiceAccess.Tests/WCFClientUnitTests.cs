@@ -16,6 +16,16 @@ namespace StudyMonitor.ServiceAccess.Tests
 			new ServiceAccessUnitTests().SetTaskTimeSpanEndTest();
 		}
 
+	    private StudyTaskService CreateStudyTaskServiceWithName(string name)
+	    {
+	        return new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
+	    }
+
+	    private TaskTimeSpanService CreateDefaultTaskTimeSpanService(int taskId)
+	    {
+	        return new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId };
+	    }
+
 		[TestInitialize]
 		public void InitializeTest()
 		{
@@ -31,7 +41,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void TaskIdAssignmentTest()
 		{
-			var taskId = client.Add(new StudyTaskService() { Name = "Erik" , UserId = this.UserId, Estimate = DateTime.Now });
+			var taskId = client.Add(CreateStudyTaskServiceWithName("Erik"));
 
 			var retrievedTask = client.GetTask(taskId);
 
@@ -41,9 +51,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void RetrieveAllTasksTest()
 		{
-			var taskId1 = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId, Estimate = DateTime.Now });
-			var taskId2 = client.Add(new StudyTaskService() { Name = "Jeroen", UserId = this.UserId, Estimate = DateTime.Now });
-			var taskId3 = client.Add(new StudyTaskService() { Name = "Nobody", UserId = this.UserId, Estimate = DateTime.Now });
+			var taskId1 = client.Add(CreateStudyTaskServiceWithName("Erik"));
+			var taskId2 = client.Add(CreateStudyTaskServiceWithName("Jeroen"));
+			var taskId3 = client.Add(CreateStudyTaskServiceWithName("Nobody"));
             
 			var allTasks = client.GetAllTasksOfUser(this.UserId);
 
@@ -53,7 +63,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void TaskCreationAndRetrievalTest()
 		{
-			var taskId = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId, Estimate = DateTime.Now });
+			var taskId = client.Add(CreateStudyTaskServiceWithName("Erik"));
 
 			var retrievedTask = client.GetTask(taskId);
 
@@ -64,7 +74,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TaskWithNameCreationTest()
 		{
 			const string name = "myname";
-			var taskId = client.Add(new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now });
+			var taskId = client.Add(CreateStudyTaskServiceWithName(name));
 
 			var retrievedTask = client.GetTask(taskId);
 
@@ -75,8 +85,8 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TimeSpanIdAssignmentTest()
 		{
 			const string name = "myname";
-			var taskId = client.Add(new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now });
-			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var taskId = client.Add(CreateStudyTaskServiceWithName(name));
+			var timeSpanId = client.AddTimeSpanTo(CreateDefaultTaskTimeSpanService(taskId));
 
 			Assert.AreNotEqual(timeSpanId, 0);
 		}
@@ -85,9 +95,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TimeSpanAdditionToTaskTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
+			var task = CreateStudyTaskServiceWithName(name);
 			var taskId = client.Add(task);
-			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var timeSpanId = client.AddTimeSpanTo(CreateDefaultTaskTimeSpanService(taskId));
 
 			var taskTimeSpans = client.GetTimeSpansFor(taskId);
 			Assert.AreEqual(taskTimeSpans.Length, 1);
@@ -97,9 +107,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TimeSpanRemovalTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
+			var task = CreateStudyTaskServiceWithName(name);
 			var taskId = client.Add(task);
-			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var timeSpanId = client.AddTimeSpanTo(CreateDefaultTaskTimeSpanService(taskId));
 
 			client.RemoveTimeSpan(timeSpanId);
 
@@ -112,9 +122,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void OpenTimeSpanAdditionToTaskTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
+			var task = CreateStudyTaskServiceWithName(name);
 			var taskId = client.Add(task);
-			var closedTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var closedTimeSpanId = client.AddTimeSpanTo(CreateDefaultTaskTimeSpanService(taskId));
 			var expectedOpenTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = null, TaskId = taskId });
 
 			var obtainedOpenTimeSpanId = client.GetOpenTimeSpanIdFor(taskId);
@@ -123,7 +133,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void RemoveTaskTest()
 		{
-			var taskId = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId, Estimate = DateTime.Now });
+			var taskId = client.Add(CreateStudyTaskServiceWithName("Erik"));
 			client.RemoveTask(taskId);
 			var result = client.GetAllTasksOfUser(this.UserId).Length;
 			var expected = 0;
@@ -148,9 +158,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void GetTimeSpanTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
+			var task = CreateStudyTaskServiceWithName(name);
 			var taskId = client.Add(task);
-			int expectedTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			int expectedTimeSpanId = client.AddTimeSpanTo(CreateDefaultTaskTimeSpanService(taskId));
 
 			var resultTimeSpan = client.GetTimeSpan(expectedTimeSpanId);
 			Assert.AreEqual(expectedTimeSpanId, resultTimeSpan.Id);

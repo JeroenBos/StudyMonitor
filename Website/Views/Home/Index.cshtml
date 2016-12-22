@@ -14,7 +14,7 @@
         bool hasOpenTask = Model.Any(task => task.IsOpen);
         foreach (var task in Model)
         {
-            @HtmlHelpers.CreateTask(task.Id, task.Name, task.IsOpen, hasOpenTask);
+            @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.IsOpen, hasOpenTask);
         }
 
         <p class="body-content">
@@ -61,15 +61,6 @@
                 }
             )
         );
-        $form.append(
-            $("<input>",
-                {
-                    type: 'hidden',
-                    name: 'estimateString',
-                    value: '@DateTime.Now'
-                }
-            )
-        );
 
         $('#taskList').append($form);
         $('#requestAddTask').remove();
@@ -82,7 +73,7 @@
                 { taskName: taskName, estimateString: '@DateTime.Now' }, function (data, status, jqXHR) {
                     $('#createForm').remove();
                     $('#taskList').append('<p class="body-content">' + data);
-                    $('#taskList').append("@HtmlHelpers.CreateTask(123456, "echterg", false, false)".replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName))
+                    $('#taskList').append("@HtmlHelpers.CreateTask("123456", "echterg", false, false)".replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName))
                     $('#taskList').append('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>');
                 });
         }
