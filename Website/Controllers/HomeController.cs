@@ -23,7 +23,6 @@ namespace Website.Controllers
             if (userId != null)
             {
                 var userTasks = StudyTaskCollection.FromDatabase(client, userId);
-                ViewBag.userId = userId;
                 return View(userTasks);
             }
 
@@ -81,8 +80,9 @@ namespace Website.Controllers
 	    /// <param name="taskName">The name of the task</param>
 	    /// <returns>Redirects the action to Index</returns>
 	    [HttpPost]
-		public ActionResult Add(string taskName, string userId)
-		{
+		public ActionResult Add(string taskName)
+	    {
+	        string userId = User.Identity.GetUserId();
 			// Check the string for a valid task name
 			if (true)
 			{
