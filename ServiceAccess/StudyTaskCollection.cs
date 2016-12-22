@@ -61,7 +61,8 @@ namespace StudyMonitor.ServiceAccess
 			if (client == null) throw new ArgumentNullException(nameof(client));
 
 			var tasksFromDatabase = client.GetAllTasks()
-										  .Select(taskService => new StudyTask(client, taskService));
+										  .Select(taskService => new StudyTask(client, taskService))
+										  .ToList();
 			return new StudyTaskCollection(client, tasksFromDatabase);
 		}
 	}
