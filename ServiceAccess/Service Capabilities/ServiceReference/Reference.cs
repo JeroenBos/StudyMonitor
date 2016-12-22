@@ -23,10 +23,16 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime EstimateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -35,6 +41,19 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Estimate {
+            get {
+                return this.EstimateField;
+            }
+            set {
+                if ((this.EstimateField.Equals(value) != true)) {
+                    this.EstimateField = value;
+                    this.RaisePropertyChanged("Estimate");
+                }
             }
         }
         
@@ -60,6 +79,19 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserIdField, value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
                 }
             }
         }
@@ -201,11 +233,11 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/ClearAll", ReplyAction="http://tempuri.org/IStudyTasksService/ClearAllResponse")]
         System.Threading.Tasks.Task ClearAllAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
-        StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksOfUserResponse")]
+        StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasksOfUser(string userId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
-        System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksOfUserResponse")]
+        System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksOfUserAsync(string userId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor", ReplyAction="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdForResponse")]
         int GetOpenTimeSpanIdFor(int taskId);
@@ -236,6 +268,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/Update", ReplyAction="http://tempuri.org/IStudyTasksService/UpdateResponse")]
         System.Threading.Tasks.Task UpdateAsync(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetUserIdForTests", ReplyAction="http://tempuri.org/IStudyTasksService/GetUserIdForTestsResponse")]
+        string GetUserIdForTests();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetUserIdForTests", ReplyAction="http://tempuri.org/IStudyTasksService/GetUserIdForTestsResponse")]
+        System.Threading.Tasks.Task<string> GetUserIdForTestsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -305,12 +343,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
             return base.Channel.ClearAllAsync();
         }
         
-        public StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks() {
-            return base.Channel.GetAllTasks();
+        public StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasksOfUser(string userId) {
+            return base.Channel.GetAllTasksOfUser(userId);
         }
         
-        public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync() {
-            return base.Channel.GetAllTasksAsync();
+        public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksOfUserAsync(string userId) {
+            return base.Channel.GetAllTasksOfUserAsync(userId);
         }
         
         public int GetOpenTimeSpanIdFor(int taskId) {
@@ -351,6 +389,14 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         public System.Threading.Tasks.Task UpdateAsync(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject) {
             return base.Channel.UpdateAsync(messageObject);
+        }
+        
+        public string GetUserIdForTests() {
+            return base.Channel.GetUserIdForTests();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetUserIdForTestsAsync() {
+            return base.Channel.GetUserIdForTestsAsync();
         }
     }
 }

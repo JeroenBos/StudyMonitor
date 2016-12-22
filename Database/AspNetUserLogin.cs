@@ -1,4 +1,4 @@
-﻿namespace StudyMonitor.Database
+namespace StudyMonitor.Database
 {
     using System;
     using System.Collections.Generic;
@@ -6,20 +6,19 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class StudyTask
+    public partial class AspNetUserLogin
     {
-        public int Id { get; set; }
+        [Key]
+        [Column(Order = 0)]
+        public string LoginProvider { get; set; }
 
-        [Required]
-        [StringLength(150)]
-        public string Name { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        public string ProviderKey { get; set; }
 
-        [Required]
-        [StringLength(128)]
+        [Key]
+        [Column(Order = 2)]
         public string UserId { get; set; }
-
-        [Required]
-        public DateTime Estimate { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
     }

@@ -67,15 +67,17 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetAllTasks">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetAllTasksResponse">
+  <xs:element name="GetAllTasksOfUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetAllTasksResult" nillable="true" type="q5:ArrayOfStudyTaskService" />
+        <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksOfUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetAllTasksOfUserResult" nillable="true" type="q5:ArrayOfStudyTaskService" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,6 +143,18 @@
   <xs:element name="UpdateResponse">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserIdForTests">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserIdForTestsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetUserIdForTestsResult" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>

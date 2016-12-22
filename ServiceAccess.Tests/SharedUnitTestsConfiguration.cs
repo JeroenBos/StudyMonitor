@@ -11,5 +11,11 @@ namespace StudyMonitor.ServiceAccess.Tests
 	public class SharedUnitTestsConfiguration
 	{
 		protected readonly StudyTasksServiceClient client = new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
+	    protected readonly string UserId;
+
+	    public SharedUnitTestsConfiguration()
+	    {
+	        UserId = client.GetUserIdForTests();
+	    }
 	}
 }

@@ -24,7 +24,7 @@ namespace StudyMonitor.Service
 		void ClearAll();
 
 		[OperationContract]
-		IEnumerable<StudyTaskService> GetAllTasks();
+        IEnumerable<StudyTaskService> GetAllTasksOfUser(string userId);
 
 		[OperationContract]
 		int GetOpenTimeSpanIdFor(int taskId);
@@ -40,6 +40,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		void Update(TaskTimeSpanService messageObject);
+
+	    [OperationContract]
+	    string GetUserIdForTests();
 	}
 
 	[DataContract]
@@ -50,5 +53,11 @@ namespace StudyMonitor.Service
 
 		[DataMember]
 		public string Name { get; set; }
+
+        [DataMember]
+        public string UserId { get; set; }
+
+        [DataMember]
+        public DateTime Estimate { get; set; }
 	}
 }
