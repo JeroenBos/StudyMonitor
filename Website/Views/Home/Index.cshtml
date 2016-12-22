@@ -12,11 +12,12 @@
             bool hasOpenTask = Model.Any(task => task.IsOpen);
             foreach (var task in Model)
             {
-                var buttonCaption = task.IsOpen ? "Stop" : "Start";
-                <p class="body-content">
-                    @task.Id.ToString(), @task.Name
-                    <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(!task.IsOpen && hasOpenTask)">@buttonCaption</button>
-                </p>
+                <script>
+                    addTaskView(@task.Name, @task.Id, taskIsOpen, anyOtherTaskIsOpen)
+                </script>
+
+
+
             }
 
             <p class="body-content">
@@ -91,5 +92,16 @@
         else {
             alert("Empty task name is not allowed");
         }
+    }
+
+    function addTaskView(taskName, taskId, taskIsOpen, anyOtherTaskIsOpen) {
+
+        var hideTaskButton = !task.IsOpen && hasOpenTask;
+        var buttonCaption = taskIsOpen ? "Stop" : "Start";
+        $('#taskList').append(
+        '<p class="body-content">' +
+            taskId, taskName +
+            '<button type="button" id=' + taskId + '-button" onclick="myFunction(' + taskId + ')" hidden="' + hideTaskButton + '">' + buttonCaption + '</button>' +
+         '</p>');
     }
 </script>
