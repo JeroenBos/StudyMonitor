@@ -74,5 +74,22 @@ namespace StudyMonitor.ServiceAccess.Tests
 			task = new StudyTask(base.client, task.Service.Id);
 			Assert.AreEqual(expectedTimeSpanCount, task.TimeSpans.Count);
 		}
+		[TestMethod]
+		public void CumulativeTaskTimeSpansLengthTest()
+		{
+			var timeSpansInSeconds = new int[] { 5, 3, 10 };
+
+			var task = new StudyTask(base.client, "taskName");
+			StudyTaskCollection.Create(base.client).Add(task);
+
+			DateTime now = DateTime.Now;
+			foreach(var taskTimeSpan in timeSpansInSeconds.Select(seconds => new TaskTimeSpan(task, now) { End = now + TimeSpan.FromSeconds(seconds) }))
+			{
+				task.TimeSpans.Add(taskTimeSpan);
+			}
+
+			var expectedCumulativeLength = TimeSpan.FromSeconds(timeSpansInSeconds.Sum());
+			Assert.AreEqual(expectedCumulativeLength, task.GetLength());
+		}
 	}
 }
