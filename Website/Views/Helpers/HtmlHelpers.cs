@@ -14,11 +14,11 @@ namespace Website.Views.Helpers
 		public static HtmlString CreateTask(int taskId, string taskName, bool hideButton, string buttonCaption)
 		{
 			var htmlResult =
-				$@"<p class='body - content'>
+				$@"<p class='body-content'>
 						{taskId}, {taskName}
 						<button type='button' id='{taskId}-button' onclick='myFunction({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
 				  </p>";
-			return new HtmlString(htmlResult);
+			return new HtmlString(htmlResult.Replace("\r\n", "").Replace("\n", ""));
 		}
 	}
 }
