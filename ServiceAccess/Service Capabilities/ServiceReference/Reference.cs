@@ -230,6 +230,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetTimeSpan", ReplyAction="http://tempuri.org/IStudyTasksService/GetTimeSpanResponse")]
         System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService> GetTimeSpanAsync(int timeSpanId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/Update", ReplyAction="http://tempuri.org/IStudyTasksService/UpdateResponse")]
+        void Update(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/Update", ReplyAction="http://tempuri.org/IStudyTasksService/UpdateResponse")]
+        System.Threading.Tasks.Task UpdateAsync(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -337,6 +343,14 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService> GetTimeSpanAsync(int timeSpanId) {
             return base.Channel.GetTimeSpanAsync(timeSpanId);
+        }
+        
+        public void Update(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject) {
+            base.Channel.Update(messageObject);
+        }
+        
+        public System.Threading.Tasks.Task UpdateAsync(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject) {
+            return base.Channel.UpdateAsync(messageObject);
         }
     }
 }

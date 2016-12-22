@@ -7,13 +7,13 @@
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
     @{
-        var openTask = Model.FirstOrDefault(task => task.OpenTimeSpan != null);
+        bool hasOpenTask = Model.Any(task => task.IsOpen);
         foreach (var task in Model)
         {
-            var buttonCaption = task == openTask ? "Stop" : "Start";
+            var buttonCaption = task.IsOpen ? "Stop" : "Start";
             <p class="body-content">
                 @task.Id.ToString(), @task.Name
-                <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(openTask != null && openTask != task)">@buttonCaption</button>
+                <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(!task.IsOpen && hasOpenTask)">@buttonCaption</button>
             </p>
         }
 
@@ -26,9 +26,11 @@
 <script>
     function myFunction(taskId) {
         var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
-        
-        //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
 
+        // update database
+        $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen });
+
+        // update website client side
         if (taskWasOpen) {
             $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
             $('#' + taskId + '-button').text("Start");

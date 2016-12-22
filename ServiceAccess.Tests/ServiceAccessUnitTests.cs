@@ -17,7 +17,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var task = new StudyTask(base.client, expected);
 			StudyTaskCollection.Create(base.client).Add(task);
 
-			var result = client.GetTask(task.Service.Id).Name;
+			var result = client.GetTask(task.MessageObject.Id).Name;
 			Assert.AreEqual(expected, result);
 		}
 		[TestMethod]
@@ -26,9 +26,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 			const string expected = "taskName";
 			var task = new StudyTask(base.client, name: expected);
 			StudyTaskCollection.Create(base.client).Add(task);
-			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
 
-			var result = client.GetTask(task.Service.Id).Name;
+			var result = client.GetTask(task.MessageObject.Id).Name;
 			Assert.AreEqual(expected, result);
 		}
 		[TestMethod]
@@ -39,7 +39,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			tasks.Add(task);
 			tasks.Remove(task);
 
-			var result = client.GetTask(task.Service.Id);
+			var result = client.GetTask(task.MessageObject.Id);
 			Assert.IsNull(result);
 		}
 		[TestMethod]
@@ -47,10 +47,10 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			var task = new StudyTask(base.client, "taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
-			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
 			task.TimeSpans.RemoveAt(0);
 
-			var result = client.GetTimeSpansFor(task.Service.Id);
+			var result = client.GetTimeSpansFor(task.MessageObject.Id);
 			Assert.AreEqual(0, result.Length);
 		}
 		[TestMethod]
@@ -60,7 +60,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var task = new StudyTask(base.client, expected);
 			StudyTaskCollection.Create(base.client).Add(task);
 
-			task = new StudyTask(base.client, task.Service.Id);
+			task = new StudyTask(base.client, task.MessageObject.Id);
 			Assert.AreEqual(expected, task.Name);
 		}
 		[TestMethod]
@@ -68,11 +68,22 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			var task = new StudyTask(base.client, "taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
-			task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
 
 			int expectedTimeSpanCount = 1;
-			task = new StudyTask(base.client, task.Service.Id);
+			task = new StudyTask(base.client, task.MessageObject.Id);
 			Assert.AreEqual(expectedTimeSpanCount, task.TimeSpans.Count);
+		}
+		[TestMethod]
+		public void SetTaskTimeSpanEndTest()
+		{
+			var task = new StudyTask(base.client, "taskName");
+			StudyTaskCollection.Create(base.client).Add(task);
+			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
+			task.TimeSpans[0].End = DateTime.Today;
+
+			var taskTimeSpanEndFromDatabase = client.GetTimeSpan(task.TimeSpans[0].timeSpanMessageObject.Id).End;
+			Assert.IsNotNull(taskTimeSpanEndFromDatabase);
 		}
 		[TestMethod]
 		public void CumulativeTaskTimeSpansLengthTest()
@@ -83,9 +94,11 @@ namespace StudyMonitor.ServiceAccess.Tests
 			StudyTaskCollection.Create(base.client).Add(task);
 
 			DateTime now = DateTime.Now;
-			foreach(var taskTimeSpan in timeSpansInSeconds.Select(seconds => new TaskTimeSpan(task, now) { End = now + TimeSpan.FromSeconds(seconds) }))
+			foreach(var seconds in timeSpansInSeconds)
 			{
+				var taskTimeSpan = new TaskTimeSpan(base.client, task, now);
 				task.TimeSpans.Add(taskTimeSpan);
+				taskTimeSpan.End = now + TimeSpan.FromSeconds(seconds);
 			}
 
 			var expectedCumulativeLength = TimeSpan.FromSeconds(timeSpansInSeconds.Sum());

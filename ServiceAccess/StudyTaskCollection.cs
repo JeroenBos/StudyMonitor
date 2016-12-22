@@ -29,13 +29,13 @@ namespace StudyMonitor.ServiceAccess
 				case NotifyCollectionChangedAction.Add:
 					foreach (var newTask in e.NewItems.Cast<StudyTask>())
 					{
-						newTask.Service.Id = this.client.Add(newTask.Service);
+						newTask.MessageObject.Id = this.client.Add(newTask.MessageObject);
 					}
 					break;
 				case NotifyCollectionChangedAction.Remove:
 					foreach (var removedTask in e.OldItems.Cast<StudyTask>())
 					{
-						this.client.RemoveTask(removedTask.Service.Id);
+						this.client.RemoveTask(removedTask.MessageObject.Id);
 						removedTask.OnRemoveFromDatabase();
 					}
 					break;
@@ -61,7 +61,8 @@ namespace StudyMonitor.ServiceAccess
 			if (client == null) throw new ArgumentNullException(nameof(client));
 
 			var tasksFromDatabase = client.GetAllTasks()
-										  .Select(taskService => new StudyTask(client, taskService));
+										  .Select(taskService => new StudyTask(client, taskService))
+										  .ToList();
 			return new StudyTaskCollection(client, tasksFromDatabase);
 		}
 	}
