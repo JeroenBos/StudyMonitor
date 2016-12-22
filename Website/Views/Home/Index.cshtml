@@ -12,7 +12,7 @@
             bool hasOpenTask = Model.Any(task => task.IsOpen);
             foreach (var task in Model)
             {
-                var buttonCaption = task.IsOpen ? "Stop" : "Start";
+                var buttonCaption = task.IsOpen ? "Stop" : @task.TimeSpans.Count == 0 ? "Start" : "Continue";
                 <p class="body-content">
                     @task.Id.ToString(), @task.Name
                     <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(!task.IsOpen && hasOpenTask)">@buttonCaption</button>
@@ -63,15 +63,6 @@
                 }
             )
         );
-        $form.append(
-            $("<input>",
-                {
-                    type: 'hidden',
-                    name: 'estimateString',
-                    value: '@DateTime.Now'
-                }
-            )
-        );
 
         $('#taskList').append($form);
         $('#requestAddTask').remove();
@@ -81,7 +72,7 @@
         taskName = $('#createForm').find('input[name="taskName"]').val();
         if (taskName !== "") {
             var i = $.get("@Url.Action("Add", "Home")",
-                { taskName: taskName }, function (data, status, jqXHR) {
+                { taskName: taskName, estimateString: "@DateTime.Now" }, function (data, status, jqXHR) {
                     $('#createForm').remove();
                     $('#taskList').append('<p class="body-content">' + data);
                     $('#taskList').append('<button type="button" id="' + data + '-button" onclick="myFunction(' + data + ')">Start</button></p>');
