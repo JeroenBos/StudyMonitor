@@ -1,29 +1,27 @@
-﻿@model StudyMonitor.ServiceAccess.StudyTaskCollection
+﻿@using Website.Views.Helpers
+@model StudyMonitor.ServiceAccess.StudyTaskCollection
 
 @{
     ViewBag.Title = "Home Page";
 }
 
+
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
-    @{
-        if (Model != null)
-        {
-            bool hasOpenTask = Model.Any(task => task.IsOpen);
-            foreach (var task in Model)
-            {
-                var buttonCaption = task.IsOpen ? "Stop" : @task.TimeSpans.Count == 0 ? "Start" : "Continue";
-                <p class="body-content">
-                    @task.Id.ToString(), @task.Name
-                    <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(!task.IsOpen && hasOpenTask)">@buttonCaption</button>
-                </p>
-            }
 
-            <p class="body-content">
-                <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
-            </p>
+    @if (Model != null)
+    {
+        bool hasOpenTask = Model.Any(task => task.IsOpen);
+        foreach (var task in Model)
+        {
+            @HtmlHelpers.CreateTask(task.Id, task.Name, task.IsOpen, hasOpenTask);
         }
+
+        <p class="body-content">
+            <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
+        </p>
     }
+
 </div>
 
 <script>
@@ -35,10 +33,10 @@
 
         // update website client side
         if (taskWasOpen) {
-            $.find('button[id$="-button"]').forEach(function(button) { $(button).show(); });
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
             $('#' + taskId + '-button').text("Start");
         } else {
-            $.find('button[id$="-button"]').forEach(function(button) { $(button).hide(); });
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
             $('#' + taskId + '-button').text("Stop");
             $('#' + taskId + '-button').show();
         }
@@ -72,15 +70,26 @@
         taskName = $('#createForm').find('input[name="taskName"]').val();
         if (taskName !== "") {
             var i = $.get("@Url.Action("Add", "Home")",
-                { taskName: taskName, estimateString: "@DateTime.Now" }, function (data, status, jqXHR) {
+                { taskName: taskName, estimateString: '@DateTime.Now' }, function (data, status, jqXHR) {
                     $('#createForm').remove();
                     $('#taskList').append('<p class="body-content">' + data);
-                    $('#taskList').append('<button type="button" id="' + data + '-button" onclick="myFunction(' + data + ')">Start</button></p>');
+                    $('#taskList').append("@HtmlHelpers.CreateTask(123456, "echterg", false, false)".replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName))
                     $('#taskList').append('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>');
                 });
         }
         else {
             alert("Empty task name is not allowed");
         }
+    }
+
+    function addTaskView(taskName, taskId, taskIsOpen, anyOtherTaskIsOpen) {
+
+        var hideTaskButton = !task.IsOpen && hasOpenTask;
+        var buttonCaption = taskIsOpen ? "Stop" : "Start";
+        $('#taskList').append(
+        '<p class="body-content">' +
+            taskId, taskName +
+            '<button type="button" id="' + taskId + '-button" onclick="myFunction(' + taskId + ')" hidden="' + hideTaskButton + '">' + buttonCaption + '</button>' +
+         '</p>');
     }
 </script>
