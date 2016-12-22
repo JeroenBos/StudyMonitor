@@ -32,6 +32,15 @@ namespace StudyMonitor.ServiceAccess
 				base.Set(ref task, value);
 			}
 		}
+		/// <summary> Gets the length of this time span. </summary>
+		public TimeSpan Length
+		{
+			get
+			{
+				var end = this.End ?? DateTime.Now;
+				return end - this.Start;
+			}
+		}
 
 		private DateTime start;
 		private DateTime? end;
