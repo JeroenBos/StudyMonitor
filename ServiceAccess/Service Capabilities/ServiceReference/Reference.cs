@@ -217,12 +217,6 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/ClearAll", ReplyAction="http://tempuri.org/IStudyTasksService/ClearAllResponse")]
         System.Threading.Tasks.Task ClearAllAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
-        StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasks", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksResponse")]
-        System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser", ReplyAction="http://tempuri.org/IStudyTasksService/GetAllTasksOfUserResponse")]
         StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasksOfUser(string userId);
         
@@ -252,6 +246,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetTimeSpan", ReplyAction="http://tempuri.org/IStudyTasksService/GetTimeSpanResponse")]
         System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService> GetTimeSpanAsync(int timeSpanId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetUserIdForTests", ReplyAction="http://tempuri.org/IStudyTasksService/GetUserIdForTestsResponse")]
+        string GetUserIdForTests();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetUserIdForTests", ReplyAction="http://tempuri.org/IStudyTasksService/GetUserIdForTestsResponse")]
+        System.Threading.Tasks.Task<string> GetUserIdForTestsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -321,14 +321,6 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
             return base.Channel.ClearAllAsync();
         }
         
-        public StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasks() {
-            return base.Channel.GetAllTasks();
-        }
-        
-        public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[]> GetAllTasksAsync() {
-            return base.Channel.GetAllTasksAsync();
-        }
-        
         public StudyMonitor.ServiceAccess.ServiceReference.StudyTaskService[] GetAllTasksOfUser(string userId) {
             return base.Channel.GetAllTasksOfUser(userId);
         }
@@ -367,6 +359,14 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService> GetTimeSpanAsync(int timeSpanId) {
             return base.Channel.GetTimeSpanAsync(timeSpanId);
+        }
+        
+        public string GetUserIdForTests() {
+            return base.Channel.GetUserIdForTests();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetUserIdForTestsAsync() {
+            return base.Channel.GetUserIdForTestsAsync();
         }
     }
 }

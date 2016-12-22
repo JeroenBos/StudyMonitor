@@ -127,18 +127,6 @@ namespace StudyMonitor.Service
             }
         }
 
-        /// <summary>
-        /// Gets all the tasks from the database
-        /// </summary>
-        /// <returns>All tasks</returns>
-        public IEnumerable<StudyTaskService> GetAllTasks()
-        {
-            using (var context = new StudyTasksContext())
-            {
-                return context.Tasks.ToList().Select(x => x.ToService());
-            }
-        }
-
         /// <summary> Gets the ID of the open time span (i.e. with <see cref="TaskTimeSpan.End"/> == null) pertaining to the specified task id; 
         /// or 0 in case there is no such open time span. </summary>
         public int GetOpenTimeSpanIdFor(int taskId)
@@ -207,6 +195,34 @@ namespace StudyMonitor.Service
                     .FirstOrDefault(timeSpanDB => timeSpanDB.Id == timeSpanId);
 
                 return dbResult?.ToService(this);
+            }
+        }
+
+        public string GetUserIdForTests()
+        {
+            using (var context = new StudyTasksContext())
+            {
+                var getFirstId = context.AspNetUsers.FirstOrDefault();
+                if (getFirstId != null)
+                {
+                    return getFirstId.Id;
+                }
+                else
+                {
+                    context.AspNetUsers.Add(new AspNetUser()
+                    {
+                        UserName = "test",
+                        EmailConfirmed = false,
+                        Id = "TestingId",
+                        PhoneNumberConfirmed = false,
+                        TwoFactorEnabled = false,
+                        AccessFailedCount = 0,
+                        LockoutEnabled = false
+                    });
+                    context.SaveChanges();
+
+                    return context.AspNetUsers.First().Id;
+                }
             }
         }
     }

@@ -22,9 +22,6 @@ namespace StudyMonitor.Service
 		[OperationContract]
 		void ClearAll();
 
-		[OperationContract]
-		IEnumerable<StudyTaskService> GetAllTasks();
-
         [OperationContract]
         IEnumerable<StudyTaskService> GetAllTasksOfUser(string userId);
 
@@ -39,6 +36,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		TaskTimeSpanService GetTimeSpan(int timeSpanId);
+
+	    [OperationContract]
+	    string GetUserIdForTests();
 	}
 
 	[DataContract]
