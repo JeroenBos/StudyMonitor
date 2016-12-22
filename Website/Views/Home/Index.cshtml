@@ -8,10 +8,9 @@
     <h1>Study Monitor</h1>
     @{
         var openTask = Model.FirstOrDefault(task => task.OpenTimeSpan != null);
-        var buttonCaption = openTask == null ? "Start" : "Stop";
-        var test = Model.GroupBy(task => task.Id).Where(group => group.Count() != 1).ToList();
         foreach (var task in Model)
         {
+            var buttonCaption = task == openTask ? "Stop" : "Start";
             <p class="body-content">
                 @task.Id.ToString(), @task.Name
                 <button type="button" id="@task.Id-button" onclick="myFunction(@task.Id)" hidden="@(openTask != null && openTask != task)">@buttonCaption</button>
@@ -27,19 +26,17 @@
 <script>
     function myFunction(taskId) {
         var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
-        $.find('button[id$="-button"]').forEach(function (button) { button.hidden = taskWasOpen });
+        
+        //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
 
         if (taskWasOpen) {
-            //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
-
-
-
-
-
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
+            $('#' + taskId + '-button').text("Start");
         }
         else {
-            // $.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: false });
-            $('#' + taskId + '-button').text("Stop")
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
+            $('#' + taskId + '-button').text("Stop");
+            $('#' + taskId + '-button').show();
         }
     }
 
