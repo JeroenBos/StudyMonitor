@@ -11,11 +11,17 @@ namespace StudyMonitor.ServiceAccess.Tests
 	[TestClass]
 	public class ServiceAccessUnitTests : SharedUnitTestsConfiguration
 	{
+
+	    private StudyTask CreateStudyTaskWithName(string name)
+	    {
+	        return new StudyTask(base.client, name, this.UserId, DateTime.Now);
+        }
+
 		[TestMethod]
 		public void AddTaskTest()
 		{
 			const string expected = "taskName";
-			var task = new StudyTask(base.client, expected, this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName(expected);
 			StudyTaskCollection.Create(base.client).Add(task);
 
 			var result = client.GetTask(task.MessageObject.Id).Name;
@@ -25,7 +31,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void AddTimeSpanTest()
 		{
 			const string expected = "taskName";
-			var task = new StudyTask(base.client, expected, this.UserId, DateTime.Now);
+		    var task = CreateStudyTaskWithName(expected);
 			StudyTaskCollection.Create(base.client).Add(task);
 			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
 
@@ -36,7 +42,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void RemoveTaskTest()
 		{
 			var tasks = StudyTaskCollection.Create(base.client);
-			var task = new StudyTask(base.client, "name", this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName("name");
 			tasks.Add(task);
 			tasks.Remove(task);
 
@@ -46,7 +52,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void RemoveTimeSpanTest()
 		{
-			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName("taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
 			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
 			task.TimeSpans.RemoveAt(0);
@@ -58,7 +64,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TaskRetrievalTest()
 		{
 			const string expected = "taskName";
-			var task = new StudyTask(base.client, expected, this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName(expected);
 			StudyTaskCollection.Create(base.client).Add(task);
 
 			task = new StudyTask(base.client, task.MessageObject.Id);
@@ -67,7 +73,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void TaskRetrievalWithTimeSpansTest()
 		{
-			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName("taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
 			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
 
@@ -78,7 +84,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void SetTaskTimeSpanEndTest()
 		{
-			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName("taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
 			task.TimeSpans.Add(new TaskTimeSpan(base.client, task, DateTime.Now));
 			task.TimeSpans[0].End = DateTime.Today;
@@ -91,7 +97,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			var timeSpansInSeconds = new int[] { 5, 3, 10 };
 
-			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName("taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
 
 			DateTime now = DateTime.Now;
@@ -108,7 +114,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void ChangeTaskEstimateTest()
 		{
-			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			var task = CreateStudyTaskWithName("taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
 
 			DateTime expected = DateTime.Today;
