@@ -105,5 +105,17 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var expectedCumulativeLength = TimeSpan.FromSeconds(timeSpansInSeconds.Sum());
 			Assert.AreEqual(expectedCumulativeLength, task.GetLength());
 		}
+		[TestMethod]
+		public void ChangeTaskEstimateTest()
+		{
+			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			StudyTaskCollection.Create(base.client).Add(task);
+
+			DateTime expected = DateTime.Today;
+			task.Estimate = expected;
+
+			var taskEstimateFromDatabase = client.GetTask(task.MessageObject.Id).Estimate;
+			Assert.AreEqual(expected, taskEstimateFromDatabase);
+		}
 	}
 }
