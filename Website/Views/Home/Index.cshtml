@@ -4,19 +4,17 @@
     ViewBag.Title = "Home Page";
 }
 
+
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
-    @{
-        if (Model != null)
+
+    @Website.Views.Helpers.TestHelper.Note("hiasdffasdf")
+
+        @if (Model != null)
         {
             bool hasOpenTask = Model.Any(task => task.IsOpen);
             foreach (var task in Model)
             {
-                <script>
-                    addTaskView(@task.Name, @task.Id, taskIsOpen, anyOtherTaskIsOpen)
-                </script>
-
-
 
             }
 
@@ -24,7 +22,7 @@
                 <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
             </p>
         }
-    }
+    
 </div>
 
 <script>
@@ -36,10 +34,10 @@
 
         // update website client side
         if (taskWasOpen) {
-            $.find('button[id$="-button"]').forEach(function(button) { $(button).show(); });
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
             $('#' + taskId + '-button').text("Start");
         } else {
-            $.find('button[id$="-button"]').forEach(function(button) { $(button).hide(); });
+            $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
             $('#' + taskId + '-button').text("Stop");
             $('#' + taskId + '-button').show();
         }
