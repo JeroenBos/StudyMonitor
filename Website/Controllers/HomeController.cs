@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using Website.Models;
 using StudyMonitor.ServiceAccess;
@@ -18,9 +19,15 @@ namespace Website.Controllers
 		public ActionResult Index()
 		{
 			var client = CreateTasksClient();
-			var allTasks = StudyTaskCollection.FromDatabase(client);
+            var userId = User.Identity.GetUserId();
+            if (userId != null)
+            {
+                var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+                return View(userTasks);
+            }
 
-			return View(allTasks);
+
+            return View();
 		}
 
 		public ActionResult About()
@@ -72,19 +79,23 @@ namespace Website.Controllers
 	    /// This method is invoked when the client adds a task
 	    /// </summary>
 	    /// <param name="taskName">The name of the task</param>
+		/// <param name="estimateString">String representation of the estimated for the new task</param>
 	    /// <returns>the task id created for the task name</returns>
-		public int Add(string taskName)
+		public int Add(string taskName, string estimateString)
 		{
+			DateTime estimate;
+			string userId = User.Identity.GetUserId();
 			// Check the string for a valid task name
-			if (true)
+			if (DateTime.TryParse(estimateString, out estimate))
 			{
 				var client = CreateTasksClient();
-				var databaseConnection = StudyTaskCollection.FromDatabase(client);
-				var task = new StudyTask(client, taskName);
+				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
+				var task = new StudyTask(client, taskName, userId, estimate);
 				databaseConnection.Add(task);
 
 				return task.Id;
 			}
+			return 0;
 		}
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>

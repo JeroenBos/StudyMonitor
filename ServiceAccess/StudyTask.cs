@@ -56,6 +56,7 @@ namespace StudyMonitor.ServiceAccess
 			if (service == null) throw new ArgumentNullException(nameof(service));
 			if (task == null) throw new ArgumentNullException(nameof(task));
 			if (task.Id == 0) throw new ArgumentException();
+            if (task.UserId == null) throw new ArgumentNullException(nameof(task.UserId));
 
 			this.MessageObject = task;
 			this.service = service;
@@ -69,12 +70,13 @@ namespace StudyMonitor.ServiceAccess
 			this.PropertyChanged += OnPropertyChanged;
 		}
 		/// <summary> Creates a new task. </summary>
-		public StudyTask(IStudyTasksService client, string name)
+		public StudyTask(IStudyTasksService client, string name, string userId, DateTime estimate)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
+            if(userId == null) throw new ArgumentNullException(nameof(userId));
 
-			this.MessageObject = new StudyTaskService() { Name = name };
+			this.MessageObject = new StudyTaskService() { Name = name, UserId = userId, Estimate = estimate};
 			this.service = client;
 			this.Name = name;
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();

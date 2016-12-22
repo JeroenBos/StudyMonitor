@@ -37,11 +37,11 @@
   <wsdl:message name="IStudyTasksService_ClearAll_OutputMessage">
     <wsdl:part name="parameters" element="tns:ClearAllResponse" />
   </wsdl:message>
-  <wsdl:message name="IStudyTasksService_GetAllTasks_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllTasks" />
+  <wsdl:message name="IStudyTasksService_GetAllTasksOfUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksOfUser" />
   </wsdl:message>
-  <wsdl:message name="IStudyTasksService_GetAllTasks_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllTasksResponse" />
+  <wsdl:message name="IStudyTasksService_GetAllTasksOfUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksOfUserResponse" />
   </wsdl:message>
   <wsdl:message name="IStudyTasksService_GetOpenTimeSpanIdFor_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOpenTimeSpanIdFor" />
@@ -73,6 +73,12 @@
   <wsdl:message name="IStudyTasksService_Update_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateResponse" />
   </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetUserIdForTests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserIdForTests" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetUserIdForTests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserIdForTestsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IStudyTasksService">
     <wsdl:operation name="Add">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/Add" message="tns:IStudyTasksService_Add_InputMessage" />
@@ -94,9 +100,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/ClearAll" message="tns:IStudyTasksService_ClearAll_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/ClearAllResponse" message="tns:IStudyTasksService_ClearAll_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetAllTasks">
-      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasks" message="tns:IStudyTasksService_GetAllTasks_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksResponse" message="tns:IStudyTasksService_GetAllTasks_OutputMessage" />
+    <wsdl:operation name="GetAllTasksOfUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser" message="tns:IStudyTasksService_GetAllTasksOfUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUserResponse" message="tns:IStudyTasksService_GetAllTasksOfUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetOpenTimeSpanIdFor">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor" message="tns:IStudyTasksService_GetOpenTimeSpanIdFor_InputMessage" />
@@ -117,6 +123,10 @@
     <wsdl:operation name="Update">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/Update" message="tns:IStudyTasksService_Update_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/UpdateResponse" message="tns:IStudyTasksService_Update_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserIdForTests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetUserIdForTests" message="tns:IStudyTasksService_GetUserIdForTests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetUserIdForTestsResponse" message="tns:IStudyTasksService_GetUserIdForTests_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IStudyTasksService" type="tns:IStudyTasksService">
@@ -166,8 +176,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetAllTasks">
-      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetAllTasks" style="document" />
+    <wsdl:operation name="GetAllTasksOfUser">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -213,6 +223,15 @@
     </wsdl:operation>
     <wsdl:operation name="Update">
       <soap:operation soapAction="http://tempuri.org/IStudyTasksService/Update" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserIdForTests">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetUserIdForTests" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
