@@ -31,7 +31,12 @@ namespace StudyMonitor.ServiceAccess
 		{
 			get { return this.Service.Id; }
 		}
-
+		
+		/// <summary> Gets the open time span associated to this task, if any; null otherwise. </summary>
+		public TaskTimeSpan OpenTimeSpan
+		{
+			get { return TimeSpans.FirstOrDefault(timeSpan => timeSpan.End == null); }
+		}
 
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
 		/// <param name="taskId"> The id of the task in the database to fetch. </param>
@@ -88,12 +93,6 @@ namespace StudyMonitor.ServiceAccess
 			this.TimeSpans.CollectionChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
 			this.PropertyChanged -= OnPropertyChanged;
 			this.PropertyChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
-		}
-
-		/// <summary> Gets the open time span associated to this task, if any; null otherwise. </summary>
-		public TaskTimeSpan OpenTimeSpan
-		{
-			get { return TimeSpans.FirstOrDefault(timeSpan => timeSpan.End == null); }
 		}
 
 		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
