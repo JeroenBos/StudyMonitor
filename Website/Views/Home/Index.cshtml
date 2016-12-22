@@ -14,7 +14,7 @@
         bool hasOpenTask = Model.Any(task => task.IsOpen);
         foreach (var task in Model)
         {
-            @HtmlHelpers.CreateTask(task.Id, task.IsOpen, hasOpenTask);
+            @HtmlHelpers.CreateTask(task.Id, task.Name, task.IsOpen, hasOpenTask);
         }
 
         <p class="body-content">
