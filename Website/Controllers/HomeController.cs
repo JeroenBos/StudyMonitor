@@ -79,22 +79,23 @@ namespace Website.Controllers
 	    /// This method is invoked when the client adds a task
 	    /// </summary>
 	    /// <param name="taskName">The name of the task</param>
-	    /// <param name="estimateString">The estimate time of the object</param>
-	    /// <returns>Redirects the action to Index</returns>
-	    [HttpPost]
-		public ActionResult Add(string taskName, string estimateString)
-	    {
-	        DateTime estimate;
-	        string userId = User.Identity.GetUserId();
+		/// <param name="estimateString">String representation of the estimated for the new task</param>
+	    /// <returns>the task id created for the task name</returns>
+		public int Add(string taskName, string estimateString)
+		{
+			DateTime estimate;
+			string userId = User.Identity.GetUserId();
 			// Check the string for a valid task name
 			if (DateTime.TryParse(estimateString, out estimate))
 			{
 				var client = CreateTasksClient();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
-				databaseConnection.Add(new StudyTask(client, taskName, userId, estimate));
-			}
+				var task = new StudyTask(client, taskName, userId, estimate);
+				databaseConnection.Add(task);
 
-			return RedirectToAction("Index", "Home");
+				return task.Id;
+			}
+			return 0;
 		}
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>

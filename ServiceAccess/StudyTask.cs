@@ -24,6 +24,12 @@ namespace StudyMonitor.ServiceAccess
 				base.Set(ref name, value);
 			}
 		}
+
+		public DateTime Estimate
+		{
+			get { return estimate; }
+			set { Set(ref estimate, value); }
+		}
 		/// <summary> Gets the collection of time spans associated with this task. Modifications will be propagated to the database. </summary>
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 		/// <summary> Gets the ID this task has in the database. </summary>
@@ -35,6 +41,12 @@ namespace StudyMonitor.ServiceAccess
 		public bool IsOpen
 		{
 			get { return this.OpenTimeSpan != null; }
+		}
+
+		/// <summary> Gets the open time span associated to this task, if any; null otherwise. </summary>
+		public TaskTimeSpan OpenTimeSpan
+		{
+			get { return TimeSpans.FirstOrDefault(timeSpan => timeSpan.End == null); }
 		}
 
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
@@ -50,7 +62,7 @@ namespace StudyMonitor.ServiceAccess
 			if (service == null) throw new ArgumentNullException(nameof(service));
 			if (task == null) throw new ArgumentNullException(nameof(task));
 			if (task.Id == 0) throw new ArgumentException();
-            if (task.UserId == null) throw new ArgumentNullException(nameof(task.UserId));
+			if (task.UserId == null) throw new ArgumentNullException(nameof(task.UserId));
 
 			this.MessageObject = task;
 			this.service = service;
@@ -68,17 +80,24 @@ namespace StudyMonitor.ServiceAccess
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
-            if(userId == null) throw new ArgumentNullException(nameof(userId));
+			if (userId == null) throw new ArgumentNullException(nameof(userId));
 
-			this.MessageObject = new StudyTaskService() { Name = name, UserId = userId, Estimate = estimate};
+			this.MessageObject = new StudyTaskService() { Name = name, UserId = userId, Estimate = estimate };
 			this.service = client;
 			this.Name = name;
+			this.Estimate = estimate;
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();
 
 			this.TimeSpans.CollectionChanged += OnTimeSpansChanged;
 			this.PropertyChanged += OnPropertyChanged;
 		}
 
+		/// <summary> Gets the total length of all time spans in this task. </summary>
+		public TimeSpan GetLength()
+		{
+			return TimeSpans.Select(taskTimeSpan => taskTimeSpan.Length)
+							.Aggregate((a, b) => a + b);
+		}
 		/// <summary> Removes the task represented by this instance from the database. </summary>
 		internal void OnRemoveFromDatabase()
 		{
@@ -90,21 +109,18 @@ namespace StudyMonitor.ServiceAccess
 			this.PropertyChanged += (sender, e) => { throw new Exception(removedErrorMessage); };
 		}
 
-		/// <summary> Gets the open time span associated to this task, if any; null otherwise. </summary>
-		public TaskTimeSpan OpenTimeSpan
-		{
-			get { return TimeSpans.FirstOrDefault(timeSpan => timeSpan.End == null); }
-		}
-
 		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			switch (e.PropertyName)
 			{
 				case nameof(Name):
 					MessageObject.Name = this.Name;
-					
+					break;
+				case nameof(Estimate):
+					MessageObject.Estimate = this.Estimate;
 					break;
 			}
+			this.service.UpdateTask(this.MessageObject);
 		}
 		private void OnTimeSpansChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
@@ -139,5 +155,6 @@ namespace StudyMonitor.ServiceAccess
 			return TimeSpans.Count(timeSpan => timeSpan.End == null) <= 1;
 		}
 		private string name;
+		private DateTime estimate;
 	}
 }

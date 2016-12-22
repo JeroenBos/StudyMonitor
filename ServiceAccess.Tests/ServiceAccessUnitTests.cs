@@ -86,5 +86,36 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var taskTimeSpanEndFromDatabase = client.GetTimeSpan(task.TimeSpans[0].timeSpanMessageObject.Id).End;
 			Assert.IsNotNull(taskTimeSpanEndFromDatabase);
 		}
+		[TestMethod]
+		public void CumulativeTaskTimeSpansLengthTest()
+		{
+			var timeSpansInSeconds = new int[] { 5, 3, 10 };
+
+			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			StudyTaskCollection.Create(base.client).Add(task);
+
+			DateTime now = DateTime.Now;
+			foreach(var seconds in timeSpansInSeconds)
+			{
+				var taskTimeSpan = new TaskTimeSpan(base.client, task, now);
+				task.TimeSpans.Add(taskTimeSpan);
+				taskTimeSpan.End = now + TimeSpan.FromSeconds(seconds);
+			}
+
+			var expectedCumulativeLength = TimeSpan.FromSeconds(timeSpansInSeconds.Sum());
+			Assert.AreEqual(expectedCumulativeLength, task.GetLength());
+		}
+		[TestMethod]
+		public void ChangeTaskEstimateTest()
+		{
+			var task = new StudyTask(base.client, "taskName", this.UserId, DateTime.Now);
+			StudyTaskCollection.Create(base.client).Add(task);
+
+			DateTime expected = DateTime.Today;
+			task.Estimate = expected;
+
+			var taskEstimateFromDatabase = client.GetTask(task.MessageObject.Id).Estimate;
+			Assert.AreEqual(expected, taskEstimateFromDatabase);
+		}
 	}
 }

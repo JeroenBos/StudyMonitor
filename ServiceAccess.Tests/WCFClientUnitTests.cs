@@ -31,7 +31,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void TaskIdAssignmentTest()
 		{
-			var taskId = client.Add(new StudyTaskService() { Name = "Erik" , UserId = this.UserId });
+			var taskId = client.Add(new StudyTaskService() { Name = "Erik" , UserId = this.UserId, Estimate = DateTime.Now });
 
 			var retrievedTask = client.GetTask(taskId);
 
@@ -41,9 +41,9 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void RetrieveAllTasksTest()
 		{
-			var taskId1 = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId });
-			var taskId2 = client.Add(new StudyTaskService() { Name = "Jeroen", UserId = this.UserId });
-			var taskId3 = client.Add(new StudyTaskService() { Name = "Nobody", UserId = this.UserId });
+			var taskId1 = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId, Estimate = DateTime.Now });
+			var taskId2 = client.Add(new StudyTaskService() { Name = "Jeroen", UserId = this.UserId, Estimate = DateTime.Now });
+			var taskId3 = client.Add(new StudyTaskService() { Name = "Nobody", UserId = this.UserId, Estimate = DateTime.Now });
             
 			var allTasks = client.GetAllTasksOfUser(this.UserId);
 
@@ -53,7 +53,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void TaskCreationAndRetrievalTest()
 		{
-			var taskId = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId });
+			var taskId = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId, Estimate = DateTime.Now });
 
 			var retrievedTask = client.GetTask(taskId);
 
@@ -64,7 +64,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TaskWithNameCreationTest()
 		{
 			const string name = "myname";
-			var taskId = client.Add(new StudyTaskService() { Name = name, UserId = this.UserId });
+			var taskId = client.Add(new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now });
 
 			var retrievedTask = client.GetTask(taskId);
 
@@ -75,7 +75,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TimeSpanIdAssignmentTest()
 		{
 			const string name = "myname";
-			var taskId = client.Add(new StudyTaskService() { Name = name, UserId = this.UserId });
+			var taskId = client.Add(new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now });
 			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
 			Assert.AreNotEqual(timeSpanId, 0);
@@ -85,7 +85,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TimeSpanAdditionToTaskTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId };
+			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
 			var taskId = client.Add(task);
 			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
@@ -97,7 +97,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void TimeSpanRemovalTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId };
+			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
 			var taskId = client.Add(task);
 			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
@@ -112,7 +112,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void OpenTimeSpanAdditionToTaskTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId };
+			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
 			var taskId = client.Add(task);
 			var closedTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 			var expectedOpenTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = null, TaskId = taskId });
@@ -123,7 +123,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		[TestMethod]
 		public void RemoveTaskTest()
 		{
-			var taskId = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId });
+			var taskId = client.Add(new StudyTaskService() { Name = "Erik", UserId = this.UserId, Estimate = DateTime.Now });
 			client.RemoveTask(taskId);
 			var result = client.GetAllTasksOfUser(this.UserId).Length;
 			var expected = 0;
@@ -148,7 +148,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		public void GetTimeSpanTest()
 		{
 			const string name = "myname";
-			var task = new StudyTaskService() { Name = name, UserId = this.UserId };
+			var task = new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
 			var taskId = client.Add(task);
 			int expectedTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 

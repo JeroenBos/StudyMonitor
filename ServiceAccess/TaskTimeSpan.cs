@@ -33,6 +33,15 @@ namespace StudyMonitor.ServiceAccess
 				base.Set(ref task, value);
 			}
 		}
+		/// <summary> Gets the length of this time span. </summary>
+		public TimeSpan Length
+		{
+			get
+			{
+				var end = this.End ?? DateTime.Now;
+				return end - this.Start;
+			}
+		}
 
 		private DateTime start;
 		private DateTime? end;
@@ -85,7 +94,7 @@ namespace StudyMonitor.ServiceAccess
 					timeSpanMessageObject.TaskId = this.Task.MessageObject.Id;
 					break;
 			}
-			service.Update(timeSpanMessageObject);
+			service.UpdateTimeSpan(timeSpanMessageObject);
 		}
 	}
 }
