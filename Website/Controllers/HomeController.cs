@@ -72,19 +72,19 @@ namespace Website.Controllers
 	    /// This method is invoked when the client adds a task
 	    /// </summary>
 	    /// <param name="taskName">The name of the task</param>
-	    /// <returns>Redirects the action to Index</returns>
-	    [HttpPost]
-		public ActionResult Add(string taskName)
+	    /// <returns>the task id created for the task name</returns>
+		public int Add(string taskName)
 		{
 			// Check the string for a valid task name
 			if (true)
 			{
 				var client = CreateTasksClient();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client);
-				databaseConnection.Add(new StudyTask(client, taskName));
-			}
+				var task = new StudyTask(client, taskName);
+				databaseConnection.Add(task);
 
-			return RedirectToAction("Index", "Home");
+				return task.Id;
+			}
 		}
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
