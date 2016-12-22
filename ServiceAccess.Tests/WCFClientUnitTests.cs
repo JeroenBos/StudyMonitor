@@ -76,7 +76,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 		{
 			const string name = "myname";
 			var taskId = client.Add(new StudyTaskService() { Name = name });
-			var timeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
 			Assert.AreNotEqual(timeSpanId, 0);
 		}
@@ -87,7 +87,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			const string name = "myname";
 			var task = new StudyTaskService() { Name = name };
 			var taskId = client.Add(task);
-			var timeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
 			var taskTimeSpans = client.GetTimeSpansFor(taskId);
 			Assert.AreEqual(taskTimeSpans.Length, 1);
@@ -99,7 +99,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			const string name = "myname";
 			var task = new StudyTaskService() { Name = name };
 			var taskId = client.Add(task);
-			var timeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var timeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
 			client.RemoveTimeSpan(timeSpanId);
 
@@ -114,8 +114,8 @@ namespace StudyMonitor.ServiceAccess.Tests
 			const string name = "myname";
 			var task = new StudyTaskService() { Name = name };
 			var taskId = client.Add(task);
-			var closedTimeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
-			var expectedOpenTimeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = null, TaskId = taskId });
+			var closedTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			var expectedOpenTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = null, TaskId = taskId });
 
 			var obtainedOpenTimeSpanId = client.GetOpenTimeSpanIdFor(taskId);
 			Assert.AreEqual(expectedOpenTimeSpanId, obtainedOpenTimeSpanId);
@@ -151,7 +151,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			const string name = "myname";
 			var task = new StudyTaskService() { Name = name };
 			var taskId = client.Add(task);
-			int expectedTimeSpanId = client.AddTimeSpanTo(taskId, new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
+			int expectedTimeSpanId = client.AddTimeSpanTo(new TaskTimeSpanService() { Start = DateTime.Now, End = DateTime.Now, TaskId = taskId });
 
 			var resultTimeSpan = client.GetTimeSpan(expectedTimeSpanId);
 			Assert.AreEqual(expectedTimeSpanId, resultTimeSpan.Id);

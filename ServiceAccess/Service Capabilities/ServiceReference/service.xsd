@@ -32,7 +32,6 @@
   <xs:element name="AddTimeSpanTo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="taskId" type="xs:int" />
         <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="timeSpan" nillable="true" type="q3:TaskTimeSpanService" />
       </xs:sequence>
     </xs:complexType>
