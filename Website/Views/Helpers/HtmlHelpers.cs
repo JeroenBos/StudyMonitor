@@ -7,15 +7,18 @@ namespace Website.Views.Helpers
 {
 	public class HtmlHelpers
 	{
-		public static HtmlString Note(string content)
+		public static HtmlString CreateTask(int taskId, bool taskIsOpen, bool anyOtherTaskIsOpen)
 		{
-			var result = $@"<div class='note' style='border: 1px solid black; width: 90%; padding: 5px; margin-left: 15px;'>	
-								<p>	<strong> Note </strong> 
-										&nbsp; &nbsp; {content}
-								</p>
-							</div> ";
-
-			return new HtmlString(result);
+			return CreateTask(taskId, hideButton: !taskIsOpen && anyOtherTaskIsOpen, buttonCaption: taskIsOpen ? "Stop" : "Start");
+		}
+		public static HtmlString CreateTask(int taskId, bool hideButton, string buttonCaption)
+		{
+			var htmlResult =
+				$@"<p class='body - content'>
+						taskId, taskName +
+						<button type='button' id='{taskId}'-button' onclick='myFunction({taskId})' hidden='{hideButton}'>{buttonCaption}</button>
+				  </p>";
+			return new HtmlString(htmlResult);
 		}
 	}
 }

@@ -9,21 +9,19 @@
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
 
-    @HtmlHelpers.Note("hiasdffasdf")
-
-        @if (Model != null)
+    @if (Model != null)
+    {
+        bool hasOpenTask = Model.Any(task => task.IsOpen);
+        foreach (var task in Model)
         {
-            bool hasOpenTask = Model.Any(task => task.IsOpen);
-            foreach (var task in Model)
-            {
-
-            }
-
-            <p class="body-content">
-                <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
-            </p>
+            @HtmlHelpers.CreateTask(task.Id, task.IsOpen, hasOpenTask);
         }
-    
+
+        <p class="body-content">
+            <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
+        </p>
+    }
+
 </div>
 
 <script>
