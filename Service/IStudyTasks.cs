@@ -23,9 +23,12 @@ namespace StudyMonitor.Service
 		void ClearAll();
 
 		[OperationContract]
-		IEnumerable<StudyTaskService> GetAllTasks(string UserId);
+		IEnumerable<StudyTaskService> GetAllTasks();
 
-		[OperationContract]
+        [OperationContract]
+        IEnumerable<StudyTaskService> GetAllTasksOfUser(string userId);
+
+        [OperationContract]
 		int GetOpenTimeSpanIdFor(int taskId);
 
 		[OperationContract]

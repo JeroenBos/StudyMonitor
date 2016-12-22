@@ -48,6 +48,15 @@
                 }
             )
         );
+        $form.append(
+            $("<input>",
+                {
+                    type: 'hidden',
+                    name: 'userId',
+                    value: '@ViewBag.userId'
+                }
+            )
+        );
         $('#taskList').append($form);
         $('#requestAddTask').remove();
     }

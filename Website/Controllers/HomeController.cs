@@ -23,6 +23,7 @@ namespace Website.Controllers
             if (userId != null)
             {
                 var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+                ViewBag.userId = userId;
                 return View(userTasks);
             }
 
@@ -80,14 +81,14 @@ namespace Website.Controllers
 	    /// <param name="taskName">The name of the task</param>
 	    /// <returns>Redirects the action to Index</returns>
 	    [HttpPost]
-		public ActionResult Add(string taskName)
+		public ActionResult Add(string taskName, string userId)
 		{
 			// Check the string for a valid task name
 			if (true)
 			{
 				var client = CreateTasksClient();
-				//var databaseConnection = StudyTaskCollection.FromDatabase(client);
-				//databaseConnection.Add(new StudyTask(client, taskName));
+				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
+				databaseConnection.Add(new StudyTask(client, taskName, userId));
 			}
 
 			return RedirectToAction("Index", "Home");

@@ -115,14 +115,27 @@ namespace StudyMonitor.Service
         }
 
         /// <summary>
-        /// Gets all the tasks from the database
+        /// Gets all the tasks from the database of the given user
         /// </summary>
-        /// <returns>All tasks</returns>
-        public IEnumerable<StudyTaskService> GetAllTasks(string userId)
+        /// <param name="userId">The user id of the tasks you want to get</param>
+        /// <returns>All tasks of the given user</returns>
+        public IEnumerable<StudyTaskService> GetAllTasksOfUser(string userId)
         {
             using (var context = new StudyTasksContext())
             {
                 return context.Tasks.ToList().Select(x => x.ToService()).Where(x => x.UserId == userId);
+            }
+        }
+
+        /// <summary>
+        /// Gets all the tasks from the database
+        /// </summary>
+        /// <returns>All tasks</returns>
+        public IEnumerable<StudyTaskService> GetAllTasks()
+        {
+            using (var context = new StudyTasksContext())
+            {
+                return context.Tasks.ToList().Select(x => x.ToService());
             }
         }
 

@@ -69,15 +69,27 @@
   </xs:element>
   <xs:element name="GetAllTasks">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetAllTasksResponse">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetAllTasksResult" nillable="true" type="q5:ArrayOfStudyTaskService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksOfUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksOfUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetAllTasksOfUserResult" nillable="true" type="q6:ArrayOfStudyTaskService" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -129,7 +141,7 @@
   <xs:element name="GetTimeSpanResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetTimeSpanResult" nillable="true" type="q6:TaskTimeSpanService" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetTimeSpanResult" nillable="true" type="q7:TaskTimeSpanService" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

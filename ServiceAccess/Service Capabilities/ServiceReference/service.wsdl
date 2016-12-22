@@ -43,6 +43,12 @@
   <wsdl:message name="IStudyTasksService_GetAllTasks_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllTasksResponse" />
   </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetAllTasksOfUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksOfUser" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetAllTasksOfUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksOfUserResponse" />
+  </wsdl:message>
   <wsdl:message name="IStudyTasksService_GetOpenTimeSpanIdFor_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOpenTimeSpanIdFor" />
   </wsdl:message>
@@ -91,6 +97,10 @@
     <wsdl:operation name="GetAllTasks">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasks" message="tns:IStudyTasksService_GetAllTasks_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksResponse" message="tns:IStudyTasksService_GetAllTasks_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksOfUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser" message="tns:IStudyTasksService_GetAllTasksOfUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUserResponse" message="tns:IStudyTasksService_GetAllTasksOfUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetOpenTimeSpanIdFor">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor" message="tns:IStudyTasksService_GetOpenTimeSpanIdFor_InputMessage" />
@@ -158,6 +168,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAllTasks">
       <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetAllTasks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksOfUser">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
