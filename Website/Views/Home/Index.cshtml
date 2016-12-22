@@ -72,8 +72,7 @@
             var i = $.get("@Url.Action("Add", "Home")",
                 { taskName: taskName, estimateString: '@DateTime.Now' }, function (data, status, jqXHR) {
                     $('#createForm').remove();
-                    $('#taskList').append('<p class="body-content">' + data);
-                    $('#taskList').append("@HtmlHelpers.CreateTask("123456", "echterg", false, false)".replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName).replace("123456", data).replace("echterg", taskName))
+                    $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", false, false)".f(data, taskName));
                     $('#taskList').append('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>');
                 });
         }
@@ -92,4 +91,18 @@
             '<button type="button" id="' + taskId + '-button" onclick="myFunction(' + taskId + ')" hidden="' + hideTaskButton + '">' + buttonCaption + '</button>' +
          '</p>');
     }
+
+    String.prototype.format = String.prototype.f = function() {
+        var s = this,
+            i = arguments.length;
+
+        while (i--) {
+            var oldS = "";
+            while (oldS !== s) {
+                oldS = s;
+                s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+            }
+        }
+        return s;
+    };
 </script>
