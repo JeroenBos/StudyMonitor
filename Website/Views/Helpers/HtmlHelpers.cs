@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Website.Views.Helpers
 {
-	public class TestHelper
+	public class HtmlHelpers
 	{
 		public static HtmlString Note(string content)
 		{
