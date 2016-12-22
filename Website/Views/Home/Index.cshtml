@@ -1,4 +1,5 @@
-﻿@model StudyMonitor.ServiceAccess.StudyTaskCollection
+﻿@using Website.Views.Helpers
+@model StudyMonitor.ServiceAccess.StudyTaskCollection
 
 @{
     ViewBag.Title = "Home Page";
@@ -8,7 +9,7 @@
 <div class="jumbotron" id="taskList">
     <h1>Study Monitor</h1>
 
-    @Website.Views.Helpers.HtmlHelpers.Note("hiasdffasdf")
+    @HtmlHelpers.Note("hiasdffasdf")
 
         @if (Model != null)
         {
