@@ -26,9 +26,11 @@
 <script>
     function myFunction(taskId) {
         var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
-        
-        //$.post("@Url.Action("Select", "Home")", { data: taskId, taskWasOpen: true });
 
+        // update database
+        $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen });
+
+        // update website client side
         if (taskWasOpen) {
             $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
             $('#' + taskId + '-button').text("Start");
