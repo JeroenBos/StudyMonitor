@@ -24,6 +24,12 @@ namespace StudyMonitor.ServiceAccess
 				base.Set(ref name, value);
 			}
 		}
+
+		public DateTime Estimate
+		{
+			get { return estimate; }
+			set { Set(ref estimate, value); }
+		}
 		/// <summary> Gets the collection of time spans associated with this task. Modifications will be propagated to the database. </summary>
 		public ObservableCollection<TaskTimeSpan> TimeSpans { get; }
 		/// <summary> Gets the ID this task has in the database. </summary>
@@ -36,7 +42,7 @@ namespace StudyMonitor.ServiceAccess
 		{
 			get { return this.OpenTimeSpan != null; }
 		}
-		
+
 		/// <summary> Gets the open time span associated to this task, if any; null otherwise. </summary>
 		public TaskTimeSpan OpenTimeSpan
 		{
@@ -56,7 +62,7 @@ namespace StudyMonitor.ServiceAccess
 			if (service == null) throw new ArgumentNullException(nameof(service));
 			if (task == null) throw new ArgumentNullException(nameof(task));
 			if (task.Id == 0) throw new ArgumentException();
-            if (task.UserId == null) throw new ArgumentNullException(nameof(task.UserId));
+			if (task.UserId == null) throw new ArgumentNullException(nameof(task.UserId));
 
 			this.MessageObject = task;
 			this.service = service;
@@ -74,11 +80,12 @@ namespace StudyMonitor.ServiceAccess
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
-            if(userId == null) throw new ArgumentNullException(nameof(userId));
+			if (userId == null) throw new ArgumentNullException(nameof(userId));
 
-			this.MessageObject = new StudyTaskService() { Name = name, UserId = userId, Estimate = estimate};
+			this.MessageObject = new StudyTaskService() { Name = name, UserId = userId, Estimate = estimate };
 			this.service = client;
 			this.Name = name;
+			this.Estimate = estimate;
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();
 
 			this.TimeSpans.CollectionChanged += OnTimeSpansChanged;
@@ -108,7 +115,9 @@ namespace StudyMonitor.ServiceAccess
 			{
 				case nameof(Name):
 					MessageObject.Name = this.Name;
-					
+					break;
+				case nameof(Estimate):
+					MessageObject.Estimate = this.Estimate;
 					break;
 			}
 		}
@@ -145,5 +154,6 @@ namespace StudyMonitor.ServiceAccess
 			return TimeSpans.Count(timeSpan => timeSpan.End == null) <= 1;
 		}
 		private string name;
+		private DateTime estimate;
 	}
 }
