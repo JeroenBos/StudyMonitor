@@ -50,15 +50,14 @@ namespace StudyMonitor.Service
         /// <summary>
         /// Add a timespan to the database
         /// </summary>
-        /// <param name="taskId">The task id to which the timespan belongs</param>
         /// <param name="timeSpan">The timespan</param>
         /// <returns>The id of the timespan in the database</returns>
-        public int AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan)
+        public int AddTimeSpanTo(TaskTimeSpanService timeSpan)
         {
-            if (taskId == 0) throw new ArgumentOutOfRangeException(nameof(taskId));
             if (timeSpan == null) throw new ArgumentNullException(nameof(timeSpan));
+            if(timeSpan.Start == new DateTime()) throw new ArgumentException("timespan has the default DateTime instead of an assigned one");
             if (timeSpan.Id != 0) throw new ArgumentException("timespan has an ID assigned but is ignored");
-            if (timeSpan.TaskId == 0) throw new ArgumentException();
+            if (timeSpan.TaskId == 0) throw new ArgumentException("timespan has no assigned TaskId");
 
             int timeSpanId = timeSpan.Id;
             using (var context = new StudyTasksContext())

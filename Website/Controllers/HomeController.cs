@@ -20,8 +20,6 @@ namespace Website.Controllers
 			var client = CreateTasksClient();
 			var allTasks = StudyTaskCollection.FromDatabase(client);
 
-			allTasks.Add(new StudyTask(client, "TestCase")); // is added to database as well
-
 			return View(allTasks);
 		}
 
@@ -45,15 +43,25 @@ namespace Website.Controllers
         /// <param name="data">A string array with the taskId at index 0</param>
         /// <returns>Nothing</returns>
         [HttpPost]
-		public ActionResult Select(object data)
+		public ActionResult Select(string taskId, string taskWasOpen)
 		{
-			string taskId = ((string[])data)[0];
 			int id;
-			bool validData = int.TryParse(taskId, out id);
-			if (validData)
+            bool taskOpen;
+			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
-				var task = new StudyTask(CreateTasksClient(), id);
-				task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			    if (!taskOpen)
+			    {
+			        var task = new StudyTask(CreateTasksClient(), id);
+			        task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			    }
+			    else
+			    {
+			        var openTimeSpan = new StudyTask(CreateTasksClient(), id).OpenTimeSpan;
+			        if (openTimeSpan != null)
+			        {
+			            openTimeSpan.End = DateTime.Now;
+			        }
+			    }
 			}
 
 			return View();

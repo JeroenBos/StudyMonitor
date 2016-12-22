@@ -106,7 +106,7 @@ namespace StudyMonitor.ServiceAccess
 					foreach (var newTimeSpan in e.NewItems.Cast<TaskTimeSpan>())
 					{
 						Contract.Assert(newTimeSpan.service.Id == 0, "The added time span is already added to another task");
-						var assignedTimeSpanId = this.client.AddTimeSpanTo(Service.Id, newTimeSpan.service);
+						var assignedTimeSpanId = this.client.AddTimeSpanTo(newTimeSpan.service);
 						newTimeSpan.service.Id = assignedTimeSpanId;
 					}
 					Contract.Assert(HasAtMostOneOpenTimeSpan(), "A task may not have multiple open time spans associated to it");
