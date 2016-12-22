@@ -23,6 +23,9 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime EstimateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -38,6 +41,19 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Estimate {
+            get {
+                return this.EstimateField;
+            }
+            set {
+                if ((this.EstimateField.Equals(value) != true)) {
+                    this.EstimateField = value;
+                    this.RaisePropertyChanged("Estimate");
+                }
             }
         }
         
@@ -247,6 +263,12 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetTimeSpan", ReplyAction="http://tempuri.org/IStudyTasksService/GetTimeSpanResponse")]
         System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService> GetTimeSpanAsync(int timeSpanId);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/Update", ReplyAction="http://tempuri.org/IStudyTasksService/UpdateResponse")]
+        void Update(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/Update", ReplyAction="http://tempuri.org/IStudyTasksService/UpdateResponse")]
+        System.Threading.Tasks.Task UpdateAsync(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStudyTasksService/GetUserIdForTests", ReplyAction="http://tempuri.org/IStudyTasksService/GetUserIdForTestsResponse")]
         string GetUserIdForTests();
         
@@ -359,6 +381,14 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         
         public System.Threading.Tasks.Task<StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService> GetTimeSpanAsync(int timeSpanId) {
             return base.Channel.GetTimeSpanAsync(timeSpanId);
+        }
+        
+        public void Update(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject) {
+            base.Channel.Update(messageObject);
+        }
+        
+        public System.Threading.Tasks.Task UpdateAsync(StudyMonitor.ServiceAccess.ServiceReference.TaskTimeSpanService messageObject) {
+            return base.Channel.UpdateAsync(messageObject);
         }
         
         public string GetUserIdForTests() {

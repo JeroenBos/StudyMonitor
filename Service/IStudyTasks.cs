@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
@@ -22,10 +23,10 @@ namespace StudyMonitor.Service
 		[OperationContract]
 		void ClearAll();
 
-        [OperationContract]
+		[OperationContract]
         IEnumerable<StudyTaskService> GetAllTasksOfUser(string userId);
 
-        [OperationContract]
+		[OperationContract]
 		int GetOpenTimeSpanIdFor(int taskId);
 
 		[OperationContract]
@@ -36,6 +37,9 @@ namespace StudyMonitor.Service
 
 		[OperationContract]
 		TaskTimeSpanService GetTimeSpan(int timeSpanId);
+
+		[OperationContract]
+		void Update(TaskTimeSpanService messageObject);
 
 	    [OperationContract]
 	    string GetUserIdForTests();
@@ -52,5 +56,8 @@ namespace StudyMonitor.Service
 
         [DataMember]
         public string UserId { get; set; }
+
+        [DataMember]
+        public DateTime Estimate { get; set; }
 	}
 }

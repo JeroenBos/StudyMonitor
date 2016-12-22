@@ -61,9 +61,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ServiceAccess\ServiceAccess.csproj">
+    <ProjectReference Include="..\ServiceAccess\StudyMonitor.ServiceAccess.csproj">
       <Project>{dbb98465-b31c-41a5-a671-d2e022c67291}</Project>
-      <Name>ServiceAccess</Name>
+      <Name>StudyMonitor.ServiceAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

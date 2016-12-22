@@ -55,7 +55,7 @@ namespace StudyMonitor.Service
         public int AddTimeSpanTo(TaskTimeSpanService timeSpan)
         {
             if (timeSpan == null) throw new ArgumentNullException(nameof(timeSpan));
-            if(timeSpan.Start == new DateTime()) throw new ArgumentException("timespan has the default DateTime instead of an assigned one");
+			if (timeSpan.Start == new DateTime()) throw new ArgumentException("timespan has the default DateTime instead of an assigned one");
             if (timeSpan.Id != 0) throw new ArgumentException("timespan has an ID assigned but is ignored");
             if (timeSpan.TaskId == 0) throw new ArgumentException("timespan has no assigned TaskId");
 
@@ -197,6 +197,19 @@ namespace StudyMonitor.Service
                 return dbResult?.ToService(this);
             }
         }
+
+		public void Update(TaskTimeSpanService messageObject)
+		{
+			using (var context = new StudyTasksContext())
+			{
+				var dbElement = context.TimeSpans.FirstOrDefault(timeSpanDB => timeSpanDB.Id == messageObject.Id);
+				Contract.Assert(dbElement != null, "Cannot update an element that does not exist");
+				dbElement.TaskId = messageObject.TaskId;
+				dbElement.Start = messageObject.Start;
+				dbElement.End = messageObject.End;
+				context.SaveChanges();
+			}
+		}
 
         public string GetUserIdForTests()
         {

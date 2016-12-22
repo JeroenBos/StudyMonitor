@@ -56,14 +56,15 @@ namespace Website.Controllers
             bool taskOpen;
 			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
-			    if (!taskOpen)
+				var service = CreateTasksClient();
+				if (!taskOpen)
 			    {
-			        var task = new StudyTask(CreateTasksClient(), id);
-			        task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			        var task = new StudyTask(service, id);
+			        task.TimeSpans.Add(new TaskTimeSpan(service, task, DateTime.Now));
 			    }
 			    else
 			    {
-			        var openTimeSpan = new StudyTask(CreateTasksClient(), id).OpenTimeSpan;
+					var openTimeSpan = new StudyTask(service, id).OpenTimeSpan;
 			        if (openTimeSpan != null)
 			        {
 			            openTimeSpan.End = DateTime.Now;
@@ -78,17 +79,19 @@ namespace Website.Controllers
 	    /// This method is invoked when the client adds a task
 	    /// </summary>
 	    /// <param name="taskName">The name of the task</param>
+	    /// <param name="estimateString">The estimate time of the object</param>
 	    /// <returns>Redirects the action to Index</returns>
 	    [HttpPost]
-		public ActionResult Add(string taskName)
+		public ActionResult Add(string taskName, string estimateString)
 	    {
+	        DateTime estimate;
 	        string userId = User.Identity.GetUserId();
 			// Check the string for a valid task name
-			if (true)
+			if (true && DateTime.TryParse(estimateString, out estimate))
 			{
 				var client = CreateTasksClient();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
-				databaseConnection.Add(new StudyTask(client, taskName, userId));
+				databaseConnection.Add(new StudyTask(client, taskName, userId, estimate));
 			}
 
 			return RedirectToAction("Index", "Home");

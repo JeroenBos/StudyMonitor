@@ -18,6 +18,9 @@
         [StringLength(128)]
         public string UserId { get; set; }
 
+        [Required]
+        public DateTime Estimate { get; set; }
+
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }
