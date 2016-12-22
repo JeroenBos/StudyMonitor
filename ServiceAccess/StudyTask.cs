@@ -12,8 +12,8 @@ namespace StudyMonitor.ServiceAccess
 	/// <summary> Represents a study task and handles updating the database. </summary>
 	public class StudyTask : DefaultINotifyPropertyChanged
 	{
-		private readonly IStudyTasksService client;
-		internal readonly StudyTaskService Service;
+		private readonly IStudyTasksService service;
+		internal readonly StudyTaskService MessageObject;
 		/// <summary> Gets or sets the name of this task. Setting will update the database. </summary>
 		public string Name
 		{
@@ -29,7 +29,7 @@ namespace StudyMonitor.ServiceAccess
 		/// <summary> Gets the ID this task has in the database. </summary>
 		public int Id
 		{
-			get { return this.Service.Id; }
+			get { return this.MessageObject.Id; }
 		}
 		/// <summary> Gets whether this study task is currently running. </summary>
 		public bool IsOpen
@@ -39,24 +39,24 @@ namespace StudyMonitor.ServiceAccess
 
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
 		/// <param name="taskId"> The id of the task in the database to fetch. </param>
-		public StudyTask(IStudyTasksService client, int taskId)
-			: this(client, client.GetTask(taskId))
+		public StudyTask(IStudyTasksService service, int taskId)
+			: this(service, service.GetTask(taskId))
 		{
-			Contract.Assert(this.Service.Id == taskId);
+			Contract.Assert(this.MessageObject.Id == taskId);
 		}
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
-		public StudyTask(IStudyTasksService client, StudyTaskService task)
+		public StudyTask(IStudyTasksService service, StudyTaskService task)
 		{
-			if (client == null) throw new ArgumentNullException(nameof(client));
+			if (service == null) throw new ArgumentNullException(nameof(service));
 			if (task == null) throw new ArgumentNullException(nameof(task));
 			if (task.Id == 0) throw new ArgumentException();
 
-			this.Service = task;
-			this.client = client;
-			this.Name = this.Service.Name;
+			this.MessageObject = task;
+			this.service = service;
+			this.Name = this.MessageObject.Name;
 
 			//retrieve time spans from database:
-			var timeSpans = client.GetTimeSpansFor(task.Id).Select(timeSpanDB => new TaskTimeSpan(timeSpanDB, this));
+			var timeSpans = service.GetTimeSpansFor(task.Id).Select(timeSpanDB => new TaskTimeSpan(service, timeSpanDB, this));
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>(timeSpans);
 
 			this.TimeSpans.CollectionChanged += OnTimeSpansChanged;
@@ -68,8 +68,8 @@ namespace StudyMonitor.ServiceAccess
 			if (client == null) throw new ArgumentNullException(nameof(client));
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
 
-			this.Service = new StudyTaskService() { Name = name };
-			this.client = client;
+			this.MessageObject = new StudyTaskService() { Name = name };
+			this.service = client;
 			this.Name = name;
 			this.TimeSpans = new ObservableCollection<TaskTimeSpan>();
 
@@ -99,7 +99,8 @@ namespace StudyMonitor.ServiceAccess
 			switch (e.PropertyName)
 			{
 				case nameof(Name):
-					Service.Name = this.Name;
+					MessageObject.Name = this.Name;
+					
 					break;
 			}
 		}
@@ -110,16 +111,16 @@ namespace StudyMonitor.ServiceAccess
 				case NotifyCollectionChangedAction.Add:
 					foreach (var newTimeSpan in e.NewItems.Cast<TaskTimeSpan>())
 					{
-						Contract.Assert(newTimeSpan.service.Id == 0, "The added time span is already added to another task");
-						var assignedTimeSpanId = this.client.AddTimeSpanTo(newTimeSpan.service);
-						newTimeSpan.service.Id = assignedTimeSpanId;
+						Contract.Assert(newTimeSpan.timeSpanMessageObject.Id == 0, "The added time span is already added to another task");
+						var assignedTimeSpanId = this.service.AddTimeSpanTo(newTimeSpan.timeSpanMessageObject);
+						newTimeSpan.timeSpanMessageObject.Id = assignedTimeSpanId;
 					}
 					Contract.Assert(HasAtMostOneOpenTimeSpan(), "A task may not have multiple open time spans associated to it");
 					break;
 				case NotifyCollectionChangedAction.Remove:
 					foreach (var newTimeSpan in e.OldItems.Cast<TaskTimeSpan>())
 					{
-						this.client.RemoveTimeSpan(newTimeSpan.service.Id);
+						this.service.RemoveTimeSpan(newTimeSpan.timeSpanMessageObject.Id);
 					}
 					break;
 				case NotifyCollectionChangedAction.Replace:

@@ -49,14 +49,15 @@ namespace Website.Controllers
             bool taskOpen;
 			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
-			    if (!taskOpen)
+				var service = CreateTasksClient();
+				if (!taskOpen)
 			    {
-			        var task = new StudyTask(CreateTasksClient(), id);
-			        task.TimeSpans.Add(new TaskTimeSpan(task, DateTime.Now));
+			        var task = new StudyTask(service, id);
+			        task.TimeSpans.Add(new TaskTimeSpan(service, task, DateTime.Now));
 			    }
 			    else
 			    {
-			        var openTimeSpan = new StudyTask(CreateTasksClient(), id).OpenTimeSpan;
+					var openTimeSpan = new StudyTask(service, id).OpenTimeSpan;
 			        if (openTimeSpan != null)
 			        {
 			            openTimeSpan.End = DateTime.Now;
