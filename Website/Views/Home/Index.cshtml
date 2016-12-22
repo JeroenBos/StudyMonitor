@@ -43,7 +43,7 @@
     }
 
     function addTask() {
-        $form = $('<form id="createForm" action ="@Url.Action("Add", "Home")" method="post"></form>');
+        $form = $('<form id="createForm"></form>');
         $form.append(
             $("<input>",
                 {
@@ -55,8 +55,9 @@
         $form.append(
             $("<input>",
                 {
-                    type: 'submit',
-                    value: 'Create Task'
+                    type: 'button',
+                    value: 'Create Task',
+                    onclick: 'createTask()'
                 }
             )
         );
@@ -66,9 +67,15 @@
 
     function createTask() {
         taskName = $('#createForm').find('input[name="taskName"]').val();
-        $.post("@Url.Action("Add", "Home")",
-            { data: taskName });
-        $('#createForm').remove();
-        $('#taskList').append($('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>'));
+        debugger;
+        if (taskName !== "") {
+            $.post("@Url.Action("Add", "Home")",
+                { taskName: taskName });
+            $('#createForm').remove();
+            $('#taskList').append($('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>'));
+        }
+        else {
+            alert("Empty task name is not allowed");
+        }
     }
 </script>
