@@ -31,6 +31,11 @@ namespace StudyMonitor.ServiceAccess
 		{
 			get { return this.Service.Id; }
 		}
+		/// <summary> Gets whether this study task is currently running. </summary>
+		public bool IsOpen
+		{
+			get { return this.OpenTimeSpan != null; }
+		}
 
 		/// <summary> Creates a <see cref="StudyTask"/> instance representing an already existing task in the database. </summary>
 		/// <param name="taskId"> The id of the task in the database to fetch. </param>
