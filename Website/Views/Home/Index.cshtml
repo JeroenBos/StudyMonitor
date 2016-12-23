@@ -12,18 +12,19 @@
     <div class="jumbotron" id="taskList">
         <h1>Study Monitor</h1>
 
-        @if (Model != null)
-        {
-            bool hasOpenTask = Model.Any(task => task.IsOpen);
-            foreach (var task in Model)
+        <table id="taskTable">
+            @if (Model != null)
             {
-                @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, HtmlHelpers.FormatTotalTime(task.GetLength()), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask);
+                bool hasOpenTask = Model.Any(task => task.IsOpen);
+                foreach (var task in Model)
+                {
+                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, HtmlHelpers.FormatTotalTime(task.GetLength()), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask);
+                }
             }
-
-            <p class="body-content">
-                @createAddTaskButton()
-            </p>
-        }
+        </table>
+        <p class="body-content">
+            @createAddTaskButton()
+        </p>
 
     </div>
 
@@ -105,7 +106,7 @@
                 { taskName: taskName, estimateString: estimateText }, function (data, status, jqXHR) {
                     data = data.split(",");
                     $('#createForm').remove();
-                    $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(data[0], taskName, data[1], estimateText));
+                    $('#taskTable').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(data[0], taskName, data[1], estimateText));
                     $('#taskList').append('@createAddTaskButton()');
                 });
         }

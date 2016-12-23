@@ -18,11 +18,15 @@ namespace Website.Views.Helpers
 		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, string estimate, bool hideButton, string buttonCaption)
 		{
 			var htmlResult =
-				$@"<p class='body-content' id='{taskId}-p'>
-						{taskName}: {totalTime} seconds spent out of {estimate}.
-						<button type='button' id='{taskId}-button' onclick='onClickTaskButton({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
-						<button type='button' onclick='removeTask({taskId})'>Remove</button>
-				  </p>";
+				$@"<tr>
+					  <td>
+						 <p class='body-content' id='{taskId}-p'>
+							{taskName}: {totalTime} seconds spent out of {estimate}.
+							<button type='button' id='{taskId}-button' onclick='onClickTaskButton({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
+							<button type='button' onclick='removeTask({taskId})'>Remove</button>
+						 </p>
+					  </td>
+				   </tr>";
 			return new HtmlString(htmlResult.Replace("\r\n", "").Replace("\n", ""));
 		}
 	}
