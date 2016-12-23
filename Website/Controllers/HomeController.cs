@@ -45,6 +45,16 @@ namespace Website.Controllers
 			return View();
 		}
 
+		[HttpPost]
+		public void Remove(string taskId)
+		{
+			int id;
+			if (int.TryParse(taskId, out id))
+			{
+				var service = CreateTasksClient();
+				service.RemoveTask(id);
+			}
+		}
 		/// <summary>
 		/// This method is invoked when the client selects a task
 		/// </summary>

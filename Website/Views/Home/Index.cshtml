@@ -30,6 +30,8 @@
     <script>
         function removeTask(taskId) {
             $('#' + taskId + '-p').remove();
+
+            $.post("@Url.Action("Remove", "Home")", { taskId: taskId });
         }
         function onClickTaskButton(taskId) {
             var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
