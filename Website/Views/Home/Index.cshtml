@@ -74,8 +74,9 @@
         if (taskName !== "") {
             var i = $.get("@Url.Action("Add", "Home")",
                 { taskName: taskName, estimateString: '@DateTime.Now' }, function (data, status, jqXHR) {
+                    data = data.split(",");
                     $('#createForm').remove();
-                    $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", false, false)".f(data, taskName));
+                    $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", false, false)".f(data[0], taskName));
                     $('#taskList').append('@createAddTaskButton()');
                 });
         }
