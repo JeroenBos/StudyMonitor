@@ -19,7 +19,7 @@ namespace Website.Views.Helpers
 		{
 			var htmlResult =
 				$@"<p class='body-content' id='{taskId}-p'>
-						{taskId}, {taskName}, {totalTime}, {estimate}
+						{taskName}: {totalTime} seconds spent out of {estimate}.
 						<button type='button' id='{taskId}-button' onclick='onClickTaskButton({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
 						<button type='button' onclick='removeTask({taskId})'>Remove</button>
 				  </p>";
