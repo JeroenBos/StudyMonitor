@@ -21,7 +21,7 @@ namespace Website.Views.Helpers
 			var htmlResult =
 				$@"<p class='body-content'>
 						{taskId}, {taskName}, {totalTime}
-						<button type='button' id='{taskId}-button' onclick='myFunction({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
+						<button type='button' id='{taskId}-button' onclick='onClickTaskButton({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
 				  </p>";
 			return new HtmlString(htmlResult.Replace("\r\n", "").Replace("\n", ""));
 		}
