@@ -12,15 +12,15 @@ namespace Website.Views.Helpers
 			string formatSpecifier = totalTime.Days == 0 ? @"hh\:mm\:ss" : @"dd\.hh\:mm\:ss";
 			return totalTime.ToString(formatSpecifier);
 		}
-		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, bool taskIsOpen, bool anyOtherTaskIsOpen)
+		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, string estimate, bool taskIsOpen, bool anyOtherTaskIsOpen)
 		{
-			return CreateTask(taskId, taskName, totalTime, hideButton: !taskIsOpen && anyOtherTaskIsOpen, buttonCaption: taskIsOpen ? "Stop" : "Start");
+			return CreateTask(taskId, taskName, totalTime, estimate, hideButton: !taskIsOpen && anyOtherTaskIsOpen, buttonCaption: taskIsOpen ? "Stop" : "Start");
 		}
-		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, bool hideButton, string buttonCaption)
+		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, string estimate, bool hideButton, string buttonCaption)
 		{
 			var htmlResult =
 				$@"<p class='body-content'>
-						{taskId}, {taskName}, {totalTime}
+						{taskId}, {taskName}, {totalTime}, {estimate}
 						<button type='button' id='{taskId}-button' onclick='onClickTaskButton({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
 				  </p>";
 			return new HtmlString(htmlResult.Replace("\r\n", "").Replace("\n", ""));
