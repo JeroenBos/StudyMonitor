@@ -51,7 +51,7 @@ namespace Website.Controllers
 		/// <param name="data">A string array with the taskId at index 0</param>
 		/// <returns>Nothing</returns>
 		[HttpPost]
-		public ActionResult Select(string taskId, string taskWasOpen)
+		public void Select(string taskId, string taskWasOpen)
 		{
 			int id;
 			bool taskOpen;
@@ -72,8 +72,6 @@ namespace Website.Controllers
 					}
 				}
 			}
-
-			return View();
 		}
 
 		/// <summary>
