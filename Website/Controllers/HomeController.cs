@@ -85,10 +85,10 @@ namespace Website.Controllers
 		public string Add(string taskName, string estimateString)
 		{
 			TimeSpan estimate;
-			string userId = User.Identity.GetUserId();
 			// Check the string for a valid task name
 			if (TimeSpan.TryParse(estimateString, out estimate))
 			{
+				string userId = User.Identity.GetUserId();
 				var client = CreateTasksClient();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
 				var task = new StudyTask(client, taskName, userId, estimate);
