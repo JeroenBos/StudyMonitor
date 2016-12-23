@@ -67,15 +67,17 @@ namespace Website.Controllers
 			bool taskOpen;
 			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
+				StudyTask task;
 				var service = CreateTasksWCFService();
 				if (!taskOpen)
 				{
-					var task = new StudyTask(service, id);
+					task = new StudyTask(service, id);
 					task.TimeSpans.Add(new TaskTimeSpan(service, task, DateTime.Now));
 				}
 				else
 				{
-					var openTimeSpan = new StudyTask(service, id).OpenTimeSpan;
+					task = new StudyTask(service, id);
+					var openTimeSpan = task.OpenTimeSpan;
 					if (openTimeSpan != null)
 					{
 						openTimeSpan.End = DateTime.Now;
