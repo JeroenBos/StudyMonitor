@@ -1,0 +1,48 @@
+﻿@using System.Text
+@model StudyMonitor.ServiceAccess.StudyTaskCollection
+
+@{
+    ViewBag.Title = "TasksInfo";
+}
+
+
+<head>
+    @{
+
+        if (Model != null)
+        {
+            StringBuilder columnBuilder = new StringBuilder();
+            foreach (var task in Model)
+            {
+                columnBuilder.Append("{ y: " + task.Estimate.Hour + ", label: '" + task.Name + "' },");
+            }
+
+            <script type="text/javascript">
+                window.onload = function () {
+                    console.log(unescape("@columnBuilder.ToString()"));
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        title: {
+                            text: "Basic Column Chart"
+                        },
+
+                        data: [
+                            {
+                                type: "column",
+                                dataPoints: [
+                                    unescape("@columnBuilder.ToString()")
+                                ]
+                            }
+                        ]
+                    });
+                    chart.render();
+                }
+            </script>
+            <script src="/Scripts/canvasjs.min.js"></script>
+        }
+    }
+    <title>Tasks Plot</title>
+</head>
+
+<body>
+    <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+</body>

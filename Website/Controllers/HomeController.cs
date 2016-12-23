@@ -92,11 +92,24 @@ namespace Website.Controllers
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
 				var task = new StudyTask(client, taskName, userId, estimate);
 				databaseConnection.Add(task);
-
 				return task.Id;
 			}
 			return 0;
 		}
+
+	    public ActionResult TasksInfo()
+	    {
+            var client = CreateTasksClient();
+            var userId = User.Identity.GetUserId();
+            if (userId != null)
+            {
+                var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+                return View(userTasks);
+            }
+
+
+            return View();
+        }
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
 		private StudyTasksServiceClient CreateTasksClient()
