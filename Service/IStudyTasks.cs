@@ -61,6 +61,6 @@ namespace StudyMonitor.Service
         public string UserId { get; set; }
 
         [DataMember]
-        public DateTime Estimate { get; set; }
+        public TimeSpan Estimate { get; set; }
 	}
 }

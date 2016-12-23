@@ -19,7 +19,7 @@
         public string UserId { get; set; }
 
         [Required]
-        public DateTime Estimate { get; set; }
+        public long Estimate { get; set; } // in units of ticks
 
         public virtual AspNetUser AspNetUser { get; set; }
     }

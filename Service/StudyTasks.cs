@@ -219,7 +219,7 @@ namespace StudyMonitor.Service
 				var dbElement = context.Tasks.FirstOrDefault(taskDB => taskDB.Id == messageObject.Id);
 				Contract.Assert(dbElement != null, "Cannot update an element that does not exist");
 				dbElement.Name = messageObject.Name;
-				dbElement.Estimate = messageObject.Estimate;
+				dbElement.Estimate = messageObject.Estimate.Ticks;
 				Contract.Assert(dbElement.UserId == messageObject.UserId);
 				context.SaveChanges();
 			}
