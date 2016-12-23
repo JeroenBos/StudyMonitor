@@ -89,8 +89,8 @@
                 return;
             }
             var estimateText = $('#createForm').find('input[name="estimate"]').val();
-            var estimate = Number(estimateText)
-            if (isNaN(estimate)) {
+            var estimateInSeconds = Number(estimateText)
+            if (isNaN(estimateInSeconds)) {
                 alert("An invalid task estimate was specified. \nTry a number of seconds. ");
                 return;
             }
