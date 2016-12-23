@@ -59,9 +59,8 @@ namespace Website.Controllers
 		/// This method is invoked when the client selects a task
 		/// </summary>
 		/// <param name="data">A string array with the taskId at index 0</param>
-		/// <returns>Nothing</returns>
-		[HttpPost]
-		public void Select(string taskId, string taskWasOpen)
+		/// <returns>a string of the task name, task total length and task estimate in seconds, separated by commas</returns>
+		public string Select(string taskId, string taskWasOpen)
 		{
 			int id;
 			bool taskOpen;
@@ -83,7 +82,10 @@ namespace Website.Controllers
 						openTimeSpan.End = DateTime.Now;
 					}
 				}
+
+				return string.Join(",", task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.ToStringInSeconds());
 			}
+			return 0.ToString();
 		}
 
 		/// <summary>
@@ -91,7 +93,7 @@ namespace Website.Controllers
 		/// </summary>
 		/// <param name="taskName">The name of the task</param>
 		/// <param name="estimateString">String representation of the estimated for the new task</param>
-		/// <returns>the task id created for the task name</returns>
+		/// <returns>a string of the task id and task total length in seconds, separated by commas</returns>
 		public string Add(string taskName, string estimateString)
 		{
 			int estimate;
