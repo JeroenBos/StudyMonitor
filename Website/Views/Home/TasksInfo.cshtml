@@ -9,16 +9,25 @@
 <head>
     @if (Model != null)
     {
-        StringBuilder columnBuilder = new StringBuilder();
+
+        StringBuilder actualTimeBuilder = new StringBuilder();
         foreach (var task in Model)
         {
-            columnBuilder.Append("{ y: " + task.Estimate.TotalSeconds + ", label: '" + task.Name + "' },");
+            actualTimeBuilder.Append("{ y: " + task.GetLength().TotalSeconds + ", label: '" + task.Name + "' },");
         }
 
-        var tempTekst = new HtmlString(HttpUtility.HtmlDecode(columnBuilder.ToString()));
+        var actualTime = new HtmlString(HttpUtility.HtmlDecode(actualTimeBuilder.ToString()));
+
+        StringBuilder estimateTimeBuilder = new StringBuilder();
+        foreach (var task in Model)
+        {
+            estimateTimeBuilder.Append("{ y: " + task.Estimate.TotalSeconds + ", label: '" + task.Name + "' },");
+        }
+
+        var estimateTime = new HtmlString(HttpUtility.HtmlDecode(estimateTimeBuilder.ToString()));
 
         <script type="text/javascript">
-            window.onload = function () {
+            window.onload = function() {
                 var chart = new CanvasJS.Chart("chartContainer", {
                     title: {
                         text: "Basic Column Chart"
@@ -28,7 +37,13 @@
                         {
                             type: "column",
                             dataPoints: [
-                                @tempTekst
+                                    @actualTime
+                            ]
+                        },
+                        {
+                            type: "column",
+                            dataPoints: [
+                                    @estimateTime
                             ]
                         }
                     ]
