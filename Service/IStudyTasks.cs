@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 
 namespace StudyMonitor.Service
 {
@@ -17,10 +15,37 @@ namespace StudyMonitor.Service
 		StudyTaskService GetTask(int id);
 
 		[OperationContract]
-		void AddTimeSpanTo(int taskId, TaskTimeSpanService timeSpan);
+		int AddTimeSpanTo(TaskTimeSpanService timeSpan);
 
 		[OperationContract]
-		IEnumerable<TaskTimeSpanService> GetTimeSpansFor(StudyTaskService task);
+		IEnumerable<TaskTimeSpanService> GetTimeSpansFor(int taskId);
+
+		[OperationContract]
+		void ClearAll();
+
+		[OperationContract]
+        IEnumerable<StudyTaskService> GetAllTasksOfUser(string userId);
+
+		[OperationContract]
+		int GetOpenTimeSpanIdFor(int taskId);
+
+		[OperationContract]
+		void RemoveTask(int taskId);
+
+		[OperationContract]
+		void RemoveTimeSpan(int timeSpanId);
+
+		[OperationContract]
+		TaskTimeSpanService GetTimeSpan(int timeSpanId);
+
+		[OperationContract]
+		void UpdateTimeSpan(TaskTimeSpanService messageObject);
+
+		[OperationContract]
+		void UpdateTask(StudyTaskService messageObject);
+
+	    [OperationContract]
+	    string GetUserIdForTests();
 	}
 
 	[DataContract]
@@ -31,5 +56,11 @@ namespace StudyMonitor.Service
 
 		[DataMember]
 		public string Name { get; set; }
+
+        [DataMember]
+        public string UserId { get; set; }
+
+        [DataMember]
+        public TimeSpan Estimate { get; set; }
 	}
 }

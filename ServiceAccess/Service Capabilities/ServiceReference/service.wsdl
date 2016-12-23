@@ -31,6 +31,60 @@
   <wsdl:message name="IStudyTasksService_GetTimeSpansFor_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTimeSpansForResponse" />
   </wsdl:message>
+  <wsdl:message name="IStudyTasksService_ClearAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:ClearAll" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_ClearAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ClearAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetAllTasksOfUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksOfUser" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetAllTasksOfUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllTasksOfUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetOpenTimeSpanIdFor_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOpenTimeSpanIdFor" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetOpenTimeSpanIdFor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOpenTimeSpanIdForResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_RemoveTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveTask" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_RemoveTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_RemoveTimeSpan_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveTimeSpan" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_RemoveTimeSpan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveTimeSpanResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetTimeSpan_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeSpan" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetTimeSpan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTimeSpanResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_UpdateTimeSpan_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTimeSpan" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_UpdateTimeSpan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTimeSpanResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_UpdateTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTask" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_UpdateTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetUserIdForTests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserIdForTests" />
+  </wsdl:message>
+  <wsdl:message name="IStudyTasksService_GetUserIdForTests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserIdForTestsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IStudyTasksService">
     <wsdl:operation name="Add">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/Add" message="tns:IStudyTasksService_Add_InputMessage" />
@@ -47,6 +101,42 @@
     <wsdl:operation name="GetTimeSpansFor">
       <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetTimeSpansFor" message="tns:IStudyTasksService_GetTimeSpansFor_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetTimeSpansForResponse" message="tns:IStudyTasksService_GetTimeSpansFor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ClearAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/ClearAll" message="tns:IStudyTasksService_ClearAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/ClearAllResponse" message="tns:IStudyTasksService_ClearAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksOfUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser" message="tns:IStudyTasksService_GetAllTasksOfUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetAllTasksOfUserResponse" message="tns:IStudyTasksService_GetAllTasksOfUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenTimeSpanIdFor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor" message="tns:IStudyTasksService_GetOpenTimeSpanIdFor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdForResponse" message="tns:IStudyTasksService_GetOpenTimeSpanIdFor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/RemoveTask" message="tns:IStudyTasksService_RemoveTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/RemoveTaskResponse" message="tns:IStudyTasksService_RemoveTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTimeSpan">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/RemoveTimeSpan" message="tns:IStudyTasksService_RemoveTimeSpan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/RemoveTimeSpanResponse" message="tns:IStudyTasksService_RemoveTimeSpan_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeSpan">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetTimeSpan" message="tns:IStudyTasksService_GetTimeSpan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetTimeSpanResponse" message="tns:IStudyTasksService_GetTimeSpan_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTimeSpan">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/UpdateTimeSpan" message="tns:IStudyTasksService_UpdateTimeSpan_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/UpdateTimeSpanResponse" message="tns:IStudyTasksService_UpdateTimeSpan_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/UpdateTask" message="tns:IStudyTasksService_UpdateTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/UpdateTaskResponse" message="tns:IStudyTasksService_UpdateTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserIdForTests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IStudyTasksService/GetUserIdForTests" message="tns:IStudyTasksService_GetUserIdForTests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IStudyTasksService/GetUserIdForTestsResponse" message="tns:IStudyTasksService_GetUserIdForTests_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IStudyTasksService" type="tns:IStudyTasksService">
@@ -80,6 +170,87 @@
     </wsdl:operation>
     <wsdl:operation name="GetTimeSpansFor">
       <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetTimeSpansFor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClearAll">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/ClearAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTasksOfUser">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetAllTasksOfUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpenTimeSpanIdFor">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetOpenTimeSpanIdFor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTask">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/RemoveTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTimeSpan">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/RemoveTimeSpan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTimeSpan">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetTimeSpan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTimeSpan">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/UpdateTimeSpan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTask">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/UpdateTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserIdForTests">
+      <soap:operation soapAction="http://tempuri.org/IStudyTasksService/GetUserIdForTests" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

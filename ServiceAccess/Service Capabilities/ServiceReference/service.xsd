@@ -32,27 +32,140 @@
   <xs:element name="AddTimeSpanTo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="task" nillable="true" type="q3:StudyTaskService" />
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="timeSpan" nillable="true" type="q4:TaskTimeSpanService" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="timeSpan" nillable="true" type="q3:TaskTimeSpanService" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddTimeSpanToResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddTimeSpanToResult" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTimeSpansFor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="task" nillable="true" type="q5:StudyTaskService" />
+        <xs:element minOccurs="0" name="taskId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTimeSpansForResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetTimeSpansForResult" nillable="true" type="q6:ArrayOfTaskTimeSpanService" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetTimeSpansForResult" nillable="true" type="q4:ArrayOfTaskTimeSpanService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ClearAll">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ClearAllResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksOfUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllTasksOfUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetAllTasksOfUserResult" nillable="true" type="q5:ArrayOfStudyTaskService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOpenTimeSpanIdFor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="taskId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOpenTimeSpanIdForResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetOpenTimeSpanIdForResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="taskId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTaskResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTimeSpan">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="timeSpanId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTimeSpanResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTimeSpan">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="timeSpanId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTimeSpanResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="GetTimeSpanResult" nillable="true" type="q6:TaskTimeSpanService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTimeSpan">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="messageObject" nillable="true" type="q7:TaskTimeSpanService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTimeSpanResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" minOccurs="0" name="messageObject" nillable="true" type="q8:StudyTaskService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTaskResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserIdForTests">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserIdForTestsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetUserIdForTestsResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

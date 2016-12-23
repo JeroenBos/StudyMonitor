@@ -1,18 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/StudyMonitor.Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="StudyTaskService">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Estimate" type="ser:duration" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="StudyTaskService" nillable="true" type="tns:StudyTaskService" />
   <xs:complexType name="TaskTimeSpanService">
     <xs:sequence>
-      <xs:element minOccurs="0" name="End" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="End" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element minOccurs="0" name="Start" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Task" nillable="true" type="tns:StudyTaskService" />
+      <xs:element minOccurs="0" name="TaskId" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TaskTimeSpanService" nillable="true" type="tns:TaskTimeSpanService" />
@@ -22,4 +25,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfTaskTimeSpanService" nillable="true" type="tns:ArrayOfTaskTimeSpanService" />
+  <xs:complexType name="ArrayOfStudyTaskService">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StudyTaskService" nillable="true" type="tns:StudyTaskService" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStudyTaskService" nillable="true" type="tns:ArrayOfStudyTaskService" />
 </xs:schema>

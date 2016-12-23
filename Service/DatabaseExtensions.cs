@@ -1,9 +1,5 @@
 ﻿using StudyMonitor.Database;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudyMonitor.Service
 {
@@ -13,14 +9,19 @@ namespace StudyMonitor.Service
 		{
 			return new StudyTaskService()
 			{
-				Name = task.Name
+				Name = task.Name,
+                Id = task.Id,
+                UserId = task.UserId,
+                Estimate = TimeSpan.FromTicks(task.Estimate)
 			};
 		}
 		public static StudyTask ToDBObject(this StudyTaskService task)
 		{
 			return new StudyTask()
 			{
-				Name = task.Name
+				Name = task.Name,
+                UserId = task.UserId,
+                Estimate = task.Estimate.Ticks
 			};
 		}
 
