@@ -23,7 +23,7 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime EstimateField;
+        private System.TimeSpan EstimateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
@@ -45,7 +45,7 @@ namespace StudyMonitor.ServiceAccess.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime Estimate {
+        public System.TimeSpan Estimate {
             get {
                 return this.EstimateField;
             }

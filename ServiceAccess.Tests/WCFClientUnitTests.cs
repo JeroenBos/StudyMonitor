@@ -18,7 +18,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 
 	    private StudyTaskService CreateStudyTaskServiceWithName(string name)
 	    {
-	        return new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = DateTime.Now };
+	        return new StudyTaskService() { Name = name, UserId = this.UserId, Estimate = TimeSpan.FromSeconds(10) };
 	    }
 
 	    private TaskTimeSpanService CreateDefaultTaskTimeSpanService(int taskId)

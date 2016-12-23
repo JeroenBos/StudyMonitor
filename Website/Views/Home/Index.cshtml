@@ -73,7 +73,7 @@
         taskName = $('#createForm').find('input[name="taskName"]').val();
         if (taskName !== "") {
             var i = $.get("@Url.Action("Add", "Home")",
-                { taskName: taskName, estimateString: '@DateTime.Now' }, function (data, status, jqXHR) {
+                { taskName: taskName, estimateString: '@TimeSpan.FromSeconds(10)' }, function (data, status, jqXHR) {
                     data = data.split(",");
                     $('#createForm').remove();
                     $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", false, false)".f(data[0], taskName, data[1]));

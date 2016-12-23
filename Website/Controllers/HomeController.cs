@@ -84,10 +84,10 @@ namespace Website.Controllers
 	    /// <returns>the task id created for the task name</returns>
 		public string Add(string taskName, string estimateString)
 		{
-			DateTime estimate;
+			TimeSpan estimate;
 			string userId = User.Identity.GetUserId();
 			// Check the string for a valid task name
-			if (DateTime.TryParse(estimateString, out estimate))
+			if (TimeSpan.TryParse(estimateString, out estimate))
 			{
 				var client = CreateTasksClient();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);

@@ -14,7 +14,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 
 	    private StudyTask CreateStudyTaskWithName(string name)
 	    {
-	        return new StudyTask(base.client, name, this.UserId, DateTime.Now);
+	        return new StudyTask(base.client, name, this.UserId, TimeSpan.FromSeconds(10));
         }
 
 		[TestMethod]
@@ -117,7 +117,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var task = CreateStudyTaskWithName("taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
 
-			DateTime expected = DateTime.Today;
+			var expected = TimeSpan.FromSeconds(10);
 			task.Estimate = expected;
 
 			var taskEstimateFromDatabase = client.GetTask(task.MessageObject.Id).Estimate;

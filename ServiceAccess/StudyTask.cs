@@ -24,8 +24,8 @@ namespace StudyMonitor.ServiceAccess
 				base.Set(ref name, value);
 			}
 		}
-
-		public DateTime Estimate
+		/// <summary> Gets the estimated time for completion of this task. </summary>
+		public TimeSpan Estimate
 		{
 			get { return estimate; }
 			set { Set(ref estimate, value); }
@@ -76,7 +76,7 @@ namespace StudyMonitor.ServiceAccess
 			this.PropertyChanged += OnPropertyChanged;
 		}
 		/// <summary> Creates a new task. </summary>
-		public StudyTask(IStudyTasksService client, string name, string userId, DateTime estimate)
+		public StudyTask(IStudyTasksService client, string name, string userId, TimeSpan estimate)
 		{
 			if (client == null) throw new ArgumentNullException(nameof(client));
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
@@ -156,6 +156,6 @@ namespace StudyMonitor.ServiceAccess
 			return TimeSpans.Count(timeSpan => timeSpan.End == null) <= 1;
 		}
 		private string name;
-		private DateTime estimate;
+		private TimeSpan estimate;
 	}
 }
