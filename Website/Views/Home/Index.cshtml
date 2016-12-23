@@ -12,19 +12,21 @@
     <div class="jumbotron" id="taskList">
         <h1>Study Monitor</h1>
 
+    @if (Model != null)
+    {
         <table id="taskTable">
-            @if (Model != null)
-            {
+            @{
                 bool hasOpenTask = Model.Any(task => task.IsOpen);
                 foreach (var task in Model)
                 {
-                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask, task.GetLength().Ticks != 0);
+                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask, task.GetLength().Ticks != 0)
                 }
             }
         </table>
         <p class="body-content">
             @createAddTaskButton()
         </p>
+    }
 
     </div>
 
