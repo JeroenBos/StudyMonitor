@@ -81,7 +81,7 @@ namespace Website.Controllers
 	    /// <param name="taskName">The name of the task</param>
 		/// <param name="estimateString">String representation of the estimated for the new task</param>
 	    /// <returns>the task id created for the task name</returns>
-		public int Add(string taskName, string estimateString)
+		public string Add(string taskName, string estimateString)
 		{
 			DateTime estimate;
 			string userId = User.Identity.GetUserId();
@@ -93,9 +93,9 @@ namespace Website.Controllers
 				var task = new StudyTask(client, taskName, userId, estimate);
 				databaseConnection.Add(task);
 
-				return task.Id;
+				return task.Id.ToString();
 			}
-			return 0;
+			return 0.ToString();
 		}
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
