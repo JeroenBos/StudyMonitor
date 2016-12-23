@@ -1,0 +1,62 @@
+﻿@using System.Text
+@model StudyMonitor.ServiceAccess.StudyTaskCollection
+
+@{
+    ViewBag.Title = "TasksInfo";
+}
+
+
+<head>
+    @if (Model != null)
+    {
+
+        StringBuilder actualTimeBuilder = new StringBuilder();
+        foreach (var task in Model)
+        {
+            actualTimeBuilder.Append("{ y: " + task.GetLength().TotalSeconds + ", label: '" + task.Name + "' },");
+        }
+
+        var actualTime = new HtmlString(HttpUtility.HtmlDecode(actualTimeBuilder.ToString()));
+
+        StringBuilder estimateTimeBuilder = new StringBuilder();
+        foreach (var task in Model)
+        {
+            estimateTimeBuilder.Append("{ y: " + task.Estimate.TotalSeconds + ", label: '" + task.Name + "' },");
+        }
+
+        var estimateTime = new HtmlString(HttpUtility.HtmlDecode(estimateTimeBuilder.ToString()));
+
+        <script type="text/javascript">
+            window.onload = function() {
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    title: {
+                        text: "Basic Column Chart"
+                    },
+
+                    data: [
+                        {
+                            type: "column",
+                            dataPoints: [
+                                    @actualTime
+                            ]
+                        },
+                        {
+                            type: "column",
+                            dataPoints: [
+                                    @estimateTime
+                            ]
+                        }
+                    ]
+                });
+                chart.render();
+            }
+        </script>
+        <script src="/Scripts/canvasjs.min.js"></script>
+    }
+    
+    <title>Tasks Plot</title>
+</head>
+
+<body>
+<div id="chartContainer" style="height: 400px; width: 100%;"></div>
+</body>

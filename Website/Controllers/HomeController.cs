@@ -13,22 +13,22 @@ namespace Website.Controllers
 {
 	public class HomeController : Controller
 	{
-		/// <summary>
-		/// Creates a Study Tasks and loads all study tasks to be shown
-		/// </summary>
-		/// <returns>A view which shows all tasks</returns>
+        /// <summary>
+        /// Creates a Study Tasks and loads all study tasks to be shown
+        /// </summary>
+        /// <returns>A view which shows all tasks</returns>
 		public ActionResult Index()
 		{
 			var client = CreateTasksWCFService();
-			var userId = User.Identity.GetUserId();
-			if (userId != null)
-			{
-				var userTasks = StudyTaskCollection.FromDatabase(client, userId);
-				return View(userTasks);
-			}
+            var userId = User.Identity.GetUserId();
+            if (userId != null)
+            {
+                var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+                return View(userTasks);
+            }
 
 
-			return View();
+            return View();
 		}
 
 		public ActionResult About()
@@ -55,41 +55,41 @@ namespace Website.Controllers
 				service.RemoveTask(id);
 			}
 		}
-		/// <summary>
-		/// This method is invoked when the client selects a task
-		/// </summary>
-		/// <param name="data">A string array with the taskId at index 0</param>
-		/// <returns>Nothing</returns>
-		[HttpPost]
+        /// <summary>
+        /// This method is invoked when the client selects a task
+        /// </summary>
+        /// <param name="data">A string array with the taskId at index 0</param>
+        /// <returns>Nothing</returns>
+        [HttpPost]
 		public void Select(string taskId, string taskWasOpen)
 		{
 			int id;
-			bool taskOpen;
+            bool taskOpen;
 			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
 				var service = CreateTasksWCFService();
 				if (!taskOpen)
-				{
-					var task = new StudyTask(service, id);
-					task.TimeSpans.Add(new TaskTimeSpan(service, task, DateTime.Now));
-				}
-				else
-				{
+			    {
+			        var task = new StudyTask(service, id);
+			        task.TimeSpans.Add(new TaskTimeSpan(service, task, DateTime.Now));
+			    }
+			    else
+			    {
 					var openTimeSpan = new StudyTask(service, id).OpenTimeSpan;
-					if (openTimeSpan != null)
-					{
-						openTimeSpan.End = DateTime.Now;
-					}
-				}
+			        if (openTimeSpan != null)
+			        {
+			            openTimeSpan.End = DateTime.Now;
+			        }
+			    }
 			}
 		}
 
-		/// <summary>
-		/// This method is invoked when the client adds a task
-		/// </summary>
-		/// <param name="taskName">The name of the task</param>
+	    /// <summary>
+	    /// This method is invoked when the client adds a task
+	    /// </summary>
+	    /// <param name="taskName">The name of the task</param>
 		/// <param name="estimateString">String representation of the estimated for the new task</param>
-		/// <returns>the task id created for the task name</returns>
+	    /// <returns>the task id created for the task name</returns>
 		public string Add(string taskName, string estimateString)
 		{
 			int estimate;
@@ -108,6 +108,20 @@ namespace Website.Controllers
 			}
 			return 0.ToString();
 		}
+
+	    public ActionResult TasksInfo()
+	    {
+            var client = CreateTasksWCFService();
+            var userId = User.Identity.GetUserId();
+            if (userId != null)
+            {
+                var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+                return View(userTasks);
+            }
+
+
+            return View();
+        }
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
 		private StudyTasksServiceClient CreateTasksWCFService()
