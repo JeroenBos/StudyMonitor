@@ -93,7 +93,7 @@ namespace Website.Controllers
 				var task = new StudyTask(client, taskName, userId, estimate);
 				databaseConnection.Add(task);
 
-				return task.Id.ToString();
+				return string.Join(",", task.Id);
 			}
 			return 0.ToString();
 		}
