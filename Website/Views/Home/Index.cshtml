@@ -18,7 +18,7 @@
                 bool hasOpenTask = Model.Any(task => task.IsOpen);
                 foreach (var task in Model)
                 {
-                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask);
+                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask, task.GetLength().Ticks != 0);
                 }
             }
         </table>
@@ -48,22 +48,34 @@
                 var totalTime = data[1];
                 var estimateText = data[2];
 
+                var taskHasTimeSpent = data[1] != 0;
+                debugger;
                 // update client side
                 if (taskWasOpen) {
                     $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
-                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, false);
+                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, taskHasTimeSpent);
                 } else {
                     $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
-                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, true);
+                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, taskHasTimeSpent);
                 }
             });
         }
-        function replaceTask(taskId, taskName, totalTime, estimateText, taskIsOpen) {
+        function replaceTask(taskId, taskName, totalTime, estimateText, taskIsOpen, taskHasTimeSpent) {
             if (taskIsOpen) {
-                $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(taskId, taskName, totalTime, estimateText));
+                if (taskHasTimeSpent) {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false, true)".f(taskId, taskName, totalTime, estimateText));
+                }
+                else {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false, false)".f(taskId, taskName, totalTime, estimateText));
+                }
             }
             else {
-                $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false)".f(taskId, taskName, totalTime, estimateText));
+                if (taskHasTimeSpent) {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false, true)".f(taskId, taskName, totalTime, estimateText));
+                }
+                else {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false, false)".f(taskId, taskName, totalTime, estimateText));
+                }
             }
         }
 
@@ -122,7 +134,7 @@
                 { taskName: taskName, estimateString: estimateText }, function (data, status, jqXHR) {
                     data = data.split(",");
                     $('#createForm').remove();
-                    $('#taskTable').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(data[0], taskName, data[1], estimateText));
+                    $('#taskTable').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false, false)".f(data[0], taskName, data[1], estimateText));
                     $('#taskList').append('@createAddTaskButton()');
                 });
         }
