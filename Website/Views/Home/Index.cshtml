@@ -51,12 +51,20 @@
                 // update client side
                 if (taskWasOpen) {
                     $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
-                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(taskId, taskName, totalTime, estimateText));
+                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, false);
                 } else {
                     $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
-                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false)".f(taskId, taskName, totalTime, estimateText));
+                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, true);
                 }
             });
+        }
+        function replaceTask(taskId, taskName, totalTime, estimateText, taskIsOpen) {
+            if (taskIsOpen) {
+                $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(taskId, taskName, totalTime, estimateText));
+            }
+            else {
+                $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false)".f(taskId, taskName, totalTime, estimateText));
+            }
         }
 
         function addTask() {
