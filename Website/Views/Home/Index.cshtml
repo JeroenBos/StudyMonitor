@@ -53,11 +53,10 @@
                 // update client side
                 if (taskWasOpen) {
                     $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
-                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, taskHasTimeSpent);
                 } else {
                     $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
-                    replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, taskHasTimeSpent);
                 }
+                replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, taskHasTimeSpent);
             });
         }
         function replaceTask(taskId, taskName, totalTime, estimateText, taskIsOpen, taskHasTimeSpent) {
