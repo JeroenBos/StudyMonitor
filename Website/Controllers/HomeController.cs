@@ -19,7 +19,7 @@ namespace Website.Controllers
 		/// <returns>A view which shows all tasks</returns>
 		public ActionResult Index()
 		{
-			var client = CreateTasksClient();
+			var client = CreateTasksWCFService();
 			var userId = User.Identity.GetUserId();
 			if (userId != null)
 			{
@@ -51,7 +51,7 @@ namespace Website.Controllers
 			int id;
 			if (int.TryParse(taskId, out id))
 			{
-				var service = CreateTasksClient();
+				var service = CreateTasksWCFService();
 				service.RemoveTask(id);
 			}
 		}
@@ -67,7 +67,7 @@ namespace Website.Controllers
 			bool taskOpen;
 			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
-				var service = CreateTasksClient();
+				var service = CreateTasksWCFService();
 				if (!taskOpen)
 				{
 					var task = new StudyTask(service, id);
@@ -97,7 +97,7 @@ namespace Website.Controllers
 			if (int.TryParse(estimateString, out estimate))
 			{
 				string userId = User.Identity.GetUserId();
-				var client = CreateTasksClient();
+				var client = CreateTasksWCFService();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
 				var task = new StudyTask(client, taskName, userId, TimeSpan.FromSeconds(estimate));
 				databaseConnection.Add(task);
@@ -110,7 +110,7 @@ namespace Website.Controllers
 		}
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
-		private StudyTasksServiceClient CreateTasksClient()
+		private StudyTasksServiceClient CreateTasksWCFService()
 		{
 			return new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
 		}
