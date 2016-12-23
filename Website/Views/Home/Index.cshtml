@@ -85,13 +85,13 @@
             taskName = $('#createForm').find('input[name="taskName"]').val();
             if (taskName == "") {
 
-                alert("Empty task name is not allowed");
+                alert("Empty task name is not allowed. ");
                 return;
             }
             var estimateText = $('#createForm').find('input[name="estimate"]').val();
             var estimate = Number(estimateText)
             if (isNaN(estimate)) {
-                alert("An invalid task estimate was specified. Try a number of seconds");
+                alert("An invalid task estimate was specified. \nTry a number of seconds. ");
                 return;
             }
 
