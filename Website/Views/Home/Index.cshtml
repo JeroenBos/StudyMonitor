@@ -18,7 +18,7 @@
                 bool hasOpenTask = Model.Any(task => task.IsOpen);
                 foreach (var task in Model)
                 {
-                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, HtmlHelpers.FormatTotalTime(task.GetLength()), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask);
+                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask, task.GetLength().Ticks != 0);
                 }
             }
         </table>
@@ -30,24 +30,51 @@
 
     <script>
         function removeTask(taskId) {
-            $('#' + taskId + '-p').remove();
-
+            // update database
             $.post("@Url.Action("Remove", "Home")", { taskId: taskId });
+
+            // update client side
+            $('#' + taskId + '-tr').remove();
         }
         function onClickTaskButton(taskId) {
             var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
 
-            // update database
-            $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen });
 
-            // update website client side
-            if (taskWasOpen) {
-                $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
-                $('#' + taskId + '-button').text("Start");
-            } else {
-                $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
-                $('#' + taskId + '-button').text("Stop");
-                $('#' + taskId + '-button').show();
+            // update database
+            $.get("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen },
+            function (data) {
+                data = data.split(",");
+                var taskName = data[0];
+                var totalTime = data[1];
+                var estimateText = data[2];
+
+                var taskHasTimeSpent = data[1] != 0;
+                debugger;
+                // update client side
+                if (taskWasOpen) {
+                    $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
+                } else {
+                    $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
+                }
+                replaceTask(taskId, taskName, totalTime, estimateText, taskWasOpen, taskHasTimeSpent);
+            });
+        }
+        function replaceTask(taskId, taskName, totalTime, estimateText, taskIsOpen, taskHasTimeSpent) {
+            if (taskIsOpen) {
+                if (taskHasTimeSpent) {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false, true)".f(taskId, taskName, totalTime, estimateText));
+                }
+                else {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false, false)".f(taskId, taskName, totalTime, estimateText));
+                }
+            }
+            else {
+                if (taskHasTimeSpent) {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false, true)".f(taskId, taskName, totalTime, estimateText));
+                }
+                else {
+                    $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false, false)".f(taskId, taskName, totalTime, estimateText));
+                }
             }
         }
 
@@ -106,7 +133,7 @@
                 { taskName: taskName, estimateString: estimateText }, function (data, status, jqXHR) {
                     data = data.split(",");
                     $('#createForm').remove();
-                    $('#taskTable').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(data[0], taskName, data[1], estimateText));
+                    $('#taskTable').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false, false)".f(data[0], taskName, data[1], estimateText));
                     $('#taskList').append('@createAddTaskButton()');
                 });
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Web;
-using System.Security.Cryptography;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using StudyMonitor.ServiceAccess.ServiceReference;
@@ -13,22 +12,22 @@ namespace Website.Controllers
 {
 	public class HomeController : Controller
 	{
-        /// <summary>
-        /// Creates a Study Tasks and loads all study tasks to be shown
-        /// </summary>
-        /// <returns>A view which shows all tasks</returns>
+		/// <summary>
+		/// Creates a Study Tasks and loads all study tasks to be shown
+		/// </summary>
+		/// <returns>A view which shows all tasks</returns>
 		public ActionResult Index()
 		{
 			var client = CreateTasksWCFService();
-            var userId = User.Identity.GetUserId();
-            if (userId != null)
-            {
-                var userTasks = StudyTaskCollection.FromDatabase(client, userId);
-                return View(userTasks);
-            }
+			var userId = User.Identity.GetUserId();
+			if (userId != null)
+			{
+				var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+				return View(userTasks);
+			}
 
 
-            return View();
+			return View();
 		}
 
 		public ActionResult About()
@@ -55,41 +54,45 @@ namespace Website.Controllers
 				service.RemoveTask(id);
 			}
 		}
-        /// <summary>
-        /// This method is invoked when the client selects a task
-        /// </summary>
-        /// <param name="data">A string array with the taskId at index 0</param>
-        /// <returns>Nothing</returns>
-        [HttpPost]
-		public void Select(string taskId, string taskWasOpen)
+		/// <summary>
+		/// This method is invoked when the client selects a task
+		/// </summary>
+		/// <param name="data">A string array with the taskId at index 0</param>
+		/// <returns>a string of the task name, task total length and task estimate in seconds, separated by commas</returns>
+		public string Select(string taskId, string taskWasOpen)
 		{
 			int id;
-            bool taskOpen;
+			bool taskOpen;
 			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
+				StudyTask task;
 				var service = CreateTasksWCFService();
 				if (!taskOpen)
-			    {
-			        var task = new StudyTask(service, id);
-			        task.TimeSpans.Add(new TaskTimeSpan(service, task, DateTime.Now));
-			    }
-			    else
-			    {
-					var openTimeSpan = new StudyTask(service, id).OpenTimeSpan;
-			        if (openTimeSpan != null)
-			        {
-			            openTimeSpan.End = DateTime.Now;
-			        }
-			    }
+				{
+					task = new StudyTask(service, id);
+					task.TimeSpans.Add(new TaskTimeSpan(service, task, DateTime.Now));
+				}
+				else
+				{
+					task = new StudyTask(service, id);
+					var openTimeSpan = task.OpenTimeSpan;
+					if (openTimeSpan != null)
+					{
+						openTimeSpan.End = DateTime.Now;
+					}
+				}
+
+				return string.Join(",", task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.ToStringInSeconds());
 			}
+			return 0.ToString();
 		}
 
-	    /// <summary>
-	    /// This method is invoked when the client adds a task
-	    /// </summary>
-	    /// <param name="taskName">The name of the task</param>
+		/// <summary>
+		/// This method is invoked when the client adds a task
+		/// </summary>
+		/// <param name="taskName">The name of the task</param>
 		/// <param name="estimateString">String representation of the estimated for the new task</param>
-	    /// <returns>the task id created for the task name</returns>
+		/// <returns>a string of the task id and task total length in seconds, separated by commas</returns>
 		public string Add(string taskName, string estimateString)
 		{
 			int estimate;
@@ -104,25 +107,24 @@ namespace Website.Controllers
 
 
 				var totalLength = task.GetLength();
-				return string.Join(",", task.Id, HtmlHelpers.FormatTotalTime(totalLength));
+				return string.Join(",", task.Id, totalLength.ToStringInSeconds());
 			}
 			return 0.ToString();
 		}
 
-	    public ActionResult TasksInfo()
-	    {
-            var client = CreateTasksWCFService();
-            var userId = User.Identity.GetUserId();
-            if (userId != null)
-            {
-                var userTasks = StudyTaskCollection.FromDatabase(client, userId);
-                return View(userTasks);
-            }
+		public ActionResult TasksInfo()
+		{
+			var client = CreateTasksWCFService();
+			var userId = User.Identity.GetUserId();
+			if (userId != null)
+			{
+				var userTasks = StudyTaskCollection.FromDatabase(client, userId);
+				return View(userTasks);
+			}
 
 
-            return View();
-        }
-
+			return View();
+		}
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
 		private StudyTasksServiceClient CreateTasksWCFService()
 		{
