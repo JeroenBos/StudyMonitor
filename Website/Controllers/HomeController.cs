@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using Website.Models;
 using StudyMonitor.ServiceAccess;
+using Website.Views.Helpers;
 
 namespace Website.Controllers
 {
@@ -18,7 +19,7 @@ namespace Website.Controllers
         /// <returns>A view which shows all tasks</returns>
 		public ActionResult Index()
 		{
-			var client = CreateTasksClient();
+			var client = CreateTasksWCFService();
             var userId = User.Identity.GetUserId();
             if (userId != null)
             {
@@ -44,19 +45,29 @@ namespace Website.Controllers
 			return View();
 		}
 
+		[HttpPost]
+		public void Remove(string taskId)
+		{
+			int id;
+			if (int.TryParse(taskId, out id))
+			{
+				var service = CreateTasksWCFService();
+				service.RemoveTask(id);
+			}
+		}
         /// <summary>
         /// This method is invoked when the client selects a task
         /// </summary>
         /// <param name="data">A string array with the taskId at index 0</param>
         /// <returns>Nothing</returns>
         [HttpPost]
-		public ActionResult Select(string taskId, string taskWasOpen)
+		public void Select(string taskId, string taskWasOpen)
 		{
 			int id;
             bool taskOpen;
 			if (int.TryParse(taskId, out id) && bool.TryParse(taskWasOpen, out taskOpen))
 			{
-				var service = CreateTasksClient();
+				var service = CreateTasksWCFService();
 				if (!taskOpen)
 			    {
 			        var task = new StudyTask(service, id);
@@ -71,8 +82,6 @@ namespace Website.Controllers
 			        }
 			    }
 			}
-
-			return View();
 		}
 
 	    /// <summary>
@@ -81,25 +90,28 @@ namespace Website.Controllers
 	    /// <param name="taskName">The name of the task</param>
 		/// <param name="estimateString">String representation of the estimated for the new task</param>
 	    /// <returns>the task id created for the task name</returns>
-		public int Add(string taskName, string estimateString)
+		public string Add(string taskName, string estimateString)
 		{
-			DateTime estimate;
-			string userId = User.Identity.GetUserId();
+			int estimate;
 			// Check the string for a valid task name
-			if (DateTime.TryParse(estimateString, out estimate))
+			if (int.TryParse(estimateString, out estimate))
 			{
-				var client = CreateTasksClient();
+				string userId = User.Identity.GetUserId();
+				var client = CreateTasksWCFService();
 				var databaseConnection = StudyTaskCollection.FromDatabase(client, userId);
-				var task = new StudyTask(client, taskName, userId, estimate);
+				var task = new StudyTask(client, taskName, userId, TimeSpan.FromSeconds(estimate));
 				databaseConnection.Add(task);
-				return task.Id;
+
+
+				var totalLength = task.GetLength();
+				return string.Join(",", task.Id, HtmlHelpers.FormatTotalTime(totalLength));
 			}
-			return 0;
+			return 0.ToString();
 		}
 
 	    public ActionResult TasksInfo()
 	    {
-            var client = CreateTasksClient();
+            var client = CreateTasksWCFService();
             var userId = User.Identity.GetUserId();
             if (userId != null)
             {
@@ -112,7 +124,7 @@ namespace Website.Controllers
         }
 
 		/// <summary> Encapsulates the construction of a <see cref="StudyTasksServiceClient"/>. </summary>
-		private StudyTasksServiceClient CreateTasksClient()
+		private StudyTasksServiceClient CreateTasksWCFService()
 		{
 			return new StudyTasksServiceClient("BasicHttpBinding_IStudyTasksService");
 		}

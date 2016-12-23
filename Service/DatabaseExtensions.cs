@@ -12,7 +12,7 @@ namespace StudyMonitor.Service
 				Name = task.Name,
                 Id = task.Id,
                 UserId = task.UserId,
-                Estimate = task.Estimate
+                Estimate = TimeSpan.FromTicks(task.Estimate)
 			};
 		}
 		public static StudyTask ToDBObject(this StudyTaskService task)
@@ -21,7 +21,7 @@ namespace StudyMonitor.Service
 			{
 				Name = task.Name,
                 UserId = task.UserId,
-                Estimate = task.Estimate
+                Estimate = task.Estimate.Ticks
 			};
 		}
 

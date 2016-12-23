@@ -5,104 +5,134 @@
     ViewBag.Title = "Home Page";
 }
 
+@helper createAddTaskButton()
+{
+    <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>}@*//} on this line is important for jQuery: it can't handle the newline*@
 
-<div class="jumbotron" id="taskList">
-    <h1>Study Monitor</h1>
+    <div class="jumbotron" id="taskList">
+        <h1>Study Monitor</h1>
 
-    @if (Model != null)
-    {
-        bool hasOpenTask = Model.Any(task => task.IsOpen);
-        foreach (var task in Model)
-        {
-            @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.IsOpen, hasOpenTask);
-        }
-
+        <table id="taskTable">
+            @if (Model != null)
+            {
+                bool hasOpenTask = Model.Any(task => task.IsOpen);
+                foreach (var task in Model)
+                {
+                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, HtmlHelpers.FormatTotalTime(task.GetLength()), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask);
+                }
+            }
+        </table>
         <p class="body-content">
-            <button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>
+            @createAddTaskButton()
         </p>
-    }
 
-</div>
+    </div>
 
-<script>
-    function myFunction(taskId) {
-        var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
+    <script>
+        function removeTask(taskId) {
+            $('#' + taskId + '-p').remove();
 
-        // update database
-        $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen });
-
-        // update website client side
-        if (taskWasOpen) {
-            $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
-            $('#' + taskId + '-button').text("Start");
-        } else {
-            $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
-            $('#' + taskId + '-button').text("Stop");
-            $('#' + taskId + '-button').show();
+            $.post("@Url.Action("Remove", "Home")", { taskId: taskId });
         }
-    }
+        function onClickTaskButton(taskId) {
+            var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
 
-    function addTask() {
-        $form = $('<form id="createForm"></form>');
-        $form.append(
-            $("<input>",
-                {
-                    type: 'text',
-                    name: 'taskName'
-                }
-            )
-        );
-        $form.append(
-            $("<input>",
-                {
-                    type: 'button',
-                    value: 'Create Task',
-                    onclick: 'createTask()'
-                }
-            )
-        );
+            // update database
+            $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen });
 
-        $('#taskList').append($form);
-        $('#requestAddTask').remove();
-    }
-
-    function createTask() {
-        taskName = $('#createForm').find('input[name="taskName"]').val();
-        if (taskName !== "") {
-            var i = $.get("@Url.Action("Add", "Home")",
-                { taskName: taskName, estimateString: '@DateTime.Now' }, function (data, status, jqXHR) {
-                    $('#createForm').remove();
-                    $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", false, false)".f(data, taskName));
-                    $('#taskList').append('<button type="button" id="requestAddTask" onclick="addTask()">Add Task</button>');
-                });
-        }
-        else {
-            alert("Empty task name is not allowed");
-        }
-    }
-
-    function addTaskView(taskName, taskId, taskIsOpen, anyOtherTaskIsOpen) {
-
-        var hideTaskButton = !task.IsOpen && hasOpenTask;
-        var buttonCaption = taskIsOpen ? "Stop" : "Start";
-        $('#taskList').append(
-        '<p class="body-content">' +
-            taskId, taskName +
-            '<button type="button" id="' + taskId + '-button" onclick="myFunction(' + taskId + ')" hidden="' + hideTaskButton + '">' + buttonCaption + '</button>' +
-         '</p>');
-    }
-
-    String.prototype.format = String.prototype.f = function() {
-        var s = this,
-            i = arguments.length;
-
-        while (i--) {
-            var oldS = "";
-            while (oldS !== s) {
-                oldS = s;
-                s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+            // update website client side
+            if (taskWasOpen) {
+                $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
+                $('#' + taskId + '-button').text("Start");
+            } else {
+                $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
+                $('#' + taskId + '-button').text("Stop");
+                $('#' + taskId + '-button').show();
             }
         }
-        return s;
-    };
-</script>
+
+        function addTask() {
+            $form = $('<form id="createForm"></form>');
+            $form.append('Task name:');
+            $form.append(
+                $("<input>",
+                    {
+                        type: 'text',
+                        name: 'taskName'
+                    }
+                )
+            );
+            $form.append('<br>');
+            $form.append('Task estimate (sec):');
+            $form.append(
+                $("<input>",
+                    {
+                        type: 'text',
+                        name: 'estimate'
+                    }
+                )
+            );
+            $form.append('<br>');
+            $form.append(
+                $("<input>",
+                    {
+                        type: 'button',
+                        value: 'Create Task',
+                        onclick: 'createTask()'
+                    }
+                )
+            );
+
+            $('#taskList').append($form);
+            $('#requestAddTask').remove();
+        }
+
+        function createTask() {
+            taskName = $('#createForm').find('input[name="taskName"]').val();
+            if (taskName == "") {
+
+                alert("Empty task name is not allowed. ");
+                return;
+            }
+            var estimateText = $('#createForm').find('input[name="estimate"]').val();
+            var estimateInSeconds = Number(estimateText)
+            if (isNaN(estimateInSeconds)) {
+                alert("An invalid task estimate was specified. \nTry a number of seconds. ");
+                return;
+            }
+
+
+            $.get("@Url.Action("Add", "Home")",
+                { taskName: taskName, estimateString: estimateText }, function (data, status, jqXHR) {
+                    data = data.split(",");
+                    $('#createForm').remove();
+                    $('#taskTable').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(data[0], taskName, data[1], estimateText));
+                    $('#taskList').append('@createAddTaskButton()');
+                });
+        }
+
+        function addTaskView(taskName, taskId, taskIsOpen, anyOtherTaskIsOpen) {
+
+            var hideTaskButton = !task.IsOpen && hasOpenTask;
+            var buttonCaption = taskIsOpen ? "Stop" : "Start";
+            $('#taskList').append(
+            '<p class="body-content">' +
+                taskId, taskName +
+                '<button type="button" id="' + taskId + '-button" onclick="myFunction(' + taskId + ')" hidden="' + hideTaskButton + '">' + buttonCaption + '</button>' +
+             '</p>');
+        }
+
+        String.prototype.format = String.prototype.f = function () {
+            var s = this,
+                i = arguments.length;
+
+            while (i--) {
+                var oldS = "";
+                while (oldS !== s) {
+                    oldS = s;
+                    s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+                }
+            }
+            return s;
+        };
+    </script>

@@ -12,7 +12,7 @@
         StringBuilder columnBuilder = new StringBuilder();
         foreach (var task in Model)
         {
-            columnBuilder.Append("{ y: " + task.Estimate.Second + ", label: '" + task.Name + "' },");
+            columnBuilder.Append("{ y: " + task.Estimate.TotalSeconds + ", label: '" + task.Name + "' },");
         }
 
         var tempTekst = new HtmlString(HttpUtility.HtmlDecode(columnBuilder.ToString()));
