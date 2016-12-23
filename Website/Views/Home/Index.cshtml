@@ -81,6 +81,7 @@
         function addTask() {
             $form = $('<form id="createForm"></form>');
             $form.append('Task name:');
+            $form.append('<br>');
             $form.append(
                 $("<input>",
                     {
@@ -91,6 +92,7 @@
             );
             $form.append('<br>');
             $form.append('Task estimate (sec):');
+            $form.append('<br>');
             $form.append(
                 $("<input>",
                     {
