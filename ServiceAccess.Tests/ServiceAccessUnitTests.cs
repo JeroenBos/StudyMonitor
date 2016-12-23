@@ -117,7 +117,7 @@ namespace StudyMonitor.ServiceAccess.Tests
 			var task = CreateStudyTaskWithName("taskName");
 			StudyTaskCollection.Create(base.client).Add(task);
 
-			var expected = TimeSpan.FromSeconds(10);
+			var expected = TimeSpan.FromSeconds(99);
 			task.Estimate = expected;
 
 			var taskEstimateFromDatabase = client.GetTask(task.MessageObject.Id).Estimate;
