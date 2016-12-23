@@ -14,12 +14,17 @@
             StringBuilder columnBuilder = new StringBuilder();
             foreach (var task in Model)
             {
-                columnBuilder.Append("{ y: " + task.Estimate.Hour + ", label: '" + task.Name + "' },");
+                columnBuilder.Append("{ y: " + task.Estimate.Hour + ", label: &#39;" + task.Name + "&#39; },");
             }
 
             <script type="text/javascript">
+                function ownDecode(text) {
+                    return $("<textarea/>").html(text).html();
+                }
+
                 window.onload = function () {
-                    console.log(unescape("@columnBuilder.ToString()"));
+                    var jsonstring = @HttpUtility.HtmlDecode(columnBuilder.ToString());
+                    console.log(jsonstring);
                     var chart = new CanvasJS.Chart("chartContainer", {
                         title: {
                             text: "Basic Column Chart"
@@ -29,7 +34,7 @@
                             {
                                 type: "column",
                                 dataPoints: [
-                                    unescape("@columnBuilder.ToString()")
+                                    jsonstring
                                 ]
                             }
                         ]
@@ -44,5 +49,5 @@
 </head>
 
 <body>
-    <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+<div id="chartContainer" style="height: 400px; width: 100%;"></div>
 </body>
