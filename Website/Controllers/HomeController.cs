@@ -93,7 +93,9 @@ namespace Website.Controllers
 				var task = new StudyTask(client, taskName, userId, estimate);
 				databaseConnection.Add(task);
 
-				return string.Join(",", task.Id);
+
+				var totalLength = task.GetLength();
+				return string.Join(",", task.Id, totalLength.ToString(@"dd\.hh\:mm\:ss"));
 			}
 			return 0.ToString();
 		}

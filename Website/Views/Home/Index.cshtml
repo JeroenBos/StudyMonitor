@@ -17,7 +17,7 @@
         bool hasOpenTask = Model.Any(task => task.IsOpen);
         foreach (var task in Model)
         {
-            @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.IsOpen, hasOpenTask);
+            @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToString(@"dd\.hh\:mm\:ss"), task.IsOpen, hasOpenTask);
         }
 
         <p class="body-content">
@@ -76,7 +76,7 @@
                 { taskName: taskName, estimateString: '@DateTime.Now' }, function (data, status, jqXHR) {
                     data = data.split(",");
                     $('#createForm').remove();
-                    $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", false, false)".f(data[0], taskName));
+                    $('#taskList').append("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", false, false)".f(data[0], taskName, data[1]));
                     $('#taskList').append('@createAddTaskButton()');
                 });
         }
