@@ -23,6 +23,7 @@ namespace Website.Views.Helpers
 							<td align='right'>
 								{taskName}:
 							</td>
+							<td width='20'/>
 							<td width='350'>
 								 {totalTime} seconds spent out of {estimate}.
 							</td>
