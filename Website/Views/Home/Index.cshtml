@@ -38,18 +38,22 @@
         }
         function onClickTaskButton(taskId) {
             var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
+            
 
             // update database
             $.post("@Url.Action("Select", "Home")", { taskId: taskId, taskWasOpen: taskWasOpen });
 
+            var totalTime = "totalTime";
+            var estimateText = "estimate";
+            var taskName = "taskName";
+
             // update client side
             if (taskWasOpen) {
                 $.find('button[id$="-button"]').forEach(function (button) { $(button).show(); });
-                $('#' + taskId + '-button').text("Start");
+                $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", false, false)".f(taskId, taskName, totalTime, estimateText));
             } else {
                 $.find('button[id$="-button"]').forEach(function (button) { $(button).hide(); });
-                $('#' + taskId + '-button').text("Stop");
-                $('#' + taskId + '-button').show();
+                $('#' + taskId + '-tr').replaceWith("@HtmlHelpers.CreateTask(@"{0}", @"{1}", @"{2}", @"{3}", true, false)".f(taskId, taskName, totalTime, estimateText));
             }
         }
 
