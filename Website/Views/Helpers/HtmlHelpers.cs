@@ -9,8 +9,7 @@ namespace Website.Views.Helpers
 	{
 		public static string FormatTotalTime(TimeSpan totalTime)
 		{
-			string formatSpecifier = totalTime.Days == 0 ? @"hh\:mm\:ss" : @"dd\.hh\:mm\:ss";
-			return totalTime.ToString(formatSpecifier);
+			return ((int)Math.Round(totalTime.TotalSeconds)).ToString();
 		}
 		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, string estimate, bool taskIsOpen, bool anyOtherTaskIsOpen)
 		{
