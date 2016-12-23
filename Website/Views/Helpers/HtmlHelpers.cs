@@ -18,7 +18,8 @@ namespace Website.Views.Helpers
 		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, string estimate, bool hideButton, string buttonCaption)
 		{
 			var htmlResult =
-				$@"<p class='body-content'>
+				$@"<p class='body-content' id='{taskId}-p'>
+						<button type='button' onclick='removeTask({taskId})'>Remove</button>
 						{taskId}, {taskName}, {totalTime}, {estimate}
 						<button type='button' id='{taskId}-button' onclick='onClickTaskButton({taskId})'{(hideButton ? " hidden = true" : "")}>{buttonCaption}</button>
 				  </p>";
