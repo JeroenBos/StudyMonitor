@@ -67,6 +67,7 @@ namespace StudyMonitor.ServiceAccess
 			this.MessageObject = task;
 			this.service = service;
 			this.Name = this.MessageObject.Name;
+			this.Estimate = this.MessageObject.Estimate;
 
 			//retrieve time spans from database:
 			var timeSpans = service.GetTimeSpansFor(task.Id).Select(timeSpanDB => new TaskTimeSpan(service, timeSpanDB, this));
