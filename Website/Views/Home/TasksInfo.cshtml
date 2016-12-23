@@ -7,44 +7,38 @@
 
 
 <head>
-    @{
-
-        if (Model != null)
+    @if (Model != null)
+    {
+        StringBuilder columnBuilder = new StringBuilder();
+        foreach (var task in Model)
         {
-            StringBuilder columnBuilder = new StringBuilder();
-            foreach (var task in Model)
-            {
-                columnBuilder.Append("{ y: " + task.Estimate.Hour + ", label: &#39;" + task.Name + "&#39; },");
-            }
-
-            <script type="text/javascript">
-                function ownDecode(text) {
-                    return $("<textarea/>").html(text).html();
-                }
-
-                window.onload = function () {
-                    var jsonstring = @HttpUtility.HtmlDecode(columnBuilder.ToString());
-                    console.log(jsonstring);
-                    var chart = new CanvasJS.Chart("chartContainer", {
-                        title: {
-                            text: "Basic Column Chart"
-                        },
-
-                        data: [
-                            {
-                                type: "column",
-                                dataPoints: [
-                                    jsonstring
-                                ]
-                            }
-                        ]
-                    });
-                    chart.render();
-                }
-            </script>
-            <script src="/Scripts/canvasjs.min.js"></script>
+            columnBuilder.Append("{ y: " + task.Estimate.Second + ", label: '" + task.Name + "' },");
         }
+
+        var tempTekst = new HtmlString(HttpUtility.HtmlDecode(columnBuilder.ToString()));
+
+        <script type="text/javascript">
+            window.onload = function () {
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    title: {
+                        text: "Basic Column Chart"
+                    },
+
+                    data: [
+                        {
+                            type: "column",
+                            dataPoints: [
+                                @tempTekst
+                            ]
+                        }
+                    ]
+                });
+                chart.render();
+            }
+        </script>
+        <script src="/Scripts/canvasjs.min.js"></script>
     }
+    
     <title>Tasks Plot</title>
 </head>
 
