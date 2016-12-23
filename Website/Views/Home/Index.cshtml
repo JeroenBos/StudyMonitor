@@ -30,7 +30,7 @@
 
     <script>
         function removeTask(taskId) {
-            $('#' + taskId + '-p').remove();
+            $('#' + taskId + '-tr').remove();
 
             $.post("@Url.Action("Remove", "Home")", { taskId: taskId });
         }

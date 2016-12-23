@@ -18,8 +18,8 @@ namespace Website.Views.Helpers
 		public static HtmlString CreateTask(string taskId, string taskName, string totalTime, string estimate, bool hideButton, string buttonCaption)
 		{
 			var htmlResult =
-				$@" <tr>
-						<p class='body-content' id='{taskId}-p'>
+				$@" <tr  id='{taskId}-tr'>
+						<p class='body-content'>
 							<td align='right'>
 								{taskName}:
 							</td>
