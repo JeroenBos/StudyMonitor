@@ -96,6 +96,7 @@ namespace StudyMonitor.ServiceAccess
 		public TimeSpan GetLength()
 		{
 			return TimeSpans.Select(taskTimeSpan => taskTimeSpan.Length)
+							.Concat(new[] { new TimeSpan() })
 							.Aggregate((a, b) => a + b);
 		}
 		/// <summary> Removes the task represented by this instance from the database. </summary>
