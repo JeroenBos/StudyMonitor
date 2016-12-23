@@ -17,7 +17,7 @@
         bool hasOpenTask = Model.Any(task => task.IsOpen);
         foreach (var task in Model)
         {
-            @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToString(@"dd\.hh\:mm\:ss"), task.IsOpen, hasOpenTask);
+            @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, HtmlHelpers.FormatTotalTime(task.GetLength()), task.IsOpen, hasOpenTask);
         }
 
         <p class="body-content">

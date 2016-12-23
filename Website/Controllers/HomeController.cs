@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using StudyMonitor.ServiceAccess.ServiceReference;
 using Website.Models;
 using StudyMonitor.ServiceAccess;
+using Website.Views.Helpers;
 
 namespace Website.Controllers
 {
@@ -95,7 +96,7 @@ namespace Website.Controllers
 
 
 				var totalLength = task.GetLength();
-				return string.Join(",", task.Id, totalLength.ToString(@"dd\.hh\:mm\:ss"));
+				return string.Join(",", task.Id, HtmlHelpers.FormatTotalTime(totalLength));
 			}
 			return 0.ToString();
 		}
