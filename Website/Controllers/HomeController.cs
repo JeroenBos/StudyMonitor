@@ -106,7 +106,7 @@ namespace Website.Controllers
 
 
 				var totalLength = task.GetLength();
-				return string.Join(",", task.Id, HtmlHelpers.FormatTotalTime(totalLength));
+				return string.Join(",", task.Id, totalLength.ToStringInSeconds());
 			}
 			return 0.ToString();
 		}

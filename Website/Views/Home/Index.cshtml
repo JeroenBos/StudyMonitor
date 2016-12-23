@@ -18,7 +18,7 @@
                 bool hasOpenTask = Model.Any(task => task.IsOpen);
                 foreach (var task in Model)
                 {
-                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, HtmlHelpers.FormatTotalTime(task.GetLength()), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask);
+                    @HtmlHelpers.CreateTask(task.Id.ToString(), task.Name, task.GetLength().ToStringInSeconds(), task.Estimate.TotalSeconds.ToString(), task.IsOpen, hasOpenTask);
                 }
             }
         </table>

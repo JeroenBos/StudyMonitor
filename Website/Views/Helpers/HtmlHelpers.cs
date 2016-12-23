@@ -5,9 +5,9 @@ using System.Web;
 
 namespace Website.Views.Helpers
 {
-	public class HtmlHelpers
+	public static class HtmlHelpers
 	{
-		public static string FormatTotalTime(TimeSpan totalTime)
+		public static string ToStringInSeconds(this TimeSpan totalTime)
 		{
 			return ((int)Math.Round(totalTime.TotalSeconds)).ToString();
 		}
