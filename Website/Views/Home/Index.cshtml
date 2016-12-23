@@ -28,6 +28,9 @@
     </div>
 
     <script>
+        function removeTask(taskId) {
+            $('#' + taskId + '-p').remove();
+        }
         function onClickTaskButton(taskId) {
             var taskWasOpen = $('#' + taskId + '-button').text() == "Stop";
 
